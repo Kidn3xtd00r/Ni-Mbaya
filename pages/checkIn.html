@@ -18,5 +18,26 @@
     <link rel="stylesheet" href="../CSS/styles.css" />
     <link rel="stylesheet" href="../CSS/header.css" />
   </head>
-  <body></body>
+  <body>
+    <!--THIS IS ....NI MBAYA.... AN ACCOUNTABILITY PARTNER THAT HAS A KENYAN TWIST TO IT-->
+    <!-- 
+    <div id="background"></div>
+
+    <script>
+      loadComponent("background", "components/background.html");
+    </script>
+    -->
+    <!-- THIS IS THE HEADER COMPONENT, THE NAV BAR THAT IS LOADED BY THE FOLLOWING JS -->
+
+    <div id="header"></div>
+
+    <script>
+      fetch("../components/header.html")
+        .then((res) => res.text())
+
+        .then((data) => {
+          document.getElementById("header").innerHTML = data;
+        });
+    </script>
+  </body>
 </html>
