@@ -1129,6 +1129,7 @@ input[type="number"] {
    ========================================== */
 
 .testimonial-card {
+  margin: 0; /* <figure> has a default 40px side margin */
   padding: 26px;
   border-radius: 32px;
 
@@ -1147,8 +1148,8 @@ input[type="number"] {
 
 /* Testimonial Text */
 
-.testimonial-card p {
-  margin: 0 0 16px;
+.testimonial-card blockquote {
+  margin: 0 0 16px; /* <blockquote> also has a default 40px side margin */
 
   font-size: 1rem;
   line-height: 1.7;
@@ -1158,7 +1159,7 @@ input[type="number"] {
 
 /* User Name / Tag */
 
-.testimonial-card span {
+.testimonial-card figcaption {
   color: rgba(245, 247, 250, 0.65);
 
   font-size: 0.95rem;
