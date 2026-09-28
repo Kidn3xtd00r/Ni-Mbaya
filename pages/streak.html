@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- The text on the browser tab. -->
-    <title>NI MBAYA | Streaks</title>
+    <title>NI MBAYA | Your Streak</title>
 
     <!-- The grey text Google shows under your link in search results. -->
     <meta
@@ -48,137 +48,141 @@
   <!-- ================================================================
        THE <body>: EVERYTHING YOU SEE ON SCREEN
        ================================================================
-       ⚠️ STILL MISSING (Lesson 2 exercise):
-       1. A <main> wrapping both sections below.
-       2. An <h1> page title. This page starts at <h2>, like a book
-          chapter with sub-headings but no chapter title.
-       3. The header/nav. There's no way back to the home page yet
-          (Lesson 11). -->
+       ⚠️ STILL MISSING: the header/nav. There's no way back to the home
+       page yet (Lesson 11). -->
   <body>
-    <!-- ==============================================================
-         SECTION 1: MEET MBAYA
-         The story: Mbaya = your bad habits. The longer your streak,
-         the smaller he gets.
-         ============================================================== -->
+    <!-- <main> = THE main content of the page. Only one per page.
+         Screen reader users can jump straight here, skipping the header. -->
+    <main>
+      <!-- <h1> = the page's title. One per page, like a book chapter title.
+           Every <h2> below is a sub-heading of this. -->
+      <h1 class="page-title">Your Streak</h1>
 
-    <!-- <section> = a themed chunk of the page with its own heading.
-         class="section"        → padding above/below (shared by all sections)
-         class="mascot-section" → the rounded corners + shadow.
-                                  (Only in a shared list in styles.css line
-                                  ~361. Could be one shared class instead.)
-         id="meet-mbaya"        → ❓ nothing links here or uses it yet.
-                                  It would only matter for a jump link like
-                                  <a href="#meet-mbaya">. -->
-    <section class="section mascot-section" id="meet-mbaya">
-      <!-- The small green label + the big heading. Same pattern is reused
-           on every page, which is exactly why they're CLASSES, not ids. -->
-      <div class="section-heading">
-        <!-- "Eyebrow" = small text sitting ABOVE a heading, like an
-             eyebrow above an eye. Green, uppercase, spaced out.
-             <span> = an inline box with no meaning, just a style hook. -->
-        <span class="section-eyebrow">MEET MBAYA</span>
-        <h2>Every bad habit feeds him. Every streak weakens him.</h2>
-      </div>
+      <!-- ==============================================================
+           SECTION 1: MEET MBAYA
+           The story: Mbaya = your bad habits. The longer your streak,
+           the smaller he gets.
+           ============================================================== -->
 
-      <!-- The grid that places the 4 cards side by side.
-           CSS: repeat(auto-fit, minmax(206px, 1fr)) = "fit as many
-           206px+ columns as the screen allows", so 4 across on desktop,
-           1 per row on a phone. (Lesson 7) -->
-      <div class="mascot-grid">
-        <!-- <article> = a piece that makes sense on its own. Correct here:
-             each card is a complete stage of the story.
+      <!-- <section> = a themed chunk of the page with its own heading.
+           class="section"        → padding above/below (shared by all sections)
+           class="mascot-section" → the rounded corners + shadow.
+                                    (Only in a shared list in styles.css line
+                                    ~361. Could be one shared class instead.)
+           id="meet-mbaya"        → ❓ nothing links here or uses it yet.
+                                    It would only matter for a jump link like
+                                    <a href="#meet-mbaya">. -->
+      <section class="section mascot-section" id="meet-mbaya">
+        <!-- The small green label + the big heading. Same pattern is reused
+             on every page, which is exactly why they're CLASSES, not ids. -->
+        <div class="section-heading">
+          <!-- "Eyebrow" = small text sitting ABOVE a heading, like an
+               eyebrow above an eye. Green, uppercase, spaced out.
+               <span> = an inline box with no meaning, just a style hook. -->
+          <span class="section-eyebrow">MEET MBAYA</span>
+          <h2>Every bad habit feeds him. Every streak weakens him.</h2>
+        </div>
 
-             ⚠️ TWO BUGS ON THIS LINE (Lesson 3):
-             1. "large", "medium", "small", "tiny" have NO CSS anywhere.
-                They do nothing, so all 4 cards look identical.
-                The idea was probably to make Mbaya shrink card by card.
-             2. ".mascot-card" is ALSO the name of the big mascot on the
-                home page. styles.css has TWO .mascot-card rules, so these
-                cards inherit leftovers from the home-page one,
-                e.g. width: min(360px, 100%). -->
-        <article class="mascot-card large">
-          <!-- The green "Day 1" pill badge.
-               A <div> is fine here, but <p> would be slightly more
-               meaningful, since it's a bit of text. -->
-          <div class="mascot-progress">Day 1</div>
-          <!-- <h3> because it sits UNDER the section's <h2>.
-               Headings go h1 → h2 → h3, never skipping a level. -->
-          <h3>Huge Mbaya</h3>
-          <p>
-            The app starts strong. Your bad habits are loud. Mbaya looks big.
-          </p>
-        </article>
+        <!-- The grid that places the 4 cards side by side.
+             CSS: repeat(auto-fit, minmax(206px, 1fr)) = "fit as many
+             206px+ columns as the screen allows", so 4 across on desktop,
+             1 per row on a phone. (Lesson 7) -->
+        <div class="mascot-grid">
+          <!-- <article> = a piece that makes sense on its own. Correct here:
+               each card is a complete stage of the story.
 
-        <!-- Same structure repeated. Only the text and the size word
-             change. (Later, JavaScript can build these 4 cards from a
-             list, so you only write the structure once.) -->
-        <article class="mascot-card medium">
-          <div class="mascot-progress">Day 30</div>
-          <h3>Smaller Mbaya</h3>
-          <p>
-            Streaks are working. The creature gets quieter, and you feel
-            sharper.
-          </p>
-        </article>
-        <article class="mascot-card small">
-          <div class="mascot-progress">Day 100</div>
-          <h3>Weak Mbaya</h3>
-          <p>You're in control. Mbaya is just a shadow of his former self.</p>
-        </article>
-        <article class="mascot-card tiny">
-          <div class="mascot-progress">Day 365</div>
-          <h3>Tiny Defeated Mbaya</h3>
-          <p>Discipline is your flex. The bad habit creature is almost gone.</p>
-        </article>
-      </div>
-    </section>
+               ⚠️ TWO BUGS ON THIS LINE (Lesson 3):
+               1. "large", "medium", "small", "tiny" have NO CSS anywhere.
+                  They do nothing, so all 4 cards look identical.
+                  The idea was probably to make Mbaya shrink card by card.
+               2. ".mascot-card" is ALSO the name of the big mascot on the
+                  home page. styles.css has TWO .mascot-card rules, so these
+                  cards inherit leftovers from the home-page one,
+                  e.g. width: min(360px, 100%). -->
+          <article class="mascot-card large">
+            <!-- The green "Day 1" pill badge.
+                 A <div> is fine here, but <p> would be slightly more
+                 meaningful, since it's a bit of text. -->
+            <div class="mascot-progress">Day 1</div>
+            <!-- <h3> because it sits UNDER the section's <h2>.
+                 Headings go h1 → h2 → h3, never skipping a level. -->
+            <h3>Huge Mbaya</h3>
+            <p>
+              The app starts strong. Your bad habits are loud. Mbaya looks big.
+            </p>
+          </article>
 
-    <!-- ==============================================================
-         SECTION 2: STREAK JOURNEY
-         The milestones: the ranks you earn as your streak grows.
-         ============================================================== -->
-    <section class="section journey-section" id="journey">
-      <div class="section-heading">
-        <span class="section-eyebrow">STREAK JOURNEY</span>
-        <h2>Your roadmap from Day 1 to Legend of the Republic.</h2>
-      </div>
+          <!-- Same structure repeated. Only the text and the size word
+               change. (Later, JavaScript can build these 4 cards from a
+               list, so you only write the structure once.) -->
+          <article class="mascot-card medium">
+            <div class="mascot-progress">Day 30</div>
+            <h3>Smaller Mbaya</h3>
+            <p>
+              Streaks are working. The creature gets quieter, and you feel
+              sharper.
+            </p>
+          </article>
+          <article class="mascot-card small">
+            <div class="mascot-progress">Day 100</div>
+            <h3>Weak Mbaya</h3>
+            <p>You're in control. Mbaya is just a shadow of his former self.</p>
+          </article>
+          <article class="mascot-card tiny">
+            <div class="mascot-progress">Day 365</div>
+            <h3>Tiny Defeated Mbaya</h3>
+            <p>Discipline is your flex. The bad habit creature is almost gone.</p>
+          </article>
+        </div>
+      </section>
 
-      <!-- ✅ YOU CHANGED THIS FROM <div>s TO A LIST. Good call.
-           <ol> = ORDERED list: order matters (you can't reach Day 30
-           before Day 7). A screen reader now says "list, 5 items".
-           <ul> would be for lists where order doesn't matter.
+      <!-- ==============================================================
+           SECTION 2: STREAK JOURNEY
+           The milestones: the ranks you earn as your streak grows.
+           ============================================================== -->
+      <section class="section journey-section" id="journey">
+        <div class="section-heading">
+          <span class="section-eyebrow">STREAK JOURNEY</span>
+          <h2>Your roadmap from Day 1 to Legend of the Republic.</h2>
+        </div>
 
-           Why no 1. 2. 3. numbers show up:
-           the CSS gives each <li> display: flex, and a flex item stops
-           being a "list item", so the browser drops the number.
-           Handy by accident. (Lesson 6)
+        <!-- ✅ YOU CHANGED THIS FROM <div>s TO A LIST. Good call.
+             <ol> = ORDERED list: order matters (you can't reach Day 30
+             before Day 7). A screen reader now says "list, 5 items".
+             <ul> would be for lists where order doesn't matter.
 
-           ⚠️ An <ol> also brings a default margin above and below.
-           If you notice extra space above the track, that's why.
-           Fix: margin: 0 on .journey-track. (Lesson 4) -->
-      <ol class="journey-track">
-        <!-- Each <li> = one milestone.
-             CSS: display: flex + justify-content: space-between
-             → pushes "Day 1" to the LEFT and the title to the RIGHT. -->
-        <li class="journey-point">
-          <!-- <span>   = plain text holder, styled green by the CSS.
-               <strong> = "this is important". Bold by default, and
-                          screen readers may stress it. -->
-          <span>Day 1</span><strong>The Beginning</strong>
-        </li>
-        <li class="journey-point">
-          <span>Day 7</span><strong>Weekend Survivor</strong>
-        </li>
-        <li class="journey-point">
-          <span>Day 30</span><strong>Certified Discipline</strong>
-        </li>
-        <li class="journey-point">
-          <span>Day 100</span><strong>Village Elder</strong>
-        </li>
-        <li class="journey-point">
-          <span>Day 365</span><strong>Legend of the Republic</strong>
-        </li>
-      </ol>
-    </section>
+             Why no 1. 2. 3. numbers show up:
+             the CSS gives each <li> display: flex, and a flex item stops
+             being a "list item", so the browser drops the number.
+             Handy by accident. (Lesson 6)
+
+             ⚠️ An <ol> also brings a default margin above and below.
+             If you notice extra space above the track, that's why.
+             Fix: margin: 0 on .journey-track. (Lesson 4) -->
+        <ol class="journey-track">
+          <!-- Each <li> = one milestone.
+               CSS: display: flex + justify-content: space-between
+               → pushes "Day 1" to the LEFT and the title to the RIGHT. -->
+          <li class="journey-point">
+            <!-- <span>   = plain text holder, styled green by the CSS.
+                 <strong> = "this is important". Bold by default, and
+                            screen readers may stress it. -->
+            <span>Day 1</span><strong>The Beginning</strong>
+          </li>
+          <li class="journey-point">
+            <span>Day 7</span><strong>Weekend Survivor</strong>
+          </li>
+          <li class="journey-point">
+            <span>Day 30</span><strong>Certified Discipline</strong>
+          </li>
+          <li class="journey-point">
+            <span>Day 100</span><strong>Village Elder</strong>
+          </li>
+          <li class="journey-point">
+            <span>Day 365</span><strong>Legend of the Republic</strong>
+          </li>
+        </ol>
+      </section>
+    </main>
   </body>
 </html>

@@ -340,6 +340,14 @@ main {
    WHY NI MBAYA? TIMELINE SECTION
    ========================================== */
 
+/* Page title: the one <h1> at the top of every page in pages/.
+   Same bold, tight style as the home page's hero h1, just smaller. */
+.page-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 0.95;
+  margin: 16px 0 0;
+}
+
 .section {
   padding: 46px 0;
 }

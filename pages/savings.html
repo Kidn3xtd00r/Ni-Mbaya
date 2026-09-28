@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NI MBAYA | Kenyan Accountability App</title>
+    <title>NI MBAYA | Savings</title>
     <meta
       name="description"
       content="NI MBAYA is the Kenyan app that remembers what you promised yourself. Build streaks, quit bad habits, save money, and beat Mbaya."
@@ -19,44 +19,48 @@
     <link rel="stylesheet" href="../CSS/header.css" />
   </head>
   <body>
-    <!-- THIS IS THE SAVINGS SECTION - HOW MUCH YOUR SAVING -->
-    <section class="section savings-section" id="calculator">
-      <div class="section-heading">
-        <span class="section-eyebrow">MONEY SAVED</span>
-        <h2>Make your savings feel real.</h2>
-      </div>
-      <div class="savings-shell">
-        <div class="savings-card">
-          <label for="dailyAmount">Your daily saving</label>
-          <div class="input-group">
-            <span>KSh</span>
-            <input id="dailyAmount" type="number" min="0" value="200" />
-          </div>
-          <p class="savings-tip">
-            Tip: cut one small habit and watch the savings stack.
-          </p>
+    <main>
+      <h1 class="page-title">Savings</h1>
+      <!-- THIS IS THE SAVINGS SECTION - HOW MUCH YOUR SAVING -->
+      <section class="section savings-section" id="calculator">
+        <div class="section-heading">
+          <span class="section-eyebrow">MONEY SAVED</span>
+          <h2>Make your savings feel real.</h2>
         </div>
-        <div class="savings-results">
-          <div class="savings-summary">
-            <div>
-              <span>30 Days</span>
-              <strong id="daysValue">30</strong>
+        <div class="savings-shell">
+          <div class="savings-card">
+            <label for="dailyAmount">Your daily saving</label>
+            <div class="input-group">
+              <span>KSh</span>
+              <input id="dailyAmount" type="number" min="0" value="200" />
             </div>
-            <div>
-              <span>Saved</span>
-              <strong id="savedValue">KSh 6,000</strong>
-            </div>
+            <p class="savings-tip">
+              Tip: cut one small habit and watch the savings stack.
+            </p>
           </div>
-          <div class="savings-items">
-            <span>✓ New Shoes</span>
-            <span>✓ Gym Membership</span>
-            <span>✓ Date Night</span>
-            <span>✓ Data Bundles</span>
-            <span>✓ Chicken Feed</span>
-            <span>✓ Weekend Trip</span>
+          <div class="savings-results">
+            <div class="savings-summary">
+              <div>
+                <span>30 Days</span>
+                <strong id="daysValue">30</strong>
+              </div>
+              <div>
+                <span>Saved</span>
+                <strong id="savedValue">KSh 6,000</strong>
+              </div>
+            </div>
+            <div class="savings-items">
+              <span>✓ New Shoes</span>
+              <span>✓ Gym Membership</span>
+              <span>✓ Date Night</span>
+              <span>✓ Data Bundles</span>
+              <span>✓ Chicken Feed</span>
+              <span>✓ Weekend Trip</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+  
+    </main>
   </body>
 </html>

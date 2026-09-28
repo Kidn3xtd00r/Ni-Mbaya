@@ -1,33 +1,44 @@
 <header class="topbar">
   <div class="topbar-inner">
-    <button class="profile-btn">👤</button>
+    <!-- aria-label gives the button a name for screen readers.
+         Without it, "👤" is read out as "bust in silhouette". -->
+    <button class="profile-btn" aria-label="Open account menu">👤</button>
 
     <div class="brand">
       <img src="Images/Malebo/Malebo  logo black.jpg" alt="Malebo logo" class="brand-logo" />
     </div>
 
-    <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+    <button
+      class="nav-toggle"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="main-nav"
+    >
       ☰
     </button>
   </div>
 </header>
 
-<!-- ✅ MOVE OUTSIDE HEADER -->
-
-<div class="nav-links" id="main-nav">
-  <a href="#">Dashboard</a>
-  <a href="#">Workouts</a>
-  <a href="#">Farm</a>
-  <a href="#">NI MBAYA</a>
-  <a href="#" class="nav-cta">⚡ Quick Action</a>
-</div>
+<!-- Outside <header> so it can drop down over the page.
+     <nav> (not <div>) because these are the site's main links.
+     ⚠️ These paths are written from the site's main folder, so they
+     work on index.html but not on pages inside pages/ (Lesson 11). -->
+<nav class="nav-links" id="main-nav">
+  <a href="index.html">Home</a>
+  <a href="pages/streak.html">Streak</a>
+  <a href="pages/savings.html">Savings</a>
+  <a href="pages/community.html">Community</a>
+  <a href="pages/settings.html">Settings</a>
+  <a href="pages/panic.html" class="nav-cta">⚡ Panic Button</a>
+</nav>
 
 <div class="account-panel" id="accountPanel">
   <div class="account-box">
-    <h3>Account</h3>
+    <!-- h2, not h3: it isn't a sub-heading of any h2 on the page. -->
+    <h2>Account</h2>
     <a href="#">Profile</a>
-    <a href="#">Activity</a>
-    <a href="#">Settings</a>
+    <a href="pages/checkIn.html">Daily Check-In</a>
+    <a href="pages/settings.html">Settings</a>
     <button class="logout">Logout</button>
   </div>
 </div>
