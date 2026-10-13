@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Journal · Bead by Bead</title>
+    <meta name="description" content="A private journal for the days that are hard and the days that go well." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- =====================================================================
+       THE JOURNAL
+       I Am Sober and Nomo both have one, because writing things down helps
+       you spot patterns ("I always struggle on Fridays") and see how far
+       you've come. It's PRIVATE: your accountability partner never sees it.
+
+       Each entry is an <article> (a piece that makes sense on its own),
+       with a <time> for the date and a mood colour from Malebo's moods.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="community.html">Group</a>
+          <a href="profile.html" aria-current="page">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">Journal · private, only you see this</span>
+          <h1>Write it <em>down.</em></h1>
+          <p class="lede">Hard days and good days. Future you will want to read this.</p>
+        </div>
+      </section>
+
+      <div class="wrap chapter split">
+        <!-- NEW ENTRY -->
+        <section aria-labelledby="new">
+          <h2 id="new" class="panel-title">Today's entry</h2>
+          <form class="card" action="journal.html" method="get">
+            <!-- A prompt helps when you don't know what to write -->
+            <p class="hint">Prompt: What helped you today, even a little?</p>
+            <div class="field">
+              <label for="entry">Your entry</label>
+              <!-- no name="" so it never lands in the address bar -->
+              <textarea id="entry" rows="6" placeholder="Today was…"></textarea>
+            </div>
+            <fieldset>
+              <legend class="legend-small">How did it feel?</legend>
+              <div class="chips">
+                <label class="chip mood--calm"><input type="radio" name="feel" value="calm" /> Calm</label>
+                <label class="chip mood--hype"><input type="radio" name="feel" value="good" /> Good</label>
+                <label class="chip mood--pressure"><input type="radio" name="feel" value="hard" /> Hard</label>
+                <label class="chip mood--chaos"><input type="radio" name="feel" value="rough" /> Rough</label>
+              </div>
+            </fieldset>
+            <button class="btn btn-red" type="submit">Save entry</button>
+          </form>
+        </section>
+
+        <!-- PAST ENTRIES, newest first -->
+        <section aria-labelledby="past">
+          <h2 id="past" class="panel-title">Past entries</h2>
+          <ol class="entries">
+            <li>
+              <article class="entry mood--calm">
+                <header class="entry-top"><time datetime="2026-10-06">Tue, Oct 6 · Day 22</time><span>Calm</span></header>
+                <p>Walked home instead of passing the betting shop. Small thing, but it worked. Moved KSh 150 to the Mombasa goal.</p>
+              </article>
+            </li>
+            <li>
+              <article class="entry mood--pressure">
+                <header class="entry-top"><time datetime="2026-10-03">Sat, Oct 3 · Day 19</time><span>Hard</span></header>
+                <p>Derby day. Everyone in the group chat was placing bets. Hit SOS twice. Texted Brian. Watched the match anyway, no bet. Proud.</p>
+              </article>
+            </li>
+            <li>
+              <article class="entry mood--hype">
+                <header class="entry-top"><time datetime="2026-09-29">Tue, Sept 29 · Day 15</time><span>Good</span></header>
+                <p>Payday and the money is still there. First time in months. Two weeks strong.</p>
+              </article>
+            </li>
+          </ol>
+          <p class="stat-note"><span class="example-tag">Example entries</span></p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

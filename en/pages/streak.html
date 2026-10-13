@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress · Bead by Bead</title>
+    <meta name="description" content="Earn a bead for every clean day and build a Kenyan bracelet, from your first bead to the Hero's Collar." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- =====================================================================
+       SHANGA: THE GAME
+       Shanga = beads. This page is the heart of Bead by Bead:
+         - every clean day earns ONE bead
+         - the bead's COLOUR tells the story of that day
+         - 30 beads make a Bracelet (bracelet), and the jewellery keeps
+           growing: double bracelet, then necklace (necklace), then
+           Hero's Collar (a full beaded collar)
+         - a slip resets your streak, but beads are NEVER taken away
+       It replaces three older ideas (the Safari route, Moto the flame,
+       and the ranks list) with one that's simpler and more Kenyan.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Today</a>
+          <a href="streak.html" aria-current="page">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="community.html">Group</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap streak-hero">
+          <h1 class="streak-count"><small>Your streak</small>Day 23</h1>
+          <div>
+            <dl class="streak-meta">
+              <div><dt>First bracelet</dt><dd>28 of 30 beads</dd></div>
+              <div><dt>Next piece</dt><dd>Full bracelet · 2 beads</dd></div>
+              <div><dt>Shield charms</dt><dd>3 · next one in 4 days</dd></div>
+              <div><dt>Streak Saver</dt><dd>1 equipped</dd></div>
+              <div><dt>Consistency</dt><dd>97% · 28 of 29 days</dd></div>
+            </dl>
+            <p class="stat-note"><span class="example-tag">Example numbers</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           AT A GLANCE (Quitzilla-style statistics)
+           The numbers every quit app shows on its progress screen.
+           Same .minis cards as Today, reused. Each habit has its own
+           detail page with more (habit.html).
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="glance">
+        <div class="wrap">
+          <div class="panel-title">
+            <h2 id="glance">At a glance</h2>
+            <a href="anasa.html">Each habit →</a>
+          </div>
+          <div class="minis stat-grid">
+            <div class="mini"><img src="../../Images/icons/flame.svg" alt="" /><strong>23 days</strong><span>Current streak</span></div>
+            <div class="mini"><img src="../../Images/icons/trophy.svg" alt="" /><strong>23 days</strong><span>Longest streak</span></div>
+            <div class="mini"><img src="../../Images/icons/check.svg" alt="" /><strong>28</strong><span>Clean days in total</span></div>
+            <div class="mini"><img src="../../Images/icons/mbao.svg" alt="" /><strong>KSh 4,600</strong><span>Money kept</span></div>
+            <div class="mini"><img src="../../Images/icons/bima.svg" alt="" /><strong>9</strong><span>Cravings beaten with SOS</span></div>
+            <div class="mini"><img src="../../Images/icons/xp.svg" alt="" /><strong>14 hrs</strong><span>Sleep won back</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           01: YOUR BANGILI
+           The ring IS your last 30 days: one bead position per day.
+           Bead 1 (top) is 30 days ago, and the dashed one is today,
+           waiting for your check-in. The gap is the day you slipped.
+           How the ring is drawn: "THE RING" in styles.css.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap split">
+          <div>
+            <div class="chapter-head">
+              <span class="chapter-no" aria-hidden="true">01</span>
+              <h2 id="ch1">Your <em>bracelet.</em></h2>
+              <p>
+                Every bead is a day you won. The gap is the day you slipped
+                ("the very last one", it wasn't). Notice: everything around the
+                gap is still there.
+              </p>
+            </div>
+            <p class="shanga-shout">Just two more beads, then the whole bracelet is done!</p>
+          </div>
+
+          <div class="card shanga-card">
+            <div class="shanga-ring-wrap">
+              <ol class="shanga shanga--ring" aria-label="Your last 30 days as beads: 28 earned, 1 missed, today waiting">
+                <li class="bead bead--black"><span class="sr-only">Day 1: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 2: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 3: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 4: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 5: clean, green bead</span></li>
+                <li class="bead bead--gap"><span class="sr-only">Day 6: missed</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 7: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 8: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 9: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 10: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 11: clean, green bead</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 12: clean, black bead</span></li>
+                <li class="bead bead--ngao"><span class="sr-only">Day 13: shield charm, 7 in a row</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 14: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 15: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 16: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 17: clean, green bead</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 18: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 19: clean, white bead</span></li>
+                <li class="bead bead--ngao"><span class="sr-only">Day 20: shield charm, 7 in a row</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 21: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 22: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 23: clean, green bead</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 24: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 25: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 26: clean, red bead</span></li>
+                <li class="bead bead--ngao"><span class="sr-only">Day 27: shield charm, 7 in a row</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 28: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 29: clean, green bead</span></li>
+                <li class="bead bead--next"><span class="sr-only">Day 30: today, not yet</span></li>
+              </ol>
+              <!-- The count, sitting in the middle of the ring -->
+              <p class="shanga-count" aria-hidden="true"><strong>28</strong>of 30</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           02: HOW TO EARN BEADS (the rules of the game)
+           A <dl> again: each <dt> is a bead, each <dd> says how to get it.
+           The little bead before each name is the same .bead element,
+           just smaller (.bead--swatch).
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">How to earn <em>beads.</em></h2>
+            <p>Real Kenyan bracelet beads, one a day. You can't buy them, you can't rush them. You can only earn them.</p>
+          </div>
+
+          <!-- The beads are ONLY the beads of a real Kenyan bracelet:
+               the flag's colours, in the flag's order, plus the shield.
+               So by Day 30 you've literally built a Kenyan bracelet. -->
+          <dl class="glossary bead-rules">
+            <div>
+              <dt>
+                <span class="bead bead--swatch bead--black" aria-hidden="true"></span><span class="bead bead--swatch bead--white" aria-hidden="true"></span><span class="bead bead--swatch bead--red" aria-hidden="true"></span><span class="bead bead--swatch bead--white" aria-hidden="true"></span><span class="bead bead--swatch bead--green" aria-hidden="true"></span>
+              </dt>
+              <dd><strong>One bead for every clean check-in</strong>, always in the flag's order: black, white, red, white, green, and round again. Exactly how a Kenyan bracelet is strung.</dd>
+            </div>
+            <div>
+              <dt><span class="bead bead--swatch bead--ngao" aria-hidden="true"></span> The shield</dt>
+              <dd><strong>Every 7th day in a row</strong>, the bead is the Maasai shield from the heart of the flag. The centrepiece of every real Kenyan bracelet.</dd>
+            </div>
+            <div>
+              <dt><span class="bead bead--swatch bead--gap" aria-hidden="true"></span> The gap</dt>
+              <dd><strong>A missed day.</strong> No bead, and the streak resets. But no bead is ever taken away. Messed up? Fine. We keep going.</dd>
+            </div>
+            <div>
+              <dt><img class="icon" src="../../Images/icons/bima.svg" alt="" /> Streak Saver</dt>
+              <dd>Life happened (a funeral, a trip, no network)? A Streak Saver covers the day and you still get its bead.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           03: THE JOURNEY (Duolingo-style path)
+           Same zig-zag path as before, but the stops are now the pieces
+           of jewellery you build, from one bead to a full collar.
+           stop--done = earned (green), stop--here = you (red),
+           stop--goal = the final piece (gold). No class = still ahead.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch3">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="ch3">From one bead to <em>the Hero's Collar.</em></h2>
+            <p>
+              The journey is the jewellery. A bracelet at Day 30, a necklace at
+              Day 100, and at Day 365 the full beaded collar: Legend of the Republic.
+            </p>
+          </div>
+
+          <ol class="route">
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">First bead</span><small>Day 1 · your first bead</small>
+            </li>
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">First shield</span><small>Day 7 · Weekend Survivor</small>
+            </li>
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">Two weeks strong</span><small>Day 14 · two shields</small>
+            </li>
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">Three weeks</span><small>Day 21 · third shield</small>
+            </li>
+            <li class="stop stop--here" aria-current="step">
+              <span class="stop-dot">23</span>
+              <span class="stop-name">Stringing beads</span><small>2 beads to a full bracelet</small>
+            </li>
+            <li class="stop">
+              <span class="stop-dot">30</span>
+              <span class="stop-name">Bracelet</span><small>Day 30 · Certified Discipline</small>
+            </li>
+            <li class="stop">
+              <span class="stop-dot">60</span>
+              <span class="stop-name">Double bracelet</span><small>Day 60 · the double wrap</small>
+            </li>
+            <li class="stop">
+              <span class="stop-dot">100</span>
+              <span class="stop-name">Necklace</span><small>Day 100 · necklace · Village Elder</small>
+            </li>
+            <li class="stop stop--goal">
+              <span class="stop-dot"><img src="../../Images/icons/trophy.svg" alt="" /></span>
+              <span class="stop-name">Hero's Collar</span><small>Day 365 · Legend of the Republic</small>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           04: THE SANDUKU (jewellery box)
+           Every piece you've built, and the ones still locked.
+           Each piece is drawn with CSS (see "JEWELLERY PIECES" in the CSS):
+           a dotted circle is a bracelet, a dotted U is a necklace, and the
+           collar is a ring of colour made with conic-gradient.
+           is-locked = greyed out until you earn it.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch4">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">04</span>
+            <h2 id="ch4">The <em>jewellery box.</em></h2>
+            <p>Your jewellery box. Every piece in here was earned one day at a time.</p>
+          </div>
+          <ol class="pieces">
+            <li class="piece is-current">
+              <span class="piece-art piece-art--bangili" aria-hidden="true"></span>
+              <strong>Bracelet</strong><span>30 beads · 28 / 30</span>
+            </li>
+            <li class="piece is-locked">
+              <span class="piece-art piece-art--double" aria-hidden="true"></span>
+              <strong>Double bracelet</strong><span>60 beads · locked</span>
+            </li>
+            <li class="piece is-locked">
+              <span class="piece-art piece-art--mkufu" aria-hidden="true"></span>
+              <strong>Necklace</strong><span>100 beads · locked</span>
+            </li>
+            <li class="piece is-locked">
+              <span class="piece-art piece-art--shujaa" aria-hidden="true"></span>
+              <strong>Hero's Collar</strong><span>365 beads · locked</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="wrap cta-band" aria-labelledby="cta">
+        <div>
+          <h2 id="cta">Today's bead is <em>one check-in</em> away.</h2>
+          <a class="btn btn-red btn-big" href="checkIn.html">Check in · earn a bead</a>
+        </div>
+        <img src="../../Images/illustrated/malebo-hype.svg" alt="" width="200" height="200" loading="lazy" />
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

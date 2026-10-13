@@ -1,0 +1,412 @@
+<!doctype html>
+<!-- =====================================================================
+     ENGLISH EDITION: "Bead by Bead"
+     The same app as Ni Mbaya! (one folder up), with every word in plain
+     English. Same Kenyan world (the flag bracelet, KSh, Fuliza, matatu-style
+     leagues, the 1192 helpline), just no Swahili or Sheng.
+     It shares the SAME stylesheet and images, which is why paths start
+     with ../ (step out of en/ first).
+     ===================================================================== -->
+<!-- Always the very first line. It means "use modern HTML rules". -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Without this line, phones pretend to be a laptop and shrink the page. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Bead by Bead · The game that helps you quit</title>
+    <meta
+      name="description"
+      content="Bead by Bead turns quitting betting, alcohol and Fuliza debt into a game. Streaks, XP, leagues and a savings group, with Malebo keeping you in check. Every shilling saved gets a real job."
+    />
+
+    <!-- FONTS: three families in ONE request (the & joins them).
+         Anton = loud headlines, Permanent Marker = Malebo's speech bubbles,
+         Manrope = everything you read. styles.css explains why. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../CSS/pop.css?v=5" />
+    <link rel="icon" href="../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- class="page-landing" lets CSS treat this one page differently
+       (no app tab bar here, so no space reserved for it). -->
+  <body class="page-landing">
+    <!-- Invisible until you press Tab. Lets keyboard users jump past the
+         header straight to the content. The href points at id="main". -->
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- =============================================================
+         THE LANDING HEADER (only on this page)
+         Every app page has the "app" header: stat chips, five tabs, Panic.
+         But this page is for people who DON'T have the app yet. Showing
+         them "23 · 460 coins" (someone else's stats!) is confusing.
+         So the landing page gets its own, simpler header:
+           - the wordmark
+           - links that jump down THIS page (href="#ch2" = go to id="ch2")
+           - ONE clear action: Start my streak
+         On phones the jump links hide, so only the wordmark + button show.
+         ============================================================= -->
+    <header class="site-header landing-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="index.html">Bead <span>by Bead</span></a>
+        <nav class="landing-nav" aria-label="On this page">
+          <a href="#ch1">Why</a>
+          <a href="#ch2">The game</a>
+          <a href="#ch3">Malebo</a>
+          <a href="pages/how-it-works.html">How it works</a>
+        </nav>
+        <a class="btn btn-red btn-panic landing-cta" href="pages/start.html">Start my streak</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- =============================================================
+           HERO
+           ============================================================= -->
+      <section class="wrap hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <!-- English edition: no brush-lettering logo image. A small line of
+               text does the introducing, and the headline gets all the attention. -->
+          <p class="eyebrow">Meet Malebo · your accountability buddy</p>
+
+          <!-- <br> = line break. "Wueh…" alone on line one, every time.
+               "Wueh", not "Bro": the app is for everyone (men, women,
+               anyone), so the first word on the page shouldn't decide who
+               you are. Users pick what Malebo calls them in Settings. -->
+          <h1 id="hero-title">Quit it.<br /><em>Bead by bead.</em></h1>
+
+          <!-- ONE line, not four. A hero has a few seconds to land before
+               people scroll. Say the one thing that matters; the rest of the
+               page explains the details. -->
+          <p class="hero-lead">
+            <strong>The game that helps you quit.</strong>
+            No pressure. No judgement. Just a boost.
+          </p>
+
+          <!-- ONE main action across the whole page: Start my streak.
+               "How it works" is the quieter second option. -->
+          <div class="btn-row">
+            <a class="btn btn-red btn-big" href="pages/start.html">Start my streak</a>
+            <a class="btn btn-ghost btn-big" href="pages/how-it-works.html">How it works</a>
+          </div>
+
+          <!-- Small reassurances right under the button: they answer the
+               worries people have BEFORE they tap ("does it cost money?"). -->
+          <ul class="trust">
+            <li>Free</li>
+            <li>18+</li>
+            <li>Zero betting ads</li>
+            <li><a href="pages/today.html">Peek inside the app →</a></li>
+          </ul>
+        </div>
+
+        <figure class="hero-figure">
+          <img
+            src="../Images/illustrated/malebo.svg"
+            alt="Illustrated Malebo: short twists, sunglasses, a black hoodie, a red and green shuka and a flag-colour bead necklace, framed by a ring of Kenyan beads."Ni Mbaya!", sunglasses and a red and green shuka, smiling and pointing at you."
+            width="216"
+            height="208"
+          />
+          <ul class="hero-bubbles">
+            <li><p class="bubble bubble--right">Where have you been? Let's catch up!</p></li>
+            <li><p class="bubble bubble--green">Streak dropped? We never said go <em>soft</em>!</p></li>
+            <li><p class="bubble bubble--red">"The very last one"? That's a lie.</p></li>
+          </ul>
+        </figure>
+      </section>
+
+      <!-- START IN 30 SECONDS
+           Replaces the old "Day 23 · KSh 4,600" strip. Those were someone
+           else's example numbers, which mean nothing to a visitor. What a
+           visitor actually wants to know is: "what do I DO?". Three steps.
+           It reuses the .stat-strip look; the numbers 1-2-3 come from a CSS
+           counter, just like the steps lists. -->
+      <div class="wrap">
+        <ol class="stat-strip start-steps" aria-label="Start in 30 seconds">
+          <li class="stat"><strong>Pick your habit</strong><span>Betting, alcohol, Fuliza debt, 3am scrolling…</span></li>
+          <li class="stat"><strong>Give it a goal</strong><span>Fees, rent, your savings group, sending money home</span></li>
+          <li class="stat"><strong>Check in daily</strong><span>30 seconds. Malebo does the rest.</span></li>
+        </ol>
+      </div>
+
+      <!-- =============================================================
+           CHAPTER 01: THE PURPOSE
+           The Kenyan "why". These are the anasa (indulgences) the app is built against.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap">
+          <div class="chapter-head">
+            <!-- aria-hidden: the big "01" is decoration. -->
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="ch1">They gamified your habits. <em>We gamified your comeback.</em></h2>
+            <p>
+              The apps that drain Kenyan pockets are built like games: streaks,
+              rewards, notifications. Bead by Bead uses the same tricks to pull you
+              the other way.
+            </p>
+          </div>
+
+          <ul class="anasa-list">
+            <li><strong>Betting</strong><span><em>"It's a sure bet."</em> It never is. The house always eats first.</span></li>
+            <li><strong>Fuliza &amp; loan apps</strong><span><em>"I'll pay it back Friday."</em> Borrowed today, owed forever.</span></li>
+            <li><strong>Alcohol</strong><span><em>"The very last one."</em> You said that last week too.</span></li>
+            <li><strong>3am scrolling</strong><span><em>"Just one more video."</em> Then the alarm goes off. Touch grass, friend.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- The striped band from Malebo's shuka. Pure decoration. -->
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           CHAPTER 02: THE GAME
+           Each card ends with a short "what's in it for YOU" tag.
+           (Which apps inspired which feature is credited in the README.
+           On a sales page, naming other apps three times makes yours look
+           like a copy.)
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">It's a game. <em>You're the main character.</em></h2>
+          </div>
+
+          <!-- SIX CARDS, SIX DIFFERENT IDEAS.
+               Each card must say something no other card says. (There used
+               to be two Shanga cards saying the same thing twice; now Shanga
+               gets ONE card, first, because it's the heart of the game.) -->
+          <ul class="features">
+            <li class="feature">
+              <!-- A mini Kenyan bracelet, drawn with CSS: flag-order beads
+                   with the Ngao shield in the middle. It's a <div> of
+                   <span>s, not a list, so copying the text doesn't paste
+                   empty "1. 2. 3." numbers. -->
+              <div class="shanga shanga--mini" aria-hidden="true">
+                <span class="bead bead--black"></span><span class="bead bead--white"></span><span class="bead bead--red"></span><span class="bead bead--ngao"></span><span class="bead bead--red"></span><span class="bead bead--white"></span><span class="bead bead--green"></span>
+              </div>
+              <h3>Your bracelet</h3>
+              <p>Build a real Kenyan bracelet, one bead per clean day, with a shield charm every 7th. 30 beads make a bracelet, 100 a necklace, 365 the Hero's Collar.</p>
+              <span class="feature-tag">Growth nobody can take back</span>
+            </li>
+            <li class="feature">
+              <img src="../Images/icons/bima.svg" alt="" />
+              <h3>Streak &amp; Streak Saver</h3>
+              <p>Check in daily. Miss a day for life reasons? A Streak Saver covers you. Insurance, but for discipline.</p>
+              <span class="feature-tag">Never lose a streak to a funeral</span>
+            </li>
+            <li class="feature">
+              <img src="../Images/icons/xp.svg" alt="" />
+              <h3>Quests &amp; Coins</h3>
+              <p>Four daily missions, like "turn down one 'buy me a drink'". Earn XP and coins for the shop.</p>
+              <span class="feature-tag">Small wins, every single day</span>
+            </li>
+            <li class="feature">
+              <img src="../Images/icons/trophy.svg" alt="" />
+              <h3>Leagues</h3>
+              <p>Weekly leagues with Kenyans from Kisumu to Kilifi. Climb from Handcart to Minibus to Express Train.</p>
+              <span class="feature-tag">Compete, without betting a shilling</span>
+            </li>
+            <li class="feature">
+              <img src="../Images/icons/chama.svg" alt="" />
+              <h3>Savings group</h3>
+              <p>Your crew of five. Check in together, save into one pot for a real goal, and get a heads-up when someone is struggling.</p>
+              <span class="feature-tag">Nobody quits alone</span>
+            </li>
+            <li class="feature">
+              <img src="../Images/icons/mbao.svg" alt="" />
+              <h3>Your habits</h3>
+              <p>A clean-time clock for every habit, plus the money it's no longer costing you.</p>
+              <span class="feature-tag">Proof, in shillings</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           CHAPTER 03: MALEBO'S MOODS
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch3">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="ch3">Malebo's <em>moods.</em></h2>
+            <p>He's not one guy, he's four. Which one shows up depends on your streak.</p>
+          </div>
+
+          <ul class="moods">
+            <li class="mood mood--calm">
+              <img src="../Images/illustrated/malebo-calm.svg" alt="Illustrated Malebo in round glasses, smiling calmly." width="200" height="200" loading="lazy" />
+              <div class="mood-body">
+                <h3>Calm Coach</h3>
+                <p class="mood-when">Early days. Building the foundation.</p>
+                <blockquote>"Slowly, slowly. Discipline is a journey."</blockquote>
+              </div>
+            </li>
+            <li class="mood mood--hype">
+              <img src="../Images/illustrated/malebo-hype.svg" alt="Illustrated Malebo in sunglasses with a huge grin." width="200" height="200" loading="lazy" />
+              <div class="mood-body">
+                <h3>Motivator</h3>
+                <p class="mood-when">You're on a roll.</p>
+                <blockquote>"Let's gooo! This is the energy!"</blockquote>
+              </div>
+            </li>
+            <li class="mood mood--pressure">
+              <img src="../Images/illustrated/malebo-pressure.svg" alt="Illustrated Malebo raising one eyebrow, unimpressed." width="200" height="200" loading="lazy" />
+              <div class="mood-body">
+                <h3>Pressure Friend</h3>
+                <p class="mood-when">We see you slacking.</p>
+                <blockquote>"Come on, you! Get it together!"</blockquote>
+              </div>
+            </li>
+            <li class="mood mood--chaos">
+              <img src="../Images/illustrated/malebo-chaos.svg" alt="Illustrated Malebo with narrowed eyes and a sly grin." width="200" height="200" loading="lazy" />
+              <div class="mood-body">
+                <h3>Chaos Temptation</h3>
+                <p class="mood-when">You're about to break it.</p>
+                <blockquote>"Break it… if you think you're brave."</blockquote>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           CHAPTER 04: MALEBO'S NAGS
+           Duolingo's owl is famous for guilt-trip notifications. Malebo
+           does it in Sheng, with Kenyan internet humour.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch4">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">04</span>
+            <h2 id="ch4">He will <em>text you.</em></h2>
+            <p>The owl has nothing on Malebo. You set the volume: Chill, Normal or Unhinged. Quiet hours included, because sleep is part of the plan.</p>
+          </div>
+
+          <!-- A list of fake phone notifications. <time> holds the time. -->
+          <ul class="nags" aria-label="Example notifications from Malebo">
+            <li class="nag">
+              <img src="../Images/illustrated/malebo-hype.svg" alt="" />
+              <div>
+                <p class="nag-top"><strong>Bead by Bead</strong><time>8:58 pm</time></p>
+                <p>I've called you three times and all you say is "what?" Check in. Day 23 is on the line.</p>
+              </div>
+            </li>
+            <li class="nag">
+              <img src="../Images/illustrated/malebo-hype.svg" alt="" />
+              <div>
+                <p class="nag-top"><strong>Bead by Bead</strong><time>Fri 5:00 pm</time></p>
+                <p>It's Friday. We know your plans. Our plan is the streak.</p>
+              </div>
+            </li>
+            <li class="nag">
+              <img src="../Images/illustrated/malebo-hype.svg" alt="" />
+              <div>
+                <p class="nag-top"><strong>Bead by Bead</strong><time>Sun 11:40 pm</time></p>
+                <p>The people have spoken: Joe is moving up to the Party Bus League. Don't blow it now.</p>
+              </div>
+            </li>
+            <li class="nag">
+              <img src="../Images/illustrated/malebo-hype.svg" alt="" />
+              <div>
+                <p class="nag-top"><strong>Bead by Bead</strong><time>30 Dec</time></p>
+                <p>Remember, January has 90 days. Put that "just one" money towards your goal.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           CHAPTER 05: EVERY SHILLING GETS A JOB
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch5">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">05</span>
+            <h2 id="ch5">Every shilling <em>gets a job.</em></h2>
+            <p>
+              Money kept from your habits doesn't just sit there. You give it a goal,
+              and your savings group helps you get there.
+            </p>
+          </div>
+          <ul class="goals">
+            <li class="goal"><strong>School fees</strong><span>Yours, a sibling's, a child's.</span></li>
+            <li class="goal"><strong>Rent, on time</strong><span>No more dodging the caretaker.</span></li>
+            <li class="goal"><strong>Your savings group</strong><span>A shared pot that builds something.</span></li>
+            <li class="goal"><strong>Send home</strong><span>Mum will notice. Trust.</span></li>
+            <li class="goal"><strong>Side hustle</strong><span>Chickens, salon chairs, a motorbike deposit.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- The motto. <figure> + <blockquote> + <figcaption> = a quote + who said it. -->
+      <figure class="wrap quote-band">
+        <blockquote>Discipline isn't punishment. <em>It's freedom.</em></blockquote>
+        <figcaption>— Malebo</figcaption>
+      </figure>
+
+      <section class="wrap cta-band" aria-labelledby="cta">
+        <div>
+          <h2 id="cta">Become the person you keep <em>talking about.</em></h2>
+          <p class="lede">Your discipline era starts with one check-in. One day. One streak at a time.</p>
+          <a class="btn btn-red btn-big" href="pages/start.html">Start my streak</a>
+        </div>
+        <!-- alt="" on purpose: decoration, Malebo was already described above. -->
+        <img src="../Images/illustrated/malebo-hype.svg" alt="" width="200" height="200" loading="lazy" />
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="pages/start.html">Make a quit plan</a></li>
+            <li><a href="pages/today.html">Today</a></li>
+            <li><a href="pages/checkIn.html">Evening check-in</a></li>
+            <li><a href="pages/streak.html">Progress</a></li>
+            <li><a href="pages/panic.html">SOS</a></li>
+            <li><a href="pages/community.html">Group &amp; partner</a></li>
+            <li><a href="pages/league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="pages/profile.html">Me</a></li>
+            <li><a href="pages/anasa.html">Your habits</a></li>
+            <li><a href="pages/journal.html">Journal</a></li>
+            <li><a href="pages/savings.html">Savings goals</a></li>
+            <li><a href="pages/shop.html">Shop</a></li>
+            <li><a href="pages/settings.html">Settings</a></li>
+            <li><a href="pages/how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

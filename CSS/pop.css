@@ -1,0 +1,349 @@
+/* =====================================================================
+   pop.css: the "eye-catching" layer for the ENGLISH edition (en/)
+
+   Loaded AFTER styles.css on every English page, so anything in here
+   wins (same specificity + loaded later = this one). The Kenyan edition
+   doesn't load this file, so it keeps its original poster look.
+
+   THE IDEA: make it feel like a game you WANT to tap.
+   Games like Duolingo and Finch look friendly and touchable because of:
+     1. Chunky "3D" buttons and cards: a solid shadow straight underneath
+        (box-shadow: 0 6px 0 ...) so they look like physical buttons, and
+        they "press down" when you tap them.
+     2. Colour blocks: whole cards in bright colours, not grey boxes.
+     3. Movement: a floating mascot, glowing shapes, striped progress bars.
+     4. Round, soft corners (big border-radius) instead of sharp ones.
+   ===================================================================== */
+
+:root {
+  --radius: 20px;
+  --coal: #16161d;            /* cards: a touch of blue so they're not flat grey */
+  --ash: #2a2a36;
+  --smoke: #3a3a4a;
+  --night-2: #0b0b10;
+  --indigo: #3b2a8f;          /* NEW accent: "tonight", the evening check-in */
+  --shadow: #000;             /* the solid shadow under chunky things */
+}
+
+/* A faint dot pattern behind everything, like beads scattered on a cloth.
+   radial-gradient draws ONE dot; background-size repeats it every 24px. */
+body {
+  background-color: var(--night-2);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 1.3px);
+  background-size: 24px 24px;
+}
+
+
+/* ---------------------------------------------------------------------
+   1. CHUNKY BUTTONS
+   The trick: box-shadow with NO blur, pushed 6px down = a solid "base".
+   On :active the button moves down 4px and the base shrinks, so it
+   looks like it's being physically pressed.
+   --------------------------------------------------------------------- */
+.btn {
+  border-radius: 16px;
+  box-shadow: 0 6px 0 var(--btn-base, #000);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--btn-base, #000); }
+.btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--btn-base, #000); }
+.btn-red { --btn-base: #8f1016; }
+.btn-ghost {
+  --btn-base: #9b968d;
+  background: var(--chalk);
+  color: #111;
+  border-color: var(--chalk);
+}
+.btn-ghost:hover { background: #fff; color: #111; }
+
+
+/* ---------------------------------------------------------------------
+   2. CHUNKY CARDS
+   Every card in the app gets round corners, a slightly lighter border
+   and the same solid shadow underneath. Hovering lifts it.
+   --------------------------------------------------------------------- */
+.card, .feature, .mini, .quest, .hub-link, .goal, .item, .badge, .entry,
+.piece, .excuse, .anasa-list li, .testimonial, .stage, .ten li, .habit,
+.plan-step, .tick, .pick, .counter, .mood, .event, .pledge, .reply {
+  border-radius: var(--radius);
+  border-width: 2px;
+  box-shadow: 0 6px 0 var(--shadow);
+}
+.feature, .mini, .hub-link, .goal, .item, .badge, .piece, .counter, .mood, .habit {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.feature:hover, .mini:hover, .hub-link:hover, .goal:hover, .item:hover,
+.badge:hover, .counter:hover, .mood:hover, .habit:hover {
+  transform: translateY(-4px) rotate(-0.4deg);
+  box-shadow: 0 10px 0 var(--shadow);
+}
+
+
+/* ---------------------------------------------------------------------
+   3. HEADINGS THAT POP
+   A solid offset shadow on the big headlines = a printed-sticker look.
+   The <em> words get a highlighter swipe behind them.
+   --------------------------------------------------------------------- */
+/* A crisp black offset shadow = a printed-sticker look. (We tried a
+   highlighter behind the red words too: it looked muddy, so it's gone.) */
+h1 { text-shadow: 5px 5px 0 #000; }
+h2 { text-shadow: 3px 3px 0 #000; }
+/* the big outline numbers (01, 02...) now in colour, cycling */
+.chapter-no { -webkit-text-stroke: 2px var(--red); }
+.chapter:nth-of-type(2n) .chapter-no { -webkit-text-stroke-color: var(--hype); }
+.chapter:nth-of-type(3n) .chapter-no { -webkit-text-stroke-color: var(--green); }
+
+/* thicker shuka bands */
+.shuka { height: 16px; }
+
+
+/* ---------------------------------------------------------------------
+   4. SPEECH BUBBLES: filled, like stickers
+   --------------------------------------------------------------------- */
+.bubble { background: var(--chalk); color: #111; border-color: #111; box-shadow: 4px 5px 0 #000; }
+.bubble::after { background: var(--chalk); border-color: #111; }
+.bubble--green { background: #6fe08a; }
+.bubble--green::after { background: #6fe08a; }
+.bubble--red { background: #ff7b80; }
+.bubble--red::after { background: #ff7b80; }
+.bubble em { color: #8f1016; }
+
+
+/* ---------------------------------------------------------------------
+   5. PROGRESS BARS: thick, round, with moving stripes
+   The stripes are a repeating-linear-gradient; the animation slides it
+   sideways forever, so the bar looks "alive".
+   --------------------------------------------------------------------- */
+progress { height: 1.1rem; background: rgba(255, 255, 255, 0.08); }
+progress::-webkit-progress-bar { background: rgba(255, 255, 255, 0.08); }
+progress::-webkit-progress-value {
+  background-color: var(--bar, var(--green));
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.22) 0 8px, transparent 8px 16px);
+  background-size: 22px 22px;
+  animation: stripes 1s linear infinite;
+}
+progress::-moz-progress-bar {
+  background-color: var(--bar, var(--green));
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.22) 0 8px, transparent 8px 16px);
+}
+@keyframes stripes { to { background-position: 22px 0; } }
+
+
+/* ---------------------------------------------------------------------
+   6. LANDING HERO: a glowing sun behind a floating Malebo
+   --------------------------------------------------------------------- */
+.hero-figure { isolation: isolate; }  /* keeps the glow BEHIND Malebo only */
+.hero-figure::before {
+  content: "";
+  position: absolute;
+  inset: 4% 8%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, #f4b400 0 30%, #f26b1d 52%, rgba(227, 38, 45, 0.6) 66%, transparent 72%);
+  filter: blur(6px);
+  opacity: 0.85;
+}
+.hero-figure > img { animation: float 5s ease-in-out infinite; }
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(1deg); }
+}
+.page-landing .hero h1 em { color: var(--red); }
+.trust li { padding: 0.25rem 0.7rem; border-radius: 999px; background: rgba(255, 255, 255, 0.06); }
+
+/* the 3 "start" steps: each number in its own coloured circle */
+.start-steps { border: 0; gap: var(--s2); }
+.start-steps .stat {
+  border-radius: var(--radius);
+  background: var(--coal);
+  border: 2px solid var(--ash);
+  box-shadow: 0 6px 0 #000;
+}
+.start-steps .stat + .stat { border-left: 2px solid var(--ash); border-top: 2px solid var(--ash); }
+.start-steps .stat::before {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 1.4rem;
+}
+.start-steps .stat:nth-child(2)::before { background: var(--hype); color: #111; }
+.start-steps .stat:nth-child(3)::before { background: var(--green); }
+
+/* the habit cards on the landing page: each one a different colour edge */
+.anasa-list li { background: var(--coal); }
+.anasa-list li:nth-child(2) { border-top-color: var(--hype); }
+.anasa-list li:nth-child(3) { border-top-color: var(--pressure); }
+.anasa-list li:nth-child(4) { border-top-color: var(--calm); }
+
+/* GAME FEATURE CARDS: a colour wash at the top + icon in a coloured disc */
+.feature { --accent: var(--red); background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 22%, var(--coal)) 0, var(--coal) 55%); border-color: color-mix(in srgb, var(--accent) 45%, var(--ash)); }
+.features li:nth-child(6n + 2) { --accent: #3aa0ff; }
+.features li:nth-child(6n + 3) { --accent: var(--hype); }
+.features li:nth-child(6n + 4) { --accent: #b14bff; }
+.features li:nth-child(6n + 5) { --accent: var(--green); }
+.features li:nth-child(6n + 6) { --accent: var(--pressure); }
+.feature > img {
+  width: 3.2rem;
+  padding: 0.55rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 35%, #000);
+}
+.feature-tag { background: var(--green); color: #0b2a14; border: 0; }
+
+/* MOOD CARDS: the whole body in the mood's colour */
+.mood { border-color: var(--mood); }
+.mood .mood-body { background: var(--mood); color: #111; }
+.mood h3, .mood .mood-when { color: #111; }
+
+/* the notifications: a bit of glass */
+.nag { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 6px 0 #000; }
+
+/* the final call-to-action: a big colour block */
+.cta-band {
+  margin-block: var(--s4);
+  padding: var(--s4);
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--red), #8f1016);
+  box-shadow: 0 10px 0 #000;
+}
+.cta-band h2 em { color: var(--hype); }
+.cta-band p { color: rgba(255, 255, 255, 0.85); }
+.cta-band .btn-red { background: var(--chalk); color: #111; --btn-base: #9b968d; }
+.cta-band img { border-radius: 28px; transform: rotate(3deg); box-shadow: 0 8px 0 #000; }
+
+.quote-band blockquote { text-shadow: 4px 4px 0 #000; }
+
+
+/* ---------------------------------------------------------------------
+   7. TODAY: colour-blocked dashboard
+   --------------------------------------------------------------------- */
+/* The pledge: a yellow dashed "ticket" until you tick it */
+.pledge { border: 3px dashed var(--hype); background: color-mix(in srgb, var(--hype) 10%, var(--coal)); }
+.pledge-box input { width: 2.2rem; height: 2.2rem; }
+.pledge:has(input:checked) { border-style: solid; border-color: var(--green); background: color-mix(in srgb, var(--green) 25%, var(--coal)); }
+
+/* THE CLOCKS: whole cards in the habit's colour, dark text on top */
+.counter {
+  background: var(--mood);
+  border-color: color-mix(in srgb, var(--mood) 70%, #000);
+  color: #111;
+}
+.counter:hover { border-color: color-mix(in srgb, var(--mood) 70%, #000); }
+.counter-name, .counter-time, .counter-next { color: rgba(0, 0, 0, 0.7); }
+.counter-time strong { color: #111; font-size: 2.6rem; }
+.counter-money { color: #111; }
+.counter progress { --bar: #111; background: rgba(0, 0, 0, 0.18); }
+.counter progress::-webkit-progress-bar { background: rgba(0, 0, 0, 0.18); }
+
+/* tasks: a ticked task turns into a solid green block */
+.quest:has(input:checked) { background: color-mix(in srgb, var(--green) 30%, var(--coal)); border-color: var(--green); }
+.quest-xp { padding: 0.2rem 0.55rem; border-radius: 999px; background: rgba(255, 210, 63, 0.15); }
+
+/* the evening check-in: a night-sky block (the new indigo accent) */
+.goal-card {
+  background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.18) 0 2px, transparent 3px),
+              radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.14) 0 1.5px, transparent 2.5px),
+              linear-gradient(135deg, var(--indigo), #14102e);
+  border-color: #5a47c9;
+}
+.goal-card .ring::before { background: #1a1440; }
+.goal-card p { color: rgba(255, 255, 255, 0.75); }
+
+/* the big SOS button in the side column: pulsing */
+.sos-cta { animation: sos-pulse 2s ease-in-out infinite; }
+@keyframes sos-pulse {
+  0%, 100% { box-shadow: 0 6px 0 #8f1016, 0 0 0 0 rgba(227, 38, 45, 0.5); }
+  50% { box-shadow: 0 6px 0 #8f1016, 0 0 0 12px rgba(227, 38, 45, 0); }
+}
+.meme { background: linear-gradient(135deg, color-mix(in srgb, var(--hype) 18%, var(--coal)), var(--coal)); border-color: color-mix(in srgb, var(--hype) 40%, var(--ash)); }
+
+/* the tab bar: the current tab gets a soft pill */
+.tabbar a[aria-current="page"]:not(.tab-sos) { color: #fff; }
+@media (min-width: 900px) {
+  .tabbar a[aria-current="page"]:not(.tab-sos) {
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .tabbar a[aria-current="page"]:not(.tab-sos)::before { display: none; }
+}
+.tabbar a.tab-sos { box-shadow: 0 4px 0 #8f1016; }
+
+
+/* ---------------------------------------------------------------------
+   8. SOS: rippling rings around the breathing circle
+   Two extra rings (::before and ::after) grow and fade out, one after
+   the other, like ripples on water.
+   --------------------------------------------------------------------- */
+.breathe {
+  background: radial-gradient(circle at 40% 35%, #8ff0a5, var(--calm) 45%, #1d7a33 100%);
+  border: 0;
+  box-shadow: 0 0 60px rgba(63, 191, 90, 0.45), inset 0 -10px 30px rgba(0, 0, 0, 0.25);
+}
+.breathe::before,
+.breathe::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid var(--calm);
+  animation: ripple 4s ease-out infinite;
+}
+.breathe::after { animation-delay: 2s; }
+@keyframes ripple {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(1.6); opacity: 0; }
+}
+.breathe-label { color: #0b2a14; }
+.why-card { background: linear-gradient(135deg, color-mix(in srgb, var(--hype) 16%, var(--coal)), var(--coal)); }
+.ten li { background: var(--coal); }
+.ten li:nth-child(5n + 2)::before { color: var(--hype); }
+.ten li:nth-child(5n + 3)::before { color: #3aa0ff; }
+.ten li:nth-child(5n + 4)::before { color: var(--green); }
+.ten li:nth-child(5n + 5)::before { color: var(--pressure); }
+
+
+/* ---------------------------------------------------------------------
+   9. HABIT, PROGRESS, ME, PLAN: the same treatment
+   --------------------------------------------------------------------- */
+.clean--big dd { text-shadow: 5px 5px 0 #000, 7px 7px 0 rgba(63, 191, 90, 0.4); }
+.mini { background: var(--coal); }
+.stat-grid .mini:nth-child(1) { background: color-mix(in srgb, var(--pressure) 22%, var(--coal)); }
+.stat-grid .mini:nth-child(2) { background: color-mix(in srgb, var(--hype) 22%, var(--coal)); }
+.stat-grid .mini:nth-child(3) { background: color-mix(in srgb, var(--green) 22%, var(--coal)); }
+.stat-grid .mini:nth-child(4) { background: color-mix(in srgb, #3aa0ff 22%, var(--coal)); }
+.stat-grid .mini:nth-child(5) { background: color-mix(in srgb, #b14bff 22%, var(--coal)); }
+.stat-grid .mini:nth-child(6) { background: color-mix(in srgb, var(--red) 22%, var(--coal)); }
+.trigger { border-radius: 14px; }
+.trigger::before { background: linear-gradient(90deg, var(--red), var(--pressure)); }
+.day { border-radius: 8px; }
+.hub-link { background: linear-gradient(135deg, color-mix(in srgb, var(--red) 14%, var(--coal)), var(--coal)); }
+.hub li:nth-child(2) .hub-link { background: linear-gradient(135deg, color-mix(in srgb, #b14bff 16%, var(--coal)), var(--coal)); }
+.hub li:nth-child(3) .hub-link { background: linear-gradient(135deg, color-mix(in srgb, var(--green) 16%, var(--coal)), var(--coal)); }
+.hub li:nth-child(4) .hub-link { background: linear-gradient(135deg, color-mix(in srgb, var(--hype) 16%, var(--coal)), var(--coal)); }
+.hub li:nth-child(5) .hub-link { background: linear-gradient(135deg, color-mix(in srgb, #3aa0ff 16%, var(--coal)), var(--coal)); }
+.plan-step { background: var(--coal); }
+.plan-no, .plan-steps a::before { box-shadow: 0 3px 0 #8f1016; }
+.tick { background: var(--coal); }
+.tick:has(input:checked), .pick:has(input:checked) { background: color-mix(in srgb, var(--green) 18%, var(--coal)); }
+.shanga-card { background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--hype) 18%, var(--coal)), var(--coal) 70%); }
+.piece.is-current { background: color-mix(in srgb, var(--red) 15%, var(--coal)); }
+.entry { background: color-mix(in srgb, var(--mood) 10%, var(--coal)); }
+
+/* The phone tab bar: a little lifted, rounded panel */
+@media (max-width: 899px) {
+  .tabbar { background: rgba(14, 14, 20, 0.96); border-top: 2px solid var(--ash); }
+}
+
+/* People who switch "reduce motion" on get a calm, still page */
+@media (prefers-reduced-motion: reduce) {
+  .hero-figure > img, .sos-cta, progress::-webkit-progress-value,
+  .breathe::before, .breathe::after { animation: none !important; }
+}
+
+/* On the night-sky card, the highlighted word is yellow (red on indigo is muddy) */
+.goal-card h2 em { color: var(--hype); }

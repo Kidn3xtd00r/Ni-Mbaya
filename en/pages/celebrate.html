@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let's go! Day 24 · Bead by Bead</title>
+    <meta name="description" content="Check-in done. Your streak just went up." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- =====================================================================
+       THE CELEBRATION SCREEN
+       The check-in form sends you here (action="celebrate.html"). It's the
+       Duolingo moment: big flame, number goes up, rewards pop in.
+       The pops are a CSS @keyframes animation that runs once on load
+       (section 22). People with "reduce motion" switched on get no
+       animation, thanks to the rule in section 2.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html" aria-current="page">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="community.html">Group</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="wrap celebrate">
+      <!-- Today's new bead, big, popping in. Same .bead as the bracelet,
+           just huge (.bead--hero). -->
+      <span class="bead bead--white bead--hero pop" aria-hidden="true"></span>
+
+      <!-- "Malisaa!" = the KOT cheer for someone winning an exchange -->
+      <p class="bubble bubble--green">Let's gooo! This is the energy!</p>
+
+      <h1 class="big-day pop"><small>Streak extended</small>Day 24</h1>
+
+      <!-- The rewards. Each has a colour class (reward--xp, etc.) that sets
+           --rw, which colours the border AND the number. -->
+      <ul class="rewards" aria-label="Rewards">
+        <li class="reward reward--xp pop"><img src="../../Images/icons/xp.svg" alt="" /><strong>+45</strong><span>XP</span></li>
+        <li class="reward reward--mbao pop"><img src="../../Images/icons/mbao.svg" alt="" /><strong>+15</strong><span>Coins</span></li>
+        <li class="reward reward--bead pop"><span class="bead bead--green" aria-hidden="true"></span><strong>+1</strong><span>Bead</span></li>
+      </ul>
+
+      <!-- The week, with today now lit -->
+      <section class="card" aria-label="This week">
+        <ol class="week">
+          <li><img src="../../Images/icons/flame.svg" alt="" />Mon<span class="sr-only">: checked in</span></li>
+          <li><img src="../../Images/icons/flame.svg" alt="" />Tue<span class="sr-only">: checked in</span></li>
+          <li class="is-today"><img src="../../Images/icons/flame.svg" alt="" />Wed<span class="sr-only">: checked in today</span></li>
+          <li><img src="../../Images/icons/flame-off.svg" alt="" />Thu</li>
+          <li><img src="../../Images/icons/flame-off.svg" alt="" />Fri</li>
+          <li><img src="../../Images/icons/flame-off.svg" alt="" />Sat</li>
+          <li><img src="../../Images/icons/flame-off.svg" alt="" />Sun</li>
+        </ol>
+      </section>
+
+      <p class="lede">29 of 30. Just one bead to a full bracelet. The people have spoken: you'll be Certified Discipline soon.</p>
+
+      <div class="btn-row">
+        <a class="btn btn-red btn-big" href="today.html">Keep going</a>
+        <a class="btn btn-ghost btn-big" href="community.html">Tell your group</a>
+      </div>
+      <p><span class="example-tag">Demo</span> In Phase 1 every check-in lands on Day 24.</p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

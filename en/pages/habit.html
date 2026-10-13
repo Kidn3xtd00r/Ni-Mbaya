@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Betting · Bead by Bead</title>
+    <meta name="description" content="Your betting-free clock, stats, calendar, triggers and what's improving." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- =====================================================================
+       ONE HABIT, IN DETAIL
+       This is the screen Quitzilla, Nomo and Flamy are built around.
+       Everything about ONE habit lives here:
+         1. the clock      → how long you've been clean
+         2. the stats      → current + longest streak, money, things avoided
+         3. the calendar   → which days were clean, which one slipped
+         4. what's better  → a timeline of what improves (Flamy's idea)
+         5. your triggers  → when cravings hit, so you can plan for them
+         6. log a slip     → resets the clock but KEEPS the history
+       Your habits page (anasa.html) links to one of these per habit.
+       This demo shows Betting.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="community.html">Group</a>
+          <a href="profile.html" aria-current="page">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 1. THE CLOCK -->
+      <section class="page-hero">
+        <div class="wrap">
+          <a class="back-link" href="anasa.html">← Your habits</a>
+          <span class="eyebrow">Main habit · quit Sept 15, 2026</span>
+          <h1>Betting-free <em>for</em></h1>
+          <!-- Same .clean clock as the habits page, just big (.clean--big) -->
+          <dl class="clean clean--big">
+            <div><dt>Days</dt><dd>23</dd></div>
+            <div><dt>Hours</dt><dd>14</dd></div>
+            <div><dt>Minutes</dt><dd>05</dd></div>
+          </dl>
+          <p class="stat-note"><span class="example-tag">Example numbers</span> In Phase 2 this clock ticks live.</p>
+        </div>
+      </section>
+
+      <!-- 2. THE STATS: six numbers that matter, in a grid -->
+      <section class="chapter" aria-labelledby="stats">
+        <div class="wrap">
+          <h2 id="stats" class="sr-only">Stats</h2>
+          <div class="minis stat-grid">
+            <div class="mini"><img src="../../Images/icons/flame.svg" alt="" /><strong>23 days</strong><span>Current streak</span></div>
+            <div class="mini"><img src="../../Images/icons/trophy.svg" alt="" /><strong>23 days</strong><span>Longest streak (a new record!)</span></div>
+            <div class="mini"><img src="../../Images/icons/mbao.svg" alt="" /><strong>KSh 3,450</strong><span>Not bet · at KSh 150 a day</span></div>
+            <div class="mini"><img src="../../Images/icons/check.svg" alt="" /><strong>46</strong><span>Bets not placed</span></div>
+            <div class="mini"><img src="../../Images/icons/bima.svg" alt="" /><strong>6 of 6</strong><span>Cravings beaten</span></div>
+            <div class="mini"><img src="../../Images/icons/xp.svg" alt="" /><strong>2</strong><span>Slips, ever. Both learned from.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- 3. THE CALENDAR: the last 30 days. Same squares as before:
+           day--done = clean, day--missed = the slip, day--today = today. -->
+      <section class="chapter" aria-labelledby="cal">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="cal">The last <em>30 days.</em></h2>
+            <p>One slip on day 6, derby weekend. Then 23 straight. The slip didn't erase the 5 days before it.</p>
+          </div>
+          <div>
+            <ol class="month" aria-label="Last 30 days">
+              <li class="day day--done">1<span class="sr-only">, clean</span></li>
+              <li class="day day--done">2<span class="sr-only">, clean</span></li>
+              <li class="day day--done">3<span class="sr-only">, clean</span></li>
+              <li class="day day--done">4<span class="sr-only">, clean</span></li>
+              <li class="day day--done">5<span class="sr-only">, clean</span></li>
+              <li class="day day--missed">6<span class="sr-only">, slipped</span></li>
+              <li class="day day--done">7<span class="sr-only">, clean</span></li>
+              <li class="day day--done">8<span class="sr-only">, clean</span></li>
+              <li class="day day--done">9<span class="sr-only">, clean</span></li>
+              <li class="day day--done">10<span class="sr-only">, clean</span></li>
+              <li class="day day--done">11<span class="sr-only">, clean</span></li>
+              <li class="day day--done">12<span class="sr-only">, clean</span></li>
+              <li class="day day--done">13<span class="sr-only">, clean</span></li>
+              <li class="day day--done">14<span class="sr-only">, clean</span></li>
+              <li class="day day--done">15<span class="sr-only">, clean</span></li>
+              <li class="day day--done">16<span class="sr-only">, clean</span></li>
+              <li class="day day--done">17<span class="sr-only">, clean</span></li>
+              <li class="day day--done">18<span class="sr-only">, clean</span></li>
+              <li class="day day--done">19<span class="sr-only">, clean</span></li>
+              <li class="day day--done">20<span class="sr-only">, clean</span></li>
+              <li class="day day--done">21<span class="sr-only">, clean</span></li>
+              <li class="day day--done">22<span class="sr-only">, clean</span></li>
+              <li class="day day--done">23<span class="sr-only">, clean</span></li>
+              <li class="day day--done">24<span class="sr-only">, clean</span></li>
+              <li class="day day--done">25<span class="sr-only">, clean</span></li>
+              <li class="day day--done">26<span class="sr-only">, clean</span></li>
+              <li class="day day--done">27<span class="sr-only">, clean</span></li>
+              <li class="day day--done">28<span class="sr-only">, clean</span></li>
+              <li class="day day--done">29<span class="sr-only">, clean</span></li>
+              <li class="day day--today">30<span class="sr-only">, today</span></li>
+            </ol>
+            <ul class="legend" aria-hidden="true">
+              <li>Clean</li>
+              <li>Slipped</li>
+              <li>Today</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. WHAT'S IMPROVING (Flamy shows health; for betting it's money,
+           time and headspace). The same timeline style as the ranks list:
+           rank--reached = done, rank--next = what's coming. Careful wording:
+           "many people notice", never promises. -->
+      <section class="chapter" aria-labelledby="better">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="better">What's <em>getting better.</em></h2>
+            <p>What many people notice when they stop betting. Everyone's different, but this is the road.</p>
+          </div>
+          <ol class="ranks">
+            <li class="rank rank--reached"><span class="rank-day">Day 1</span><strong>No new losses</strong><p class="rank-note">Your money stays yours, starting today.</p></li>
+            <li class="rank rank--reached"><span class="rank-day">Days 2–4</span><strong>The urge peaks</strong><p class="rank-note">The hardest stretch. This is what SOS is for.</p></li>
+            <li class="rank rank--reached"><span class="rank-day">Day 7</span><strong>First weekend survived</strong><p class="rank-note">Match day came and went.</p></li>
+            <li class="rank rank--reached"><span class="rank-day">Day 14</span><strong>Payday, intact</strong><p class="rank-note">The first pay that went where you planned.</p></li>
+            <li class="rank rank--next"><span class="rank-day">Day 30 · in 7 days</span><strong>Urges get quieter</strong><p class="rank-note">Many people find cravings come less often and pass faster.</p></li>
+            <li class="rank"><span class="rank-day">Day 90</span><strong>It feels normal</strong><p class="rank-note">New routines stop feeling like effort.</p></li>
+            <li class="rank"><span class="rank-day">Day 365</span><strong>A year of your own money</strong><p class="rank-note">About KSh 54,750 kept, at today's rate.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- 5. TRIGGERS: when do cravings hit? Each bar's width comes from
+           --pct, set by a class (no inline styles). Knowing your triggers
+           lets you plan for them (Flamy's "craving analysis"). -->
+      <section class="chapter" aria-labelledby="triggers">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="triggers">Your <em>triggers.</em></h2>
+            <p>From the 6 cravings you logged. Now you know when to be ready.</p>
+          </div>
+          <div>
+            <ul class="triggers">
+              <li class="trigger trigger--50"><span>Football on TV</span><strong>3</strong></li>
+              <li class="trigger trigger--33"><span>Payday weekend</span><strong>2</strong></li>
+              <li class="trigger trigger--17"><span>Bored, late at night</span><strong>1</strong></li>
+            </ul>
+            <p class="bubble bubble--green mt">Saturday has a match. Want me to check on you at kickoff?</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. LOG A SLIP. Quitzilla's rule: a reset is DATA, not failure.
+           The history stays; only the clock restarts. It's a <details> so
+           it doesn't sit there shouting at you. -->
+      <section class="chapter" aria-labelledby="slip">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">04</span>
+            <h2 id="slip">If you <em>slip.</em></h2>
+            <p>Logging it honestly is part of the game. Your clock restarts, your history and beads stay.</p>
+          </div>
+          <details class="explain">
+            <summary>Log a slip</summary>
+            <div>
+              <form class="slip-form" action="habit.html" method="get">
+                <fieldset>
+                  <legend>What set it off?</legend>
+                  <ul class="ticks">
+                    <li><label class="tick"><input type="radio" name="trigger" value="football" /> Football on TV</label></li>
+                    <li><label class="tick"><input type="radio" name="trigger" value="payday" /> Payday</label></li>
+                    <li><label class="tick"><input type="radio" name="trigger" value="friends" /> Friends</label></li>
+                    <li><label class="tick"><input type="radio" name="trigger" value="bored" /> Bored or stressed</label></li>
+                  </ul>
+                </fieldset>
+                <div class="field">
+                  <label for="lesson">What will you do differently next time?</label>
+                  <textarea id="lesson" rows="2"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button class="btn btn-ghost" type="submit">Log it and restart the clock</button>
+                  <p>Messed up? Fine. We keep going.</p>
+                </div>
+              </form>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

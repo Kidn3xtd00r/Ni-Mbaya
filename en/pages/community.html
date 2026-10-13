@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Group · Bead by Bead</title>
+    <meta name="description" content="Your Bead by Bead savings group: a small squad that checks in together, saves together, and has each other's backs." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="community.html" aria-current="page">Group</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">The Comeback Crew · 5 members</span>
+          <h1>Your <em>group.</em></h1>
+          <p class="lede">
+            Kenya already knows how to save together (that's a chama). A Bead by
+            Bead group does the same with discipline: check in together, save together, and
+            when one of you is about to fall, the rest find out first.
+          </p>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           YOUR ACCOUNTABILITY PARTNER
+           One person who's got your back. Research and apps like I Am Sober
+           and Nomo agree: one real partner beats a hundred notifications.
+           The switches say exactly what they can see. Your journal stays
+           private, always.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="partner">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">★</span>
+            <h2 id="partner">Your <em>partner.</em></h2>
+            <p>Brian has your back, and you have his. Day 42 and counting.</p>
+            <div class="btn-row mt">
+              <a class="btn btn-red" href="#chat">Message Brian</a>
+              <a class="btn btn-ghost" href="panic.html">I need help now</a>
+            </div>
+          </div>
+          <div class="card">
+            <p class="reply-label mood--calm">What Brian can see</p>
+            <ul class="switches">
+              <li><label class="switch"><span>Your streak and check-ins<small>So he knows you're okay.</small></span><input type="checkbox" role="switch" checked /></label></li>
+              <li><label class="switch"><span>When you hit SOS<small>He gets a nudge to check on you.</small></span><input type="checkbox" role="switch" checked /></label></li>
+              <li><label class="switch"><span>If you go quiet for 2 days<small>An alert, so nobody slips away silently.</small></span><input type="checkbox" role="switch" checked /></label></li>
+              <li><label class="switch"><span>Your journal<small>Never. That one's just yours.</small></span><input type="checkbox" role="switch" disabled /></label></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           01: THE POT + THE QUEST
+           The chama's shared goal has a real purpose: this round, the pot
+           goes to Amina's salon chairs. That's the "Kenyan sense": every
+           shilling kept from anasa builds something.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap split">
+          <div>
+            <div class="chapter-head">
+              <span class="chapter-no" aria-hidden="true">01</span>
+              <h2 id="ch1">The <em>pot.</em></h2>
+              <p>This round: two salon chairs for Amina's side hustle. Next round: Kevin's diploma fees.</p>
+            </div>
+            <div class="bars">
+              <div>
+                <p class="bar-label"><span>Saved together, by 12 Dec</span><span>KSh 18,400 / 25,000</span></p>
+                <progress value="18400" max="25000">74%</progress>
+              </div>
+              <div>
+                <p class="bar-label"><span>Group quest: check-ins this week</span><span>22 / 35</span></p>
+                <progress class="bar-blue" value="22" max="35">22 of 35</progress>
+              </div>
+            </div>
+            <p class="hint mt">Quest reward: 50 coins each. <span class="example-tag">Example</span></p>
+          </div>
+
+          <!-- The members. Each has a mood class: their colour shows how
+               their streak is doing at a glance. -->
+          <div>
+            <ol class="squad">
+              <li class="member mood--hype">
+                <span class="member-name">Brian<small>Motivator mode · checked in</small></span>
+                <span class="member-day">Day 42</span>
+              </li>
+              <li class="member member--you mood--hype">
+                <span class="member-name">Joe (you)<small>Motivator mode · not yet today</small></span>
+                <span class="member-day">Day 23</span>
+              </li>
+              <li class="member mood--calm">
+                <span class="member-name">Amina<small>Calm coach mode · checked in</small></span>
+                <span class="member-day">Day 11</span>
+              </li>
+              <li class="member mood--pressure">
+                <span class="member-name">Shani<small>Pressure friend mode · not yet today</small></span>
+                <span class="member-day">Day 3</span>
+              </li>
+              <li class="member mood--chaos">
+                <span class="member-name">Kevin<small>Chaos mode · 2 days silent</small></span>
+                <span class="member-day">Day 7</span>
+              </li>
+            </ol>
+
+            <div class="nudge" role="note">
+              <p>
+                <span class="nudge-label">Group alert</span>
+                <strong>Kevin hasn't checked in for two days. Someone check on him.</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           02: THE GROUP CHAT
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">WhatsApp energy. <em>Zero shame.</em></h2>
+            <p>The chat is where the jokes live. And the pressure. The good kind.</p>
+          </div>
+          <ol class="chat" id="chat" aria-label="Example group chat">
+            <li class="msg"><span class="msg-from">Malebo</span>Kevin's been quiet for two days. Who has his number?</li>
+            <li class="msg"><span class="msg-from">Brian</span>Send it here.</li>
+            <li class="msg"><span class="msg-from">Amina</span>I call him and he just says "what?" 😭</li>
+            <li class="msg msg--me">Driver, drop me here. I'm going to his place right now.</li>
+            <li class="msg"><span class="msg-from">Shani</span>Keep going! We're not leaving Kevin behind.</li>
+            <li class="msg"><span class="msg-from">Kevin</span>I'm okay, everyone. It was hard. I've checked in now.</li>
+            <li class="msg"><span class="msg-from">Brian</span>LET'S GOOOO 🔥</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           03: TESTIMONIALS (still fictional, still labelled)
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch3">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="ch3">Stories that <em>feel true.</em></h2>
+            <p><span class="example-tag">Fictional</span> Placeholder quotes until real groups start talking.</p>
+          </div>
+          <div class="testimonials">
+            <figure class="testimonial">
+              <blockquote>"I came for the jokes. Stayed for the streak."</blockquote>
+              <figcaption>Amina, 26</figcaption>
+            </figure>
+            <figure class="testimonial">
+              <blockquote>"The Minibus League made me competitive. Now I can't bet, I'd lose XP."</blockquote>
+              <figcaption>Kevin, 31</figcaption>
+            </figure>
+            <figure class="testimonial">
+              <blockquote>"Our group pot bought Amina's chairs. From money we used to drink."</blockquote>
+              <figcaption>Shani, 22</figcaption>
+            </figure>
+            <figure class="testimonial">
+              <blockquote>"My habit used to beat me. Now I beat it."</blockquote>
+              <figcaption>Juma, 29</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

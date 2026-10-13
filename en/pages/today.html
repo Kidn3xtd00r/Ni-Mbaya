@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Today · Bead by Bead</title>
+    <meta name="description" content="Your day in Bead by Bead: morning pledge, your clean-time counters, daily tasks and the evening check-in." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- =====================================================================
+       TODAY: THE DASHBOARD
+       The structure the big quit apps share, top to bottom:
+         MORNING  → the pledge       (I Am Sober: "just for today")
+         ALL DAY  → your counters    (Quitzilla: one card per habit)
+                  → daily tasks      (Flamy's mini-tasks / Duolingo quests)
+         EVENING  → the check-in     (how did it go? earn today's bead)
+       The side column holds the support: this week, your bracelet, your
+       group, the meme of the day, and SOS.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html" aria-current="page">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="community.html">Group</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="wrap leo">
+      <h1 class="sr-only">Today</h1>
+
+      <div class="leo-main">
+        <!-- MORNING: THE PLEDGE
+             A checkbox styled as a big card. When it's ticked, :has() turns
+             the card green and shows the "pledged" line. Pure CSS. -->
+        <section class="pledge" aria-labelledby="pledge-title">
+          <p class="pledge-time">Wednesday morning · Day 23</p>
+          <h2 id="pledge-title">Today's pledge</h2>
+          <label class="pledge-box">
+            <input type="checkbox" />
+            <span>Just for today, I won't bet or drink.</span>
+          </label>
+          <p class="pledge-done">Pledged. That's all today asks of you. See you at check-in tonight.</p>
+        </section>
+
+        <!-- ALL DAY: ONE COUNTER PER HABIT (Quitzilla's dashboard).
+             Each card links to that habit's detail page. -->
+        <section aria-labelledby="counters-title">
+          <div class="panel-title">
+            <h2 id="counters-title">Your clocks</h2>
+            <a href="anasa.html">All habits →</a>
+          </div>
+          <ul class="counters">
+            <li>
+              <a class="counter mood--calm" href="habit.html">
+                <span class="counter-name">Betting</span>
+                <span class="counter-time"><strong>23</strong>d <strong>14</strong>h <strong>05</strong>m</span>
+                <span class="counter-money">KSh 3,450 kept</span>
+                <progress value="23" max="30">23 of 30 days</progress>
+                <span class="counter-next">7 days to Day 30</span>
+              </a>
+            </li>
+            <li>
+              <a class="counter mood--hype" href="habit.html">
+                <span class="counter-name">Alcohol</span>
+                <span class="counter-time"><strong>11</strong>d <strong>02</strong>h <strong>40</strong>m</span>
+                <span class="counter-money">KSh 1,150 kept</span>
+                <progress value="11" max="14">11 of 14 days</progress>
+                <span class="counter-next">3 days to Day 14</span>
+              </a>
+            </li>
+            <li>
+              <a class="counter mood--pressure" href="habit.html">
+                <span class="counter-name">Fuliza debt</span>
+                <span class="counter-time"><strong>46</strong>% paid</span>
+                <span class="counter-money">KSh 2,300 of 5,000</span>
+                <progress value="2300" max="5000">46%</progress>
+                <span class="counter-next">About 18 days to debt-free</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- ALL DAY: DAILY TASKS. CSS counts the ticked boxes (section 15). -->
+        <section class="card" aria-labelledby="quests-title">
+          <div class="panel-title">
+            <h2 id="quests-title">Today's tasks</h2>
+            <a href="shop.html">Earn coins →</a>
+          </div>
+          <ul class="quests">
+            <li>
+              <label class="quest quest--20">
+                <input type="checkbox" />
+                <span class="quest-text">Plan for kickoff<small>Saturday's match is a trigger. Decide now where you'll watch it.</small></span>
+                <span class="quest-xp">+20 XP</span>
+              </label>
+            </li>
+            <li>
+              <label class="quest quest--30">
+                <input type="checkbox" />
+                <span class="quest-text">Turn down one "buy me a drink"<small>Someone asks you to cover their drinks? Pass.</small></span>
+                <span class="quest-xp">+30 XP</span>
+              </label>
+            </li>
+            <li>
+              <label class="quest quest--10">
+                <input type="checkbox" />
+                <span class="quest-text">Send "I'm okay" to Brian<small>Your partner. One message.</small></span>
+                <span class="quest-xp">+10 XP</span>
+              </label>
+            </li>
+            <li>
+              <label class="quest quest--50">
+                <input type="checkbox" />
+                <span class="quest-text">Move KSh 150 to your goal<small>The betting money goes to Mombasa instead.</small></span>
+                <span class="quest-xp">+50 XP</span>
+              </label>
+            </li>
+          </ul>
+          <p class="quest-total" aria-live="polite">Today: </p>
+        </section>
+
+        <!-- EVENING: THE CHECK-IN (the other bookend of the day) -->
+        <section class="card goal-card" aria-labelledby="goal-title">
+          <div class="ring" aria-hidden="true">
+            <div class="ring-text"><strong>30</strong><span>of 50 XP</span></div>
+          </div>
+          <div>
+            <span class="eyebrow">Tonight</span>
+            <h2 id="goal-title">Evening <em>check-in.</em></h2>
+            <p class="sr-only">Daily goal: 30 of 50 XP done.</p>
+            <p>Thirty seconds: how did today go? Check in clean and today's bead goes on your bracelet.</p>
+            <a class="btn btn-red btn-big" href="checkIn.html">Check in · earn a bead</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- SIDE COLUMN: SUPPORT -->
+      <div class="leo-side">
+        <a class="btn btn-red btn-big sos-cta" href="panic.html">SOS · craving right now</a>
+
+        <section class="card" aria-labelledby="week-title">
+          <div class="panel-title">
+            <h2 id="week-title">This week</h2>
+            <a href="streak.html">Progress →</a>
+          </div>
+          <ol class="week">
+            <li><img src="../../Images/icons/flame.svg" alt="" />Mon<span class="sr-only">: checked in</span></li>
+            <li><img src="../../Images/icons/flame.svg" alt="" />Tue<span class="sr-only">: checked in</span></li>
+            <li class="is-today"><img src="../../Images/icons/flame-off.svg" alt="" />Wed<span class="sr-only">: today, not yet</span></li>
+            <li><img src="../../Images/icons/flame-off.svg" alt="" />Thu</li>
+            <li><img src="../../Images/icons/flame-off.svg" alt="" />Fri</li>
+            <li><img src="../../Images/icons/flame-off.svg" alt="" />Sat</li>
+            <li><img src="../../Images/icons/flame-off.svg" alt="" />Sun</li>
+          </ol>
+          <div class="mt">
+            <p class="bar-label"><span>Bracelet · 2 beads to full</span><span>28 / 30</span></p>
+            <progress class="bar-xp" value="28" max="30">28 of 30 beads</progress>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="partner-title">
+          <div class="panel-title">
+            <h2 id="partner-title">Your people</h2>
+            <a href="community.html">Group →</a>
+          </div>
+          <p><strong>Brian</strong> (your partner) checked in this morning. Day 42.</p>
+          <p class="bar-label"><span>Group quest: 35 check-ins</span><span>22 / 35</span></p>
+          <progress class="bar-blue" value="22" max="35">22 of 35</progress>
+          <p class="hint mt">Kevin hasn't checked in for two days. <a href="community.html">Nudge him</a>.</p>
+        </section>
+
+        <section class="card meme" aria-labelledby="meme-title">
+          <h2 id="meme-title" class="eyebrow">Meme of the day</h2>
+          <p class="meme-line"><span>Me on Monday:</span> "Entering my discipline era."</p>
+          <p class="meme-line"><span>Me on Friday, 5:01pm:</span> "The very last one."</p>
+          <p class="meme-line"><span>My habit:</span> *thriving, rent-free in my head*</p>
+          <p class="meme-line"><span>My bracelet:</span> *missing a bead*</p>
+          <p class="hint mt">Delulu is not the solulu. Discipline every day is.</p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

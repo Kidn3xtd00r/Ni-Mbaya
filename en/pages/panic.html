@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOS · Bead by Bead</title>
+    <meta name="description" content="Craving right now? Breathe for 60 seconds, remember why you started, and ride it out." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
+    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
+    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
+    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+  </head>
+
+  <!-- =====================================================================
+       SOS: THE CRAVING SCREEN
+       Built like Flamy's SOS button and I Am Sober's "craving" flow:
+         1. BREATHE first (a 60-second guided circle), because a craving
+            peaks and passes, usually within minutes
+         2. your REASONS from the quit plan, shown back to you
+         3. quick DISTRACTIONS
+         4. your PARTNER, one tap away
+         5. LOG the craving + its trigger, so you learn your patterns
+         6. real help (1192) if it's bigger than an app
+       The breathing circle is a CSS animation: it grows for 4 seconds
+       (breathe in), holds 4, shrinks 4 (breathe out). See "BREATHE" in CSS.
+       ===================================================================== -->
+  <body class="page-panic">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
+             button so it's always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos" aria-current="page">SOS</a>
+          <a href="community.html">Group</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Stat chips: your streak, Streak Savers, coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 1. BREATHE -->
+      <section class="wrap sos-hero" aria-labelledby="sos-title">
+        <span class="eyebrow">SOS · you've got this</span>
+        <h1 id="sos-title">Driver, <em>drop me here.</em></h1>
+        <p class="lede">A craving is a wave. It rises, peaks and passes. Breathe with the circle for one minute.</p>
+
+        <!-- The circle. Three labels sit on top of each other; CSS fades
+             each one in during its part of the 12-second loop. -->
+        <div class="breathe" aria-hidden="true">
+          <span class="breathe-label breathe-in">Breathe in</span>
+          <span class="breathe-label breathe-hold">Hold</span>
+          <span class="breathe-label breathe-out">Breathe out</span>
+        </div>
+        <!-- Screen readers get the instruction as plain text instead -->
+        <p class="sr-only">Breathe in for 4 seconds, hold for 4, breathe out for 4. Repeat 5 times.</p>
+        <p class="hint">In for 4 · hold for 4 · out for 4 · five times</p>
+
+        <!-- A real link to the "I beat it" screen. -->
+        <a class="btn btn-red btn-big" href="celebrate.html">The wave passed · +50 XP</a>
+      </section>
+
+      <!-- 2. YOUR REASONS (from the quit plan) -->
+      <section class="chapter" aria-labelledby="why">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="why">Remember <em>why.</em></h2>
+            <p>You wrote these on day one.</p>
+          </div>
+          <figure class="card why-card">
+            <blockquote>"Saving for a Mombasa trip. And I'm tired of Monday regret."</blockquote>
+            <ul class="proof">
+              <li>Betting-free <strong>23 days</strong></li>
+              <li>Kept from betting <strong>KSh 3,450</strong></li>
+              <li>Bracelet <strong>28 of 30 beads</strong></li>
+              <li>Next milestone <strong>Day 30, in 7 days</strong></li>
+            </ul>
+            <figcaption class="hint">Change your reasons any time in Settings.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- 3 + 4. DISTRACTIONS + PARTNER: the numbered "ten minutes" cards -->
+      <section class="chapter" aria-labelledby="ten">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ten">Just get through <em>the next 10 minutes.</em></h2>
+            <p>Not forever. Ten minutes. Pick one and do it now.</p>
+          </div>
+          <ol class="ten">
+            <li><strong>Text Brian</strong><span>Your partner. "I'm struggling." That's the whole message. <a href="community.html">Open chat →</a></span></li>
+            <li><strong>Move</strong><span>Leave the room. Walk to the gate and back.</span></li>
+            <li><strong>Cold water</strong><span>Drink a full glass. Splash your face.</span></li>
+            <li><strong>Write it out</strong><span>Two lines in your journal. <a href="journal.html">Journal →</a></span></li>
+            <li><strong>Call 1192</strong><span>NACADA's free, 24/7 helpline for alcohol and drugs. Real people, no judgement.</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 5. LOG THE CRAVING: what triggered it? This feeds the "Your
+           triggers" chart on each habit's page. -->
+      <section class="chapter" aria-labelledby="log">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="log">Log this <em>craving.</em></h2>
+            <p>Ten seconds. Over time you'll see your pattern, and Malebo will warn you before it comes.</p>
+          </div>
+          <form class="card" action="celebrate.html" method="get">
+            <fieldset>
+              <legend class="legend-small">What triggered it?</legend>
+              <ul class="ticks">
+                <li><label class="tick"><input type="radio" name="trigger" value="football" /> Football on TV</label></li>
+                <li><label class="tick"><input type="radio" name="trigger" value="payday" /> Payday</label></li>
+                <li><label class="tick"><input type="radio" name="trigger" value="friends" /> Friends</label></li>
+                <li><label class="tick"><input type="radio" name="trigger" value="bored" /> Bored or stressed</label></li>
+              </ul>
+            </fieldset>
+            <fieldset>
+              <legend class="legend-small">How strong, 1 to 5?</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="strength" value="1" /> 1</label>
+                <label class="chip"><input type="radio" name="strength" value="2" /> 2</label>
+                <label class="chip"><input type="radio" name="strength" value="3" /> 3</label>
+                <label class="chip"><input type="radio" name="strength" value="4" /> 4</label>
+                <label class="chip"><input type="radio" name="strength" value="5" /> 5</label>
+              </div>
+            </fieldset>
+            <button class="btn btn-red" type="submit">Log it · I beat it</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Me</a></li>
+            <li><a href="anasa.html">Your habits</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
