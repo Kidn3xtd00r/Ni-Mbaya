@@ -23,28 +23,29 @@
     <header class="site-header">
       <div class="wrap header-inner">
         <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
-        <!-- Five tabs, like the big quit apps. SOS sits in the middle as a red
-             button so it's always one tap away (class="tab-sos"). -->
+        <!-- Five tabs. SOS sits in the middle as a red button so it's
+             always one tap away (class="tab-sos"). -->
         <nav class="tabbar" aria-label="Main">
           <a href="today.html">Today</a>
           <a href="streak.html">Progress</a>
           <a href="panic.html" class="tab-sos">SOS</a>
-          <a href="community.html">Group</a>
+          <a href="journal.html">Journal</a>
           <a href="profile.html" aria-current="page">Me</a>
         </nav>
         <div class="header-actions">
-          <!-- Stat chips: your streak, Streak Savers, coins.
-               alt="" on the icons because the sr-only text says it in words. -->
-          <ul class="stat-chips" aria-label="Your stats (example)">
-            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
-            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Saver</span></a></li>
-            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> coins</span></a></li>
+          <!-- Two numbers that come straight from the record: beads earned
+               and the current streak. No coins, no XP. alt="" on the icons
+               because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your record (example)">
+            <li><a class="chip-bead" href="streak.html"><img class="icon" src="../../Images/icons/bead.svg" alt="" />24<span class="sr-only"> beads earned</span></a></li>
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />5<span class="sr-only"> day streak</span></a></li>
           </ul>
         </div>
       </div>
     </header>
 
     <main id="main">
+      <p class="concept-note"><strong>Idea for later.</strong> This page is a design concept, not part of the first version. We'll only build it if testing shows people need it.</p>
       <section class="page-hero">
         <div class="wrap">
           <span class="eyebrow">Money saved</span>
@@ -227,36 +228,34 @@
         <div>
           <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
           <p class="wordmark">Bead <span>by Bead</span></p>
-          <p class="footer-motto">No pressure. No judgement. Just a boost.</p>
+          <p class="footer-motto">One day at a time. One bead at a time.</p>
         </div>
-        <nav class="footer-col" aria-label="Play">
-          <h2>Play</h2>
+        <nav class="footer-col" aria-label="The app">
+          <h2>The app</h2>
           <ul>
-            <li><a href="start.html">Make a quit plan</a></li>
+            <li><a href="start.html">Make your plan</a></li>
             <li><a href="today.html">Today</a></li>
             <li><a href="checkIn.html">Evening check-in</a></li>
             <li><a href="streak.html">Progress</a></li>
             <li><a href="panic.html">SOS</a></li>
-            <li><a href="community.html">Group &amp; partner</a></li>
-            <li><a href="league.html">League</a></li>
-          </ul>
-        </nav>
-        <nav class="footer-col" aria-label="You">
-          <h2>You</h2>
-          <ul>
-            <li><a href="profile.html">Me</a></li>
-            <li><a href="anasa.html">Your habits</a></li>
             <li><a href="journal.html">Journal</a></li>
-            <li><a href="savings.html">Savings goals</a></li>
-            <li><a href="shop.html">Shop</a></li>
             <li><a href="settings.html">Settings</a></li>
             <li><a href="how-it-works.html">How it works</a></li>
           </ul>
         </nav>
+        <nav class="footer-col" aria-label="Ideas for later">
+          <h2>Ideas for later</h2>
+          <ul>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+          </ul>
+        </nav>
       </div>
       <div class="wrap footer-base">
-        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
-        <p>Bead by Bead is a prototype: every name, number and score in it is an example. Coins are game coins, never real money. · <a href="../../index.html">Kiswahili &amp; Sheng edition: Ni Mbaya!</a></p>
+        <p>For ages 18+. · Need to talk to someone? Call <a href="tel:1192">1192</a>, NACADA's free 24/7 helpline for alcohol and drugs.</p>
+        <p>Bead by Bead is a prototype: nothing you type is saved, and every name, date and number is an example. · <a href="../../index.html">Kenyan voice (Kiswahili &amp; Sheng)</a></p>
       </div>
     </footer>
   </body>

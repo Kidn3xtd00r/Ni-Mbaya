@@ -3418,3 +3418,201 @@ figure.card { margin: 0; }       /* <figure> comes with side margins; remove the
 .hub-link strong::after { content: " →"; color: var(--red); }
 .hub-link span { color: var(--muted); font-size: 0.9rem; }
 .hub-link:hover { border-color: var(--red); }
+
+
+/* =====================================================================
+   23. THE BEAD BAND: the bracelet, woven like a real Kenyan one
+   ---------------------------------------------------------------------
+   A real Kenyan flag bracelet is a flat woven band: rows of black,
+   white, red, white and green beads, with the Maasai shield and spears
+   in the middle. So that's what we draw.
+
+   HOW IT WORKS
+   The band is an <ol>. Each <li> is ONE DAY, drawn as one column of
+   8 beads (top to bottom: black, black, white, red, red, white, green,
+   green). The class on the <li> says what happened that day:
+
+     .day--kept     the commitment was kept       → a full column of beads
+     .day--ngao     the 7th kept day in a row     → the shield and spears
+     .day--slip     a slip, recorded honestly     → no beads + a red mark
+     .day--pause    a pause, with a reason        → a knot on the threads
+     .day--unknown  not recorded yet (3 days)     → hollow beads, waiting
+     .day--missing  never recorded                → just the bare threads
+     .day--today    today, not checked in yet     → hollow green beads
+
+   Every class is a STATE from the Shanga rules, and nothing else.
+   One day = one class. That's the whole game, readable in the HTML.
+   ===================================================================== */
+
+.band {
+  /* --b is the size of one bead. clamp(smallest, ideal, biggest):
+     the band shrinks on phones so all 30 days fit on one line. */
+  --b: clamp(5px, calc((100vw - 6rem) / 50), 17px);
+  --flag-black: #141414;
+  --flag-white: #f5f2ec;
+  --flag-red: #c8102e;
+  --flag-green: #0a7a3b;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  padding: calc(var(--b) * 0.8) calc(var(--b) * 0.8);
+  list-style: none;
+  /* Cream like the photo's background, so the black beads show */
+  background: #fbf8f1;
+  border-radius: calc(var(--b) * 1.2);
+  box-shadow: 0 6px 0 #b9b3a7;
+}
+
+/* EVERY day starts as bare threads: one thin line through the middle
+   of each bead row. linear-gradient draws the line, and
+   background-size repeats it once per row (every --b pixels). */
+.day {
+  position: relative;
+  flex: none;
+  width: var(--b);
+  height: calc(var(--b) * 8);
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(50% - 0.5px),
+    #c9c2b4 calc(50% - 0.5px) calc(50% + 0.5px),
+    transparent calc(50% + 0.5px)
+  );
+  background-size: 100% var(--b);
+}
+
+/* KEPT: the flag's stripes, cut into round beads.
+   1. The bottom layer paints the stripes (each colour row by row).
+   2. The top layer adds a shine and a shadow to every bead.
+   3. mask cuts the column into circles: only the round "bead" part of
+      each --b square stays visible. */
+.day--kept {
+  background-image:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.55) 0 12%, transparent 30%, rgb(0 0 0 / 0.28) 72%),
+    linear-gradient(
+      to bottom,
+      var(--flag-black) 0 25%,
+      var(--flag-white) 25% 37.5%,
+      var(--flag-red) 37.5% 62.5%,
+      var(--flag-white) 62.5% 75%,
+      var(--flag-green) 75% 100%
+    );
+  background-size: var(--b) var(--b), 100% 100%;
+  -webkit-mask: radial-gradient(circle closest-side, #000 86%, transparent 94%) 0 0 / var(--b) var(--b);
+  mask: radial-gradient(circle closest-side, #000 86%, transparent 94%) 0 0 / var(--b) var(--b);
+}
+
+/* NGAO: the Maasai shield and spears from the heart of the flag.
+   It's 9 beads wide, like the centrepiece of a real bracelet. The
+   picture is drawn bead by bead by tools/make_art.py, so it matches
+   the other beads exactly. */
+.day--ngao {
+  width: calc(var(--b) * 9);
+  background: url("../Images/illustrated/ngao-beads.svg") center / 100% 100% no-repeat;
+}
+
+/* SLIP: no beads, just a red mark. It's honest, and it's small. */
+.day--slip::after {
+  content: "";
+  position: absolute;
+  inset: 12% 50% 12% auto;
+  width: 3px;
+  translate: 50% 0;
+  border-radius: 2px;
+  background: var(--flag-red);
+}
+
+/* PAUSE: a knot wrapped around the threads. No bead, and no break. */
+.day--pause::after {
+  content: "";
+  position: absolute;
+  inset: 30% 15%;
+  border-radius: 3px;
+  background: repeating-linear-gradient(to bottom, #8a8378 0 2px, #b4ad9f 2px 4px);
+}
+
+/* UNKNOWN and TODAY: hollow beads, waiting to be filled in.
+   A ring instead of a full circle: transparent in the middle. */
+.day--unknown,
+.day--today {
+  background-image: radial-gradient(circle closest-side, transparent 52%, var(--ring) 58% 80%, transparent 86%);
+  background-size: var(--b) var(--b);
+  --ring: #8c8577;
+}
+.day--today { --ring: var(--flag-green); }
+
+/* MISSING needs nothing: it's the bare threads from .day above. */
+
+/* THE SCALE under the band: "Day 1 ... Today" */
+.band-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--s1);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* THE LEGEND: every state in words, with a tiny piece of band.
+   Colour is never the only clue: each state has its own SHAPE too. */
+.band-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--s1) var(--s3);
+  margin: var(--s3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.band-legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  font-size: 0.95rem;
+}
+.band-legend .band {
+  --b: 7px;
+  padding: 3px;
+  box-shadow: none;
+  border-radius: 4px;
+}
+
+/* THE HISTORY TABLE: the same days, written out as words */
+.history {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.history caption {
+  text-align: left;
+  color: var(--muted);
+  padding-bottom: var(--s1);
+}
+.history th,
+.history td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--ash);
+  text-align: left;
+  vertical-align: top;
+}
+.history th { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.history td:first-child { font-weight: 800; white-space: nowrap; }
+/* One small coloured word per state, so the table scans quickly */
+.state { font-weight: 800; }
+.state--kept { color: var(--green); }
+.state--slip { color: var(--red-text); }
+.state--pause,
+.state--unknown,
+.state--missing { color: var(--muted); }
+
+/* CONCEPT PAGES: ideas we kept for later, clearly labelled */
+.concept-note {
+  margin: 0;
+  padding: var(--s2) var(--gutter);
+  background: #2a2410;
+  border-bottom: 2px solid var(--hype);
+  color: var(--chalk);
+  text-align: center;
+  font-weight: 700;
+}
+.concept-note strong { color: var(--hype); }

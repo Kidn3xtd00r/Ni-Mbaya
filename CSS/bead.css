@@ -1,0 +1,407 @@
+/* =====================================================================
+   BEAD.CSS · the Bead by Bead look
+   ---------------------------------------------------------------------
+   Loaded AFTER styles.css on the English pages, so anything here wins.
+
+   The idea: a calm, confident page that feels like holding the real
+   bracelet. Warm cream paper (the card a bracelet is sold on), deep
+   forest-black ink, and the flag's colours used with meaning:
+     green  = progress, a kept day, "go"
+     red    = SOS and slips only, never decoration
+     black + white = the beads themselves
+
+   Moves that make it feel alive (all CSS, no JavaScript):
+     - huge, tight, friendly headlines (Bricolage Grotesque)
+     - big rounded cards, like phone screens
+     - Malebo's handwritten notes (Caveat), in green ink
+     - the bracelet WEAVES ITSELF in, one day at a time
+     - sections rise gently into view as you scroll
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1. NEW TOKENS
+   styles.css was built for a black page. Instead of rewriting it, we
+   change its variables here: --night (the page) becomes cream, --chalk
+   (the text) becomes ink, and so on. Every rule that uses them follows.
+   --------------------------------------------------------------------- */
+:root {
+  --night: #f4efe6;          /* paper: the page background */
+  --coal: #fffdf8;           /* cards: a little brighter than the page */
+  --ash: #e4dccd;            /* hairlines */
+  --smoke: #c9bfac;          /* stronger lines */
+  --chalk: #17201a;          /* ink: all main text */
+  --muted: #5b6056;          /* quiet text (passes contrast on cream) */
+
+  --red: #d7262e;            /* SOS + slips */
+  --red-text: #b3121b;       /* red that's dark enough for small text */
+  --green: #0a7a3b;          /* the flag's green: progress */
+  --leaf: #1db45a;           /* a brighter green for big shapes */
+  --hype: #0a7a3b;           /* (old yellow accent → green, for focus rings) */
+
+  --display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --hand: "Caveat", "Segoe Print", cursive;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius: 22px;            /* big, soft corners everywhere */
+  --lift: 0 1px 0 rgb(23 32 26 / 0.04), 0 18px 40px -24px rgb(23 32 26 / 0.35);
+}
+
+
+/* ---------------------------------------------------------------------
+   2. TYPE
+   Bricolage is a friendly grotesque: wide, heavy and warm. We set it
+   tight (small line-height, slightly negative letter-spacing) and in
+   normal case, which reads calmer than SHOUTING CAPITALS.
+   --------------------------------------------------------------------- */
+h1, h2, h3 {
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  text-shadow: none;
+}
+h1 { font-size: clamp(3.4rem, 13vw, 9rem); }
+h2 { font-size: clamp(2.3rem, 6.5vw, 4.6rem); }
+
+/* The word that matters gets the green, plus a hand-drawn underline.
+   The underline is a background image: a thin ellipse under the word. */
+h1 em, h2 em {
+  color: var(--green);
+  font-style: normal;
+  background: radial-gradient(60% 40% at 50% 100%, rgb(29 180 90 / 0.28), transparent 70%) no-repeat;
+  background-size: 100% 0.5em;
+  background-position: 0 95%;
+}
+
+.eyebrow {
+  color: var(--muted);
+  letter-spacing: 0.14em;
+}
+
+/* Malebo's handwriting. Use it for short, warm notes only. */
+.signoff,
+.hand {
+  font-family: var(--hand);
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--green);
+  rotate: -2deg;
+}
+.signoff { margin-top: var(--s3); }
+.signoff::before { content: "Malebo: "; color: var(--muted); }
+
+
+/* ---------------------------------------------------------------------
+   3. HEADER: a floating pill
+   The header floats over the page with a little gap around it, like a
+   phone's island. backdrop-filter blurs whatever scrolls under it.
+   --------------------------------------------------------------------- */
+.site-header {
+  top: 0.6rem;
+  margin: 0.6rem var(--gutter) 0;
+  background: rgb(255 253 248 / 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--ash);
+  border-radius: 999px;
+  box-shadow: var(--lift);
+}
+.site-header .wrap { padding-inline: var(--s2); }
+.header-inner { min-height: 3.5rem; }
+
+.wordmark {
+  font-weight: 800;
+  font-size: 1.35rem;
+  text-transform: none;
+  letter-spacing: -0.03em;
+}
+.wordmark span { color: var(--green); }
+
+/* The stat chips: small pills with a bead and a flame */
+.stat-chips a {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: var(--night);
+  color: var(--chalk);
+  font-weight: 800;
+}
+.chip-flame { color: var(--chalk); }
+
+/* PHONE: the tab bar floats too, as a dark pill above the thumb */
+@media (max-width: 899px) {
+  .tabbar {
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 0.75rem;
+    height: 3.6rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--chalk);
+    box-shadow: 0 14px 30px -12px rgb(0 0 0 / 0.5);
+  }
+  .tabbar a { color: #b9bdb3; }
+  .tabbar a::before { background: #3a443c; }
+  .tabbar a[aria-current="page"] { color: #fff; }
+  .tabbar a[aria-current="page"]::before { background: var(--leaf); }
+  body { padding-bottom: 5.5rem; }
+}
+
+/* LAPTOP: tabs become pills inside the header */
+@media (min-width: 900px) {
+  .tabbar { gap: 0.25rem; }
+  .tabbar a {
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .tabbar a::before { display: none; }
+  .tabbar a:hover { background: var(--night); color: var(--chalk); }
+  .tabbar a[aria-current="page"] { background: var(--chalk); color: #fff; }
+}
+
+/* SOS is always red, everywhere. It's the one button that must stand out. */
+.tabbar a.tab-sos,
+.tabbar a.tab-sos[aria-current="page"] {
+  color: #fff;
+  background: var(--red);
+  border-radius: 999px;
+}
+@media (max-width: 899px) {
+  .tabbar a.tab-sos {
+    flex: none;
+    width: 3.6rem;
+    margin: 0.3rem;
+    font-weight: 800;
+  }
+  .tabbar a.tab-sos::before { display: none; }
+}
+
+
+/* ---------------------------------------------------------------------
+   4. BUTTONS: chunky ink pills
+   A plain .btn is ink-on-cream. .btn-red is only for SOS and slips.
+   .btn-green is for "yes, I kept it".
+   --------------------------------------------------------------------- */
+.btn {
+  border-radius: 999px;
+  font-family: var(--body);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  text-transform: none;
+  background: var(--chalk);
+  color: #fff;
+  box-shadow: 0 4px 0 #000;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #000; }
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #000; }
+.btn-big { min-height: 3.75rem; font-size: 1.2rem; padding-inline: var(--s4); }
+.btn-red { background: var(--red); box-shadow: 0 4px 0 #7d0f14; }
+.btn-red:hover { background: #e2343b; box-shadow: 0 6px 0 #7d0f14; }
+.btn-green { background: var(--green); box-shadow: 0 4px 0 #05411f; }
+.btn-ghost {
+  background: transparent;
+  color: var(--chalk);
+  border-color: var(--chalk);
+  box-shadow: none;
+}
+.btn-ghost:hover { background: var(--chalk); color: #fff; box-shadow: none; }
+
+
+/* ---------------------------------------------------------------------
+   5. CARDS, CHAPTERS, PANELS
+   --------------------------------------------------------------------- */
+.card {
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--coal);
+  box-shadow: var(--lift);
+}
+.page-hero { border-bottom: 0; padding-block: var(--s5) var(--s2); }
+.page-hero h1 { max-width: 12ch; }
+
+/* Chapter numbers: small and quiet, in a circle (instead of huge stencils) */
+.chapter-no {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1.5px solid var(--chalk);
+  border-radius: 50%;
+  font-family: var(--body);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--chalk);
+  -webkit-text-stroke: 0;
+}
+.chapter--tight { padding-top: 0; }
+
+.glossary div { border-color: var(--ash); }
+.glossary dt { font-weight: 800; }
+
+.example-tag { border-color: var(--smoke); background: var(--coal); }
+
+/* "Show more" boxes (<details>) */
+.more { margin-top: var(--s3); }
+.more summary {
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--chalk);
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+.more summary::-webkit-details-marker { display: none; }
+.more summary::after { content: " +"; }
+.more[open] summary::after { content: " −"; }
+.more[open] summary { margin-bottom: var(--s2); }
+
+
+/* ---------------------------------------------------------------------
+   6. THE BRACELET CARD
+   The band sits on a big card, like a bracelet on its display card.
+   --------------------------------------------------------------------- */
+.band-card {
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border-radius: calc(var(--radius) * 1.4);
+  background: var(--coal);
+  box-shadow: var(--lift);
+  overflow: hidden;
+}
+.band-frame {
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.band-frame > .band { box-shadow: 0 6px 0 #d8cfbf; }
+.band-legend li { color: var(--muted); }
+
+/* THE WEAVE: each day fades and drops into place, one after another.
+   --i is the day's number, set by :nth-child() below, so day 1 goes
+   first and day 30 goes last. animation-delay does the waiting. */
+@media (prefers-reduced-motion: no-preference) {
+  .band-frame > .band .day {
+    animation: weave 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+    animation-delay: calc(var(--i, 0) * 45ms + 200ms);
+  }
+}
+@keyframes weave {
+  from { opacity: 0; translate: 0 -40%; }
+  to { opacity: 1; translate: 0 0; }
+}
+.band .day:nth-child(1) { --i: 1; }   .band .day:nth-child(2) { --i: 2; }
+.band .day:nth-child(3) { --i: 3; }   .band .day:nth-child(4) { --i: 4; }
+.band .day:nth-child(5) { --i: 5; }   .band .day:nth-child(6) { --i: 6; }
+.band .day:nth-child(7) { --i: 7; }   .band .day:nth-child(8) { --i: 8; }
+.band .day:nth-child(9) { --i: 9; }   .band .day:nth-child(10) { --i: 10; }
+.band .day:nth-child(11) { --i: 11; } .band .day:nth-child(12) { --i: 12; }
+.band .day:nth-child(13) { --i: 13; } .band .day:nth-child(14) { --i: 14; }
+.band .day:nth-child(15) { --i: 15; } .band .day:nth-child(16) { --i: 16; }
+.band .day:nth-child(17) { --i: 17; } .band .day:nth-child(18) { --i: 18; }
+.band .day:nth-child(19) { --i: 19; } .band .day:nth-child(20) { --i: 20; }
+.band .day:nth-child(21) { --i: 21; } .band .day:nth-child(22) { --i: 22; }
+.band .day:nth-child(23) { --i: 23; } .band .day:nth-child(24) { --i: 24; }
+.band .day:nth-child(25) { --i: 25; } .band .day:nth-child(26) { --i: 26; }
+.band .day:nth-child(27) { --i: 27; } .band .day:nth-child(28) { --i: 28; }
+.band .day:nth-child(29) { --i: 29; } .band .day:nth-child(30) { --i: 30; }
+
+/* Today's hollow beads breathe gently: "waiting for you" */
+@media (prefers-reduced-motion: no-preference) {
+  .band-card .day--today { animation: weave 0.5s both, wait 1.8s ease-in-out 2s infinite; }
+}
+@keyframes wait { 50% { opacity: 0.35; } }
+
+/* THE NUMBERS under the bracelet: four big figures in a row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s2);
+  margin: var(--s3) 0 var(--s1);
+}
+@media (min-width: 700px) { .stat-row { grid-template-columns: repeat(4, 1fr); } }
+.stat-row div {
+  padding: var(--s2) var(--s3);
+  border-radius: var(--radius);
+  background: var(--coal);
+  box-shadow: var(--lift);
+}
+.stat-row dt { color: var(--muted); font-size: 0.85rem; font-weight: 700; }
+.stat-row dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.stat-row div:first-child { background: var(--chalk); color: #fff; }
+.stat-row div:first-child dt { color: #b9bdb3; }
+
+
+/* ---------------------------------------------------------------------
+   7. JEWELLERY PIECES + CTA + FOOTER
+   --------------------------------------------------------------------- */
+.piece {
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--coal);
+  box-shadow: var(--lift);
+}
+.piece.is-current { outline: 2px solid var(--green); }
+.piece > img { width: 100%; height: 5rem; object-fit: contain; }
+
+.cta-band {
+  border-radius: calc(var(--radius) * 1.4);
+  background: var(--chalk);
+  color: #fff;
+  border: 0;
+}
+.cta-band h2 em { color: var(--leaf); background: none; }
+.cta-band .btn { background: #fff; color: var(--chalk); box-shadow: 0 4px 0 #9fa69b; }
+
+.site-footer { background: var(--chalk); color: #e9e6df; margin-top: var(--s5); }
+.site-footer .wordmark span { color: var(--leaf); }
+.footer-col h2 { color: #9da396; }
+.footer-col a:hover { color: var(--leaf); }
+.footer-base { border-color: #2e3a31; color: #b9bdb3; }
+.footer-base a { color: #fff; }
+
+/* The shuka strip becomes a strip of beads: the flag, as dots */
+.shuka {
+  height: 14px;
+  background:
+    radial-gradient(circle closest-side, transparent 0) ,
+    linear-gradient(to bottom, #141414 0 30%, #f5f2ec 30% 40%, #c8102e 40% 60%, #f5f2ec 60% 70%, #0a7a3b 70%);
+  -webkit-mask: radial-gradient(circle closest-side, #000 85%, transparent 95%) 0 0 / 14px 14px;
+  mask: radial-gradient(circle closest-side, #000 85%, transparent 95%) 0 0 / 14px 14px;
+}
+
+
+/* ---------------------------------------------------------------------
+   8. SCROLL REVEAL
+   Each chapter rises a little as it scrolls into view.
+   animation-timeline: view() ties the animation to scrolling instead of
+   time. Browsers that don't know it simply show the page as normal.
+   --------------------------------------------------------------------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .chapter > .wrap {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+@keyframes rise {
+  from { opacity: 0; translate: 0 3rem; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+/* Chapter head: the number circle sits ABOVE the title, not beside it */
+@media (min-width: 900px) {
+  .chapter-head { grid-template-columns: 1fr; }
+}
+.glossary dt { text-transform: none; letter-spacing: 0; font-size: 1.05rem; }
