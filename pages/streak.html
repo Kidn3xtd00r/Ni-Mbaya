@@ -1,188 +1,320 @@
 <!doctype html>
-<!-- "Use modern HTML rules." Always the very first line. -->
 <html lang="en">
-  <!-- lang="en" tells screen readers which accent to read the page in. -->
-
-  <!-- ================================================================
-       THE <head>: INFO ABOUT THE PAGE (none of this shows on screen)
-       ================================================================ -->
   <head>
-    <!-- UTF-8 = support every character: emojis, Swahili, symbols. -->
     <meta charset="UTF-8" />
-
-    <!-- Without this, phones zoom out and show a tiny desktop-sized page. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- The text on the browser tab. -->
-    <title>NI MBAYA | Your Streak</title>
-
-    <!-- The grey text Google shows under your link in search results. -->
-    <meta
-      name="description"
-      content="NI MBAYA is the Kenyan app that remembers what you promised yourself. Build streaks, quit bad habits, save money, and beat Mbaya."
-    />
-
-    <!-- "Start connecting to Google Fonts now, I'll need it soon."
-         Only a speed boost. Delete these two and the font still loads. -->
+    <title>Shanga · Ni Mbaya!</title>
+    <meta name="description" content="Shanga: earn a bead for every clean day and build your bracelet, from your first bead to a full Ushanga wa Shujaa." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- Downloads the Manrope font in weights 300 (thin) to 800 (extra bold).
-         display=swap → show a backup font while Manrope downloads,
-         instead of invisible text. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
       rel="stylesheet"
     />
-
-    <!-- YOUR CSS FILES (Lesson 1)
-         This file lives in pages/, so "../" = walk OUT of pages/ first,
-         then into CSS/.
-         ORDER MATTERS: if two files style the same thing equally strongly,
-         the file loaded LAST wins. So header.css beats styles.css. -->
-    <link rel="stylesheet" href="../CSS/background.css" />
-    <link rel="stylesheet" href="../CSS/styles.css" />
-    <link rel="stylesheet" href="../CSS/header.css" />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
   </head>
 
-  <!-- ================================================================
-       THE <body>: EVERYTHING YOU SEE ON SCREEN
-       ================================================================
-       ⚠️ STILL MISSING: the header/nav. There's no way back to the home
-       page yet (Lesson 11). -->
+  <!-- =====================================================================
+       SHANGA: THE GAME
+       Shanga = beads. This page is the heart of Ni Mbaya!:
+         - every clean day earns ONE bead
+         - the bead's COLOUR tells the story of that day
+         - 30 beads make a Bangili (bracelet), and the jewellery keeps
+           growing: double bangili, then mkufu (necklace), then
+           Ushanga wa Shujaa (a full beaded collar)
+         - a slip resets your streak, but beads are NEVER taken away
+       It replaces three older ideas (the Safari route, Moto the flame,
+       and the ranks list) with one that's simpler and more Kenyan.
+       ===================================================================== -->
   <body>
-    <!-- <main> = THE main content of the page. Only one per page.
-         Screen reader users can jump straight here, skipping the header. -->
-    <main>
-      <!-- <h1> = the page's title. One per page, like a book chapter title.
-           Every <h2> below is a sub-heading of this. -->
-      <h1 class="page-title">Your Streak</h1>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-      <!-- ==============================================================
-           SECTION 1: MEET MBAYA
-           The story: Mbaya = your bad habits. The longer your streak,
-           the smaller he gets.
-           ============================================================== -->
-
-      <!-- <section> = a themed chunk of the page with its own heading.
-           class="section"        → padding above/below (shared by all sections)
-           class="mascot-section" → the rounded corners + shadow.
-                                    (Only in a shared list in styles.css line
-                                    ~361. Could be one shared class instead.)
-           id="meet-mbaya"        → ❓ nothing links here or uses it yet.
-                                    It would only matter for a jump link like
-                                    <a href="#meet-mbaya">. -->
-      <section class="section mascot-section" id="meet-mbaya">
-        <!-- The small green label + the big heading. Same pattern is reused
-             on every page, which is exactly why they're CLASSES, not ids. -->
-        <div class="section-heading">
-          <!-- "Eyebrow" = small text sitting ABOVE a heading, like an
-               eyebrow above an eye. Green, uppercase, spaced out.
-               <span> = an inline box with no meaning, just a style hook. -->
-          <span class="section-eyebrow">MEET MBAYA</span>
-          <h2>Every bad habit feeds him. Every streak weakens him.</h2>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html" aria-current="page">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
         </div>
+      </div>
+    </header>
 
-        <!-- The grid that places the 4 cards side by side.
-             CSS: repeat(auto-fit, minmax(206px, 1fr)) = "fit as many
-             206px+ columns as the screen allows", so 4 across on desktop,
-             1 per row on a phone. (Lesson 7) -->
-        <div class="mascot-grid">
-          <!-- <article> = a piece that makes sense on its own. Correct here:
-               each card is a complete stage of the story.
-
-               ⚠️ TWO BUGS ON THIS LINE (Lesson 3):
-               1. "large", "medium", "small", "tiny" have NO CSS anywhere.
-                  They do nothing, so all 4 cards look identical.
-                  The idea was probably to make Mbaya shrink card by card.
-               2. ".mascot-card" is ALSO the name of the big mascot on the
-                  home page. styles.css has TWO .mascot-card rules, so these
-                  cards inherit leftovers from the home-page one,
-                  e.g. width: min(360px, 100%). -->
-          <article class="mascot-card large">
-            <!-- The green "Day 1" pill badge.
-                 A <div> is fine here, but <p> would be slightly more
-                 meaningful, since it's a bit of text. -->
-            <div class="mascot-progress">Day 1</div>
-            <!-- <h3> because it sits UNDER the section's <h2>.
-                 Headings go h1 → h2 → h3, never skipping a level. -->
-            <h3>Huge Mbaya</h3>
-            <p>
-              The app starts strong. Your bad habits are loud. Mbaya looks big.
-            </p>
-          </article>
-
-          <!-- Same structure repeated. Only the text and the size word
-               change. (Later, JavaScript can build these 4 cards from a
-               list, so you only write the structure once.) -->
-          <article class="mascot-card medium">
-            <div class="mascot-progress">Day 30</div>
-            <h3>Smaller Mbaya</h3>
-            <p>
-              Streaks are working. The creature gets quieter, and you feel
-              sharper.
-            </p>
-          </article>
-          <article class="mascot-card small">
-            <div class="mascot-progress">Day 100</div>
-            <h3>Weak Mbaya</h3>
-            <p>You're in control. Mbaya is just a shadow of his former self.</p>
-          </article>
-          <article class="mascot-card tiny">
-            <div class="mascot-progress">Day 365</div>
-            <h3>Tiny Defeated Mbaya</h3>
-            <p>Discipline is your flex. The bad habit creature is almost gone.</p>
-          </article>
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap streak-hero">
+          <h1 class="streak-count"><small>Your streak</small>Day 23</h1>
+          <div>
+            <dl class="streak-meta">
+              <div><dt>Bangili ya kwanza</dt><dd>28 of 30 beads</dd></div>
+              <div><dt>Next piece</dt><dd>Full Bangili · 2 beads</dd></div>
+              <div><dt>Ngao charms</dt><dd>3 · next one in 4 days</dd></div>
+              <div><dt>Streak Bima</dt><dd>1 equipped</dd></div>
+              <div><dt>Consistency</dt><dd>97% · 28 of 29 days</dd></div>
+            </dl>
+            <p class="stat-note"><span class="example-tag">Example numbers</span></p>
+          </div>
         </div>
       </section>
 
-      <!-- ==============================================================
-           SECTION 2: STREAK JOURNEY
-           The milestones: the ranks you earn as your streak grows.
-           ============================================================== -->
-      <section class="section journey-section" id="journey">
-        <div class="section-heading">
-          <span class="section-eyebrow">STREAK JOURNEY</span>
-          <h2>Your roadmap from Day 1 to Legend of the Republic.</h2>
+      <!-- =============================================================
+           01: YOUR BANGILI
+           The ring IS your last 30 days: one bead position per day.
+           Bead 1 (top) is 30 days ago, and the dashed one is today,
+           waiting for your check-in. The gap is the day you slipped.
+           How the ring is drawn: "THE RING" in styles.css.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap split">
+          <div>
+            <div class="chapter-head">
+              <span class="chapter-no" aria-hidden="true">01</span>
+              <h2 id="ch1">Your <em>bangili.</em></h2>
+              <p>
+                Every bead is a day you won. The gap is the day you slipped
+                ("ya mwisho kabisaa", it wasn't). Notice: everything around the
+                gap is still there.
+              </p>
+            </div>
+            <p class="shanga-shout">Beads mbili tu, then the whole bangili is done!</p>
+          </div>
+
+          <div class="card shanga-card">
+            <div class="shanga-ring-wrap">
+              <ol class="shanga shanga--ring" aria-label="Your last 30 days as beads: 28 earned, 1 missed, today waiting">
+                <li class="bead bead--black"><span class="sr-only">Day 1: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 2: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 3: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 4: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 5: clean, green bead</span></li>
+                <li class="bead bead--gap"><span class="sr-only">Day 6: missed</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 7: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 8: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 9: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 10: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 11: clean, green bead</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 12: clean, black bead</span></li>
+                <li class="bead bead--ngao"><span class="sr-only">Day 13: Ngao shield charm, 7 in a row</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 14: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 15: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 16: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 17: clean, green bead</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 18: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 19: clean, white bead</span></li>
+                <li class="bead bead--ngao"><span class="sr-only">Day 20: Ngao shield charm, 7 in a row</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 21: clean, red bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 22: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 23: clean, green bead</span></li>
+                <li class="bead bead--black"><span class="sr-only">Day 24: clean, black bead</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 25: clean, white bead</span></li>
+                <li class="bead bead--red"><span class="sr-only">Day 26: clean, red bead</span></li>
+                <li class="bead bead--ngao"><span class="sr-only">Day 27: Ngao shield charm, 7 in a row</span></li>
+                <li class="bead bead--white"><span class="sr-only">Day 28: clean, white bead</span></li>
+                <li class="bead bead--green"><span class="sr-only">Day 29: clean, green bead</span></li>
+                <li class="bead bead--next"><span class="sr-only">Day 30: today, not yet</span></li>
+              </ol>
+              <!-- The count, sitting in the middle of the ring -->
+              <p class="shanga-count" aria-hidden="true"><strong>28</strong>of 30</p>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <!-- ✅ YOU CHANGED THIS FROM <div>s TO A LIST. Good call.
-             <ol> = ORDERED list: order matters (you can't reach Day 30
-             before Day 7). A screen reader now says "list, 5 items".
-             <ul> would be for lists where order doesn't matter.
+      <div class="shuka" aria-hidden="true"></div>
 
-             Why no 1. 2. 3. numbers show up:
-             the CSS gives each <li> display: flex, and a flex item stops
-             being a "list item", so the browser drops the number.
-             Handy by accident. (Lesson 6)
+      <!-- =============================================================
+           02: HOW TO EARN BEADS (the rules of the game)
+           A <dl> again: each <dt> is a bead, each <dd> says how to get it.
+           The little bead before each name is the same .bead element,
+           just smaller (.bead--swatch).
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">How to earn <em>beads.</em></h2>
+            <p>Real Kenyan bracelet beads, one a day. You can't buy them, you can't rush them. You can only earn them.</p>
+          </div>
 
-             ⚠️ An <ol> also brings a default margin above and below.
-             If you notice extra space above the track, that's why.
-             Fix: margin: 0 on .journey-track. (Lesson 4) -->
-        <ol class="journey-track">
-          <!-- Each <li> = one milestone.
-               CSS: display: flex + justify-content: space-between
-               → pushes "Day 1" to the LEFT and the title to the RIGHT. -->
-          <li class="journey-point">
-            <!-- <span>   = plain text holder, styled green by the CSS.
-                 <strong> = "this is important". Bold by default, and
-                            screen readers may stress it. -->
-            <span>Day 1</span><strong>The Beginning</strong>
-          </li>
-          <li class="journey-point">
-            <span>Day 7</span><strong>Weekend Survivor</strong>
-          </li>
-          <li class="journey-point">
-            <span>Day 30</span><strong>Certified Discipline</strong>
-          </li>
-          <li class="journey-point">
-            <span>Day 100</span><strong>Village Elder</strong>
-          </li>
-          <li class="journey-point">
-            <span>Day 365</span><strong>Legend of the Republic</strong>
-          </li>
-        </ol>
+          <!-- The beads are ONLY the beads of a real Kenyan bracelet:
+               the flag's colours, in the flag's order, plus the shield.
+               So by Day 30 you've literally built a Kenyan bracelet. -->
+          <dl class="glossary bead-rules">
+            <div>
+              <dt>
+                <span class="bead bead--swatch bead--black" aria-hidden="true"></span><span class="bead bead--swatch bead--white" aria-hidden="true"></span><span class="bead bead--swatch bead--red" aria-hidden="true"></span><span class="bead bead--swatch bead--white" aria-hidden="true"></span><span class="bead bead--swatch bead--green" aria-hidden="true"></span>
+              </dt>
+              <dd><strong>One bead for every clean check-in</strong>, always in the flag's order: black, white, red, white, green, and round again. Exactly how a Kenyan bracelet is strung.</dd>
+            </div>
+            <div>
+              <dt><span class="bead bead--swatch bead--ngao" aria-hidden="true"></span> The Ngao</dt>
+              <dd><strong>Every 7th day in a row</strong>, the bead is the Maasai shield from the heart of the flag. The centrepiece of every real Kenyan bracelet.</dd>
+            </div>
+            <div>
+              <dt><span class="bead bead--swatch bead--gap" aria-hidden="true"></span> The gap</dt>
+              <dd><strong>A missed day.</strong> No bead, and the streak resets. But no bead is ever taken away. Umebant? Sawa. Tunaendelea.</dd>
+            </div>
+            <div>
+              <dt><img class="icon" src="../Images/icons/bima.svg" alt="" /> Streak Bima</dt>
+              <dd>Life happened (msiba, safari, no network)? Bima covers the day and you still get its bead.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           03: THE JOURNEY (Duolingo-style path)
+           Same zig-zag path as before, but the stops are now the pieces
+           of jewellery you build, from one bead to a full collar.
+           stop--done = earned (green), stop--here = you (red),
+           stop--goal = the final piece (gold). No class = still ahead.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch3">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="ch3">From one bead to <em>Ushanga wa Shujaa.</em></h2>
+            <p>
+              The journey is the jewellery. A bracelet at Day 30, a necklace at
+              Day 100, and at Day 365 the full beaded collar: Legend of the Republic.
+            </p>
+          </div>
+
+          <ol class="route">
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">Shanga ya kwanza</span><small>Day 1 · your first bead</small>
+            </li>
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">First Ngao</span><small>Day 7 · Weekend Survivor</small>
+            </li>
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">Kumi na nne bora</span><small>Day 14 · two Ngao</small>
+            </li>
+            <li class="stop stop--done">
+              <span class="stop-dot"><img src="../Images/icons/check.svg" alt="" /></span>
+              <span class="stop-name">Three weeks</span><small>Day 21 · third Ngao</small>
+            </li>
+            <li class="stop stop--here" aria-current="step">
+              <span class="stop-dot">23</span>
+              <span class="stop-name">Stringing beads</span><small>2 beads to a full bangili</small>
+            </li>
+            <li class="stop">
+              <span class="stop-dot">30</span>
+              <span class="stop-name">Bangili</span><small>Day 30 · Certified Discipline</small>
+            </li>
+            <li class="stop">
+              <span class="stop-dot">60</span>
+              <span class="stop-name">Bangili mbili</span><small>Day 60 · the double wrap</small>
+            </li>
+            <li class="stop">
+              <span class="stop-dot">100</span>
+              <span class="stop-name">Mkufu</span><small>Day 100 · necklace · Village Elder</small>
+            </li>
+            <li class="stop stop--goal">
+              <span class="stop-dot"><img src="../Images/icons/trophy.svg" alt="" /></span>
+              <span class="stop-name">Ushanga wa Shujaa</span><small>Day 365 · Legend of the Republic</small>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           04: THE SANDUKU (jewellery box)
+           Every piece you've built, and the ones still locked.
+           Each piece is drawn with CSS (see "JEWELLERY PIECES" in the CSS):
+           a dotted circle is a bracelet, a dotted U is a necklace, and the
+           collar is a ring of colour made with conic-gradient.
+           is-locked = greyed out until you earn it.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch4">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">04</span>
+            <h2 id="ch4">The <em>sanduku.</em></h2>
+            <p>Your jewellery box. Every piece in here was earned one day at a time.</p>
+          </div>
+          <ol class="pieces">
+            <li class="piece is-current">
+              <span class="piece-art piece-art--bangili" aria-hidden="true"></span>
+              <strong>Bangili</strong><span>30 beads · 28 / 30</span>
+            </li>
+            <li class="piece is-locked">
+              <span class="piece-art piece-art--double" aria-hidden="true"></span>
+              <strong>Bangili mbili</strong><span>60 beads · locked</span>
+            </li>
+            <li class="piece is-locked">
+              <span class="piece-art piece-art--mkufu" aria-hidden="true"></span>
+              <strong>Mkufu</strong><span>100 beads · locked</span>
+            </li>
+            <li class="piece is-locked">
+              <span class="piece-art piece-art--shujaa" aria-hidden="true"></span>
+              <strong>Ushanga wa Shujaa</strong><span>365 beads · locked</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="wrap cta-band" aria-labelledby="cta">
+        <div>
+          <h2 id="cta">Today's bead is <em>one check-in</em> away.</h2>
+          <a class="btn btn-red btn-big" href="checkIn.html">Check in · earn a bead</a>
+        </div>
+        <img src="../Images/brand/moods/motivator.jpg" alt="" width="168" height="218" loading="lazy" />
       </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
   </body>
 </html>

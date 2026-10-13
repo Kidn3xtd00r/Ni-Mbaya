@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ligi · Ni Mbaya!</title>
+    <meta name="description" content="Weekly Ni Mbaya! leagues: climb from Mkokoteni to SGR by earning XP for staying clean." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html" aria-current="page">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">Ligi · ends Sunday midnight</span>
+          <h1>Matatu <em>League.</em></h1>
+          <p class="lede">
+            Fifteen strangers, one week, XP only. Top 5 move up to Nganya.
+            Bottom 3 drop to Boda. Hakuna kubet: the only thing you stake here is
+            your discipline.
+          </p>
+        </div>
+      </section>
+
+      <div class="wrap chapter">
+        <!-- THE FIVE LEAGUES. Same pattern as the Shanga journey: a class says where
+             you are (is-current) and which are still ahead (is-locked).
+             The shield shape is made with clip-path (section 18 of CSS). -->
+        <ol class="tiers" aria-label="Leagues, lowest to highest">
+          <li class="tier"><span class="tier-badge tier--1">1</span>Mkokoteni</li>
+          <li class="tier"><span class="tier-badge tier--2">2</span>Boda Boda</li>
+          <li class="tier is-current" aria-current="true"><span class="tier-badge tier--3">3</span>Matatu</li>
+          <li class="tier is-locked"><span class="tier-badge tier--4">4</span>Nganya</li>
+          <li class="tier is-locked"><span class="tier-badge tier--5">5</span>SGR</li>
+        </ol>
+
+        <div class="split">
+          <div>
+            <!-- THE LEADERBOARD
+                 The place numbers come from a CSS counter on .racer.
+                 The two "zone" rows are list items too, but they don't have
+                 the .racer class, so the counter skips them. --avatar
+                 colours are set with small classes, no inline styles. -->
+            <ol class="board" aria-label="This week's leaderboard">
+              <li class="racer"><span class="avatar av-1">W</span><span class="racer-name">Wanjiru<small>Day 64 · Nakuru</small></span><span class="racer-xp">880 XP</span></li>
+              <li class="racer"><span class="avatar av-2">O</span><span class="racer-name">Otieno<small>Day 41 · Kisumu</small></span><span class="racer-xp">645 XP</span></li>
+              <li class="racer"><span class="avatar av-3">C</span><span class="racer-name">Chebet<small>Day 30 · Eldoret</small></span><span class="racer-xp">520 XP</span></li>
+              <li class="racer racer--you"><span class="avatar av-you">J</span><span class="racer-name">Joe (you)<small>Day 23 · Nairobi</small></span><span class="racer-xp">410 XP</span></li>
+              <li class="racer"><span class="avatar av-4">B</span><span class="racer-name">Baraka<small>Day 19 · Mombasa</small></span><span class="racer-xp">395 XP</span></li>
+              <li class="zone zone--up" aria-hidden="true">▲ Promotion zone ends here</li>
+              <li class="racer"><span class="avatar av-5">A</span><span class="racer-name">Akinyi<small>Day 17 · Kisumu</small></span><span class="racer-xp">380 XP</span></li>
+              <li class="racer"><span class="avatar av-1">K</span><span class="racer-name">Kamau<small>Day 22 · Thika</small></span><span class="racer-xp">340 XP</span></li>
+              <li class="racer"><span class="avatar av-2">N</span><span class="racer-name">Nekesa<small>Day 9 · Bungoma</small></span><span class="racer-xp">300 XP</span></li>
+              <li class="racer"><span class="avatar av-3">M</span><span class="racer-name">Mutua<small>Day 12 · Machakos</small></span><span class="racer-xp">270 XP</span></li>
+              <li class="racer"><span class="avatar av-4">H</span><span class="racer-name">Halima<small>Day 15 · Garissa</small></span><span class="racer-xp">240 XP</span></li>
+              <li class="racer"><span class="avatar av-5">K</span><span class="racer-name">Kiprop<small>Day 8 · Kericho</small></span><span class="racer-xp">205 XP</span></li>
+              <li class="racer"><span class="avatar av-1">W</span><span class="racer-name">Wafula<small>Day 6 · Kakamega</small></span><span class="racer-xp">150 XP</span></li>
+              <li class="zone zone--down" aria-hidden="true">▼ Demotion zone</li>
+              <li class="racer"><span class="avatar av-2">N</span><span class="racer-name">Njeri<small>Day 4 · Nyeri</small></span><span class="racer-xp">120 XP</span></li>
+              <li class="racer"><span class="avatar av-3">O</span><span class="racer-name">Omondi<small>Day 2 · Homa Bay</small></span><span class="racer-xp">60 XP</span></li>
+              <li class="racer"><span class="avatar av-4">M</span><span class="racer-name">Mwangi<small>Day 1 · Nyahururu</small></span><span class="racer-xp">20 XP</span></li>
+            </ol>
+            <p class="stat-note"><span class="example-tag">Example league</span></p>
+          </div>
+
+          <div>
+            <!-- How far you are from the promotion zone -->
+            <section class="card" aria-labelledby="gap-title">
+              <h2 id="gap-title" class="panel-title">You're in!</h2>
+              <p>You're <strong>#4</strong>. Baraka is 15 XP behind you. One check-in and one quest and you're safe.</p>
+              <p class="bubble bubble--green">Kenyans have decided: Joe anapanda Nganya.</p>
+            </section>
+
+            <!-- <details> opens and closes by itself. Pure HTML. -->
+            <details class="explain">
+              <summary>How does Ligi work?</summary>
+              <div>
+                <ul>
+                  <li>Every Monday you're put in a league of 15 people at your level, from all over Kenya.</li>
+                  <li>You earn XP for check-ins (+20), quests (+10 to +50), beating a craving on the panic button (+50) and helping your chama.</li>
+                  <li>Sunday midnight: top 5 move up a league, bottom 3 drop down one.</li>
+                  <li>XP never comes from spending money. You can't buy your way up. That's the whole point.</li>
+                </ul>
+              </div>
+            </details>
+
+            <details class="explain">
+              <summary>Why matatus?</summary>
+              <div>
+                <p>Mkokoteni (handcart) to Boda to Matatu to Nganya (the matatu with the lights and the sound system) to SGR. Same destination, faster every league.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

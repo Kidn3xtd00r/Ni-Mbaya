@@ -1,1496 +1,3420 @@
-/* =========================
-   GLOBAL APP PADDING SYSTEM
-   MOBILE FIRST SPACING CONTROL
-   ========================= */
+/* =====================================================================
+   Ni Mbaya! · MALEBO — styles.css (v2, "the poster")
 
-/*
-  This creates a consistent "app container feel"
-  so content never touches screen edges on mobile
-*/
+   Hey! This is now the ONLY stylesheet on the site. Every page links to it.
+   (Before, there were three: styles.css, header.css and background.css.
+   One file = one place to look when something looks off.)
 
+   THE IDEA BEHIND THE DESIGN
+   Everything is borrowed from the "Meet Malebo" poster in Images/brand/:
+     - Pitch black      → the poster is pure #000, so Malebo's photo melts
+                          into the page with no visible box around him.
+     - Speech bubbles   → the handwritten bubbles next to him on the poster
+                          ("STREAK IMEDROP?") → .bubble
+     - The shuka        → the red/green/black shuka on his shoulder becomes a
+                          thin striped band between big sections → .shuka
+     - His four moods   → Calm Coach (green), Motivator (yellow), Pressure
+                          Friend (orange), Chaos Temptation (red). Each mood
+                          colour has ONE job: it shows how your streak is doing.
+     - Chapters         → big numbered sections (01, 02, 03…) like a poster
+                          series, instead of the same centred heading again
+                          and again.
+
+   A FEW HOUSE RULES (why things look the way they do)
+     - Black, white, and Kenyan red do most of the work. Green means "good".
+       Yellow and orange only show up when talking about Malebo's moods.
+     - Three typefaces, each with a job:
+         Anton           → big loud headlines (feels like a matatu sign)
+         Permanent Marker → only inside speech bubbles (Malebo "talking")
+         Manrope         → everything you actually read
+     - No glassmorphism, no glowing blobs, no gradients everywhere. Those are
+       what make a site look like every other AI-made template. Flat black
+       cards with thin borders feel more like a real street brand.
+
+   FILE MAP
+     1. Design tokens        6. Home page
+     2. Base                 7. Streak page
+     3. Layout helpers       8. Check-in & Settings (forms)
+     4. Header + tab bar     9. Savings page
+     5. Shared components   10. Panic page
+                            11. Community page
+                            12. Footer
+     PART 2, the game (sections 13 to 22) starts about halfway down.
+
+   PHASE 1 RULE: HTML + CSS only. Zero JavaScript. Anything that looks
+   interactive (the check-in reply, the savings calculator, the panic pop-up)
+   is done with CSS tricks that are explained right where they're used.
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   1. DESIGN TOKENS
+   Variables. Change one here and it changes everywhere it's used.
+   --------------------------------------------------------------------- */
 :root {
-  --app-padding: 16px;
+  /* The base: black like the poster, with a few greys for cards and lines */
+  --night: #000000;          /* page background (matches the photos exactly) */
+  --coal: #111111;           /* cards */
+  --ash: #262626;            /* borders and hairlines */
+  --smoke: #3d3d3d;          /* stronger borders, e.g. on hover */
+  --chalk: #f5f2ec;          /* main text: warm white, softer than pure #fff */
+  --muted: #a39e96;          /* secondary text (still passes contrast on black) */
+
+  /* The brand */
+  --red: #e3262d;            /* Ni Mbaya! red: buttons, the "BO" in MaleBO */
+  --red-text: #ff5a5f;       /* a lighter red for SMALL text. Pure --red is a
+                                bit too dark to read at small sizes on black. */
+  --green: #2fb04c;          /* "you're doing well" green */
+
+  /* Malebo's four moods. Each one = one state of your streak. */
+  --calm: #3fbf5a;           /* early days, steady */
+  --hype: #f4b400;           /* you're on a roll */
+  --pressure: #f26b1d;       /* you're slacking */
+  --chaos: #e3262d;          /* you're about to break it */
+
+  /* Type */
+  --display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --marker: "Permanent Marker", "Comic Sans MS", cursive;
+  --body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Spacing: one scale, so all the gaps feel related */
+  --s1: 0.5rem;
+  --s2: 1rem;
+  --s3: 1.5rem;
+  --s4: 2.5rem;
+  --s5: 4rem;
+  --s6: 6rem;
+
+  --gutter: 1rem;            /* page edge on phones (16px) */
+  --max: 1240px;             /* the widest the content ever gets */
+  --radius: 10px;            /* one corner size for every card */
+  --tabbar-h: 4rem;          /* height of the phone tab bar at the bottom */
+}
+@media (min-width: 900px) {
+  :root { --gutter: 2.5rem; }
 }
 
-/* Apply safe screen padding globally */
+
+/* ---------------------------------------------------------------------
+   2. BASE
+   The "reset": fixing browser defaults before we design anything.
+   --------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;    /* padding counts INSIDE the width. Saves headaches. */
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;   /* stops iPhones randomly enlarging text */
+}
+
 body {
   margin: 0;
-  padding: var(--app-padding);
+  font-family: var(--body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--chalk);
+  background: var(--night);
+  /* On phones the tab bar is stuck to the bottom of the screen.
+     This padding stops it from covering the end of the page. */
+  padding-bottom: var(--tabbar-h);
+}
+@media (min-width: 900px) {
+  body { padding-bottom: 0; }   /* on laptops the tab bar moves into the header */
 }
 
-/* Prevent topbar from double-padding visually */
-.topbar {
-  margin-top: 8px;
+img {
+  display: block;            /* images are "inline" by default, which leaves a
+                                weird tiny gap under them. block removes it. */
+  max-width: 100%;
+  height: auto;
 }
 
-/* Optional: keep main content aligned cleanly */
-main {
-  padding-top: 12px;
-}
-/* <!-- THIS IS THE LANDING PAGE OF THE APP --> */
-.hero {
-  top: 72px;
-  display: grid;
-  gap: 28px;
-  padding: 0 0 42px;
-}
+a { color: inherit; }
 
-.hero-copy {
-  max-width: 640px;
-}
+p { margin: 0 0 var(--s2); }
 
-.eyebrow,
-.section-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 800;
+/* All headings use Anton: tall, tight, loud. Uppercase like the poster. */
+h1,
+h2,
+h3 {
+  margin: 0 0 var(--s2);
+  font-family: var(--display);
+  font-weight: 400;          /* Anton only comes in one weight, so 400 it is */
+  line-height: 0.95;
   text-transform: uppercase;
-  color: var(--electric);
-  letter-spacing: 0.16em;
-  font-size: 0.75rem;
+  letter-spacing: 0.005em;
+}
+/* clamp(smallest, ideal, biggest): grows with the screen but never too far */
+h1 { font-size: clamp(3.2rem, 12vw, 7.5rem); }
+h2 { font-size: clamp(2.2rem, 6vw, 4rem); }
+h3 { font-size: 1.45rem; line-height: 1.05; }
+
+/* <em> inside a heading = the word that hits hardest. It turns red. */
+h1 em,
+h2 em {
+  font-style: normal;
+  color: var(--red);
 }
 
-.hero h1 {
-  font-size: clamp(3rem, 8vw, 5.5rem);
-  line-height: 0.9;
-  margin: 16px 0 14px;
+/* When someone moves around with the Tab key, show a clear outline.
+   :focus-visible only shows it for keyboards, not mouse clicks. */
+:focus-visible {
+  outline: 3px solid var(--hype);
+  outline-offset: 3px;
 }
 
-.hero-lead {
-  font-size: 1.2rem;
-  line-height: 1.7;
-  max-width: 580px;
-  margin-bottom: 16px;
+/* Hides text from eyes but NOT from screen readers.
+   Used for extra words a blind user needs but a sighted user doesn't
+   (e.g. "missed" on a calendar day that's already shown in red). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.hero-support {
-  margin: 0 0 24px;
+/* The "Skip to content" link. Invisible until you press Tab once,
+   then it pops up so keyboard users can skip the whole header. */
+.skip-link {
+  position: absolute;
+  left: var(--s2);
+  top: -4rem;
+  z-index: 100;
+  padding: var(--s1) var(--s2);
+  background: var(--chalk);
+  color: var(--night);
+  font-weight: 700;
+}
+.skip-link:focus { top: var(--s2); }
+
+/* If someone has told their phone "reduce motion", we respect it. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* ---------------------------------------------------------------------
+   3. LAYOUT HELPERS
+   --------------------------------------------------------------------- */
+
+/* .wrap = "keep this content centred and not too wide".
+   Used inside almost every section. */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;       /* margin-left + margin-right: auto = centred */
+  padding-inline: var(--gutter);
+}
+
+/* A chapter is one big section of a page. */
+.chapter {
+  padding-block: var(--s5);
+}
+@media (min-width: 900px) {
+  .chapter { padding-block: var(--s6); }
+}
+
+/* Chapter heading: a big number on the left, title on the right.
+   On phones they just stack. */
+.chapter-head {
+  display: grid;
+  gap: var(--s1) var(--s3);
+  margin-bottom: var(--s4);
+}
+@media (min-width: 900px) {
+  .chapter-head {
+    grid-template-columns: auto 1fr;
+    align-items: end;
+  }
+}
+.chapter-no {
+  font-family: var(--display);
+  font-size: clamp(3rem, 9vw, 6rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--smoke);   /* outline-only numbers, like a stencil */
+}
+.chapter-head h2 { margin: 0; }
+.chapter-head p {
+  grid-column: 1 / -1;       /* the intro line stretches under BOTH columns */
+  max-width: 38rem;
+  margin: var(--s2) 0 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+/* The small label above a heading ("an eyebrow sits above an eye") */
+.eyebrow {
+  display: block;
+  margin-bottom: var(--s2);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+}
+
+/* Big intro paragraph */
+.lede {
+  max-width: 34rem;
+  font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+  line-height: 1.5;
+}
+
+/* The opening block on every inner page */
+.page-hero {
+  padding-block: var(--s5) var(--s4);
+  border-bottom: 1px solid var(--ash);
+}
+.page-hero h1 { margin-bottom: var(--s3); }
+.page-hero .lede { color: var(--muted); }
+
+/* A plain card: dark box, thin border. */
+.card {
+  padding: var(--s3);
+  background: var(--coal);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+
+/* Everything with fake numbers (Day 23, KSh 4,600…) gets this tag,
+   so nobody mistakes the demo for real data. */
+.example-tag {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border: 1px dashed var(--smoke);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
-.hero-actions {
+
+/* ---------------------------------------------------------------------
+   4. HEADER + TAB BAR
+   The header is copy-pasted into every page (no JavaScript to load it).
+   The nav inside it is the clever part, read on.
+   --------------------------------------------------------------------- */
+.site-header {
+  position: sticky;          /* sticks to the top as you scroll */
+  top: 0;
+  z-index: 50;               /* stays above the page content */
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom: 1px solid var(--ash);
+}
+.header-inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: var(--s2);
+  min-height: 4rem;
 }
 
+/* The wordmark "Ni Mbaya!" is real text, not an image, so it's always sharp
+   and Google can read it. The <span> makes "Mbaya!" red. */
+.wordmark {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.wordmark span { color: var(--red); }
+
+/* margin-left: auto pushes this group all the way to the right */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-left: auto;
+}
+.header-link {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
+}
+.header-link:hover,
+.header-link[aria-current="page"] { color: var(--chalk); }
+
+/* THE TAB BAR
+   One <nav>, two jobs:
+     - On a phone it's FIXED to the bottom of the screen, like a real app
+       (Instagram, M-Pesa…), where your thumb already is.
+     - From 900px wide, the same <nav> stops being fixed and just sits in
+       the header between the wordmark and the buttons.
+   Same HTML, different CSS. That's the whole point of CSS. */
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  height: var(--tabbar-h);
+  background: var(--night);
+  border-top: 1px solid var(--ash);
+}
+.tabbar a {
+  flex: 1;                   /* every tab gets an equal share of the width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--muted);
+}
+/* A small dot above each label. The current page's dot turns red. */
+.tabbar a::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ash);
+}
+/* aria-current="page" is put on the link of the page you're on.
+   It tells screen readers "you are here", AND we can style it. Two birds. */
+.tabbar a[aria-current="page"] { color: var(--chalk); }
+.tabbar a[aria-current="page"]::before { background: var(--red); }
+
+@media (min-width: 900px) {
+  .tabbar {
+    position: static;        /* back to normal: sits in the header's flex row */
+    height: auto;
+    gap: var(--s3);
+    margin-left: var(--s4);
+    background: none;
+    border: 0;
+  }
+  .tabbar a {
+    flex: none;
+    flex-direction: row;
+    font-size: 0.9rem;
+  }
+  .tabbar a:hover { color: var(--chalk); }
+}
+
+
+/* ---------------------------------------------------------------------
+   5. SHARED COMPONENTS
+   --------------------------------------------------------------------- */
+
+/* BUTTONS
+   They're <a> links styled to look like buttons, because they take you to
+   another page. (A real <button> is for doing something ON the page.) */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  border: none;
-  border-radius: 999px;
-  padding: 16px 28px;
-  font-weight: 800;
+  gap: var(--s1);
+  min-height: 3.25rem;       /* tall enough for a thumb (44px+) */
+  padding: 0 var(--s3);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  text-decoration: none;
   cursor: pointer;
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease,
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease;
+  transition: transform 0.15s ease, background-color 0.15s ease;
 }
+/* :hover = mouse over it. :active = while pressing it. A tiny push down
+   makes it feel like a real button. */
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(1px); }
 
-.btn:hover {
-  transform: translateY(-2px);
+.btn-red {
+  background: var(--red);
+  color: #fff;
 }
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--electric), #00b45b);
-  color: var(--surface-strong);
-  box-shadow:
-    0 20px 45px rgba(0, 200, 83, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.btn-primary:hover {
-  box-shadow:
-    0 26px 60px rgba(0, 200, 83, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  color: var(--text);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(10px);
-}
-
-.btn-secondary:hover {
-  background: rgba(0, 200, 83, 0.08);
-  border-color: rgba(0, 200, 83, 0.22);
-  color: var(--text);
-}
-
-.btn-danger {
-  background: #f04545;
-  color: white;
-  box-shadow: 0 18px 35px rgba(240, 69, 69, 0.22);
-}
-
-.btn-large {
-  padding: 18px 32px;
-  font-size: 1rem;
-}
-
-.hero-hype {
-  display: grid;
-  gap: 16px;
-}
-
-.hero-stats {
-  display: grid;
-  gap: 12px;
-}
-
-.stat-card {
-  padding: 16px 18px;
-  border-radius: 24px;
-  font-weight: 700;
-
-  /* unified dark system base */
-  background: #0f1115;
-  color: var(--text);
-
-  border: 1px solid rgba(255, 255, 255, 0.06);
-
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
-}
-
-.stat-card.green {
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.25),
-      transparent 45%
-    ),
-    #0f1115;
-
-  border: 1px solid rgba(0, 200, 83, 0.35);
-
-  box-shadow:
-    0 0 35px rgba(0, 200, 83, 0.12),
-    0 18px 45px rgba(0, 0, 0, 0.5);
-
-  color: var(--text);
-}
-
-.stat-card.yellow {
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(255, 209, 0, 0.22),
-      transparent 45%
-    ),
-    #0f1115;
-
-  border: 1px solid rgba(255, 209, 0, 0.3);
-
-  box-shadow:
-    0 0 30px rgba(255, 209, 0, 0.1),
-    0 18px 45px rgba(0, 0, 0, 0.5);
-
-  color: var(--text);
-}
-
-.stat-card.charcoal {
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(255, 255, 255, 0.05),
-      transparent 50%
-    ),
-    #0b0d10;
-
-  border: 1px solid rgba(255, 255, 255, 0.06);
-
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
-
-  color: var(--text);
-}
-
-.hero-visual {
-  position: relative;
-  min-height: 380px;
-  display: grid;
-  place-items: center;
-}
-
-/* <!-- THIS IS THE MASCOT CARD OF THE APP --> */
-.mascot-card {
-  position: relative;
-  width: min(360px, 100%);
-  padding: 36px;
-  border-radius: 44px;
-  background: linear-gradient(180deg, #fafff7 0%, #d9f8e1 100%);
-  box-shadow: var(--shadow);
-  overflow: visible;
-}
-
-.mascot-badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  background: var(--charcoal);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-}
-
-.mascot-body {
-  position: relative;
-  width: 220px;
-  aspect-ratio: 1 / 1;
-  margin: 0 auto;
-  border-radius: 45% 45% 55% 55%;
-  background: radial-gradient(
-    circle at top,
-    #41d97f 0%,
-    #18a45d 52%,
-    #0f6a3f 100%
-  );
-  box-shadow: inset 0 18px 28px rgba(0, 0, 0, 0.12);
-}
-
-.mascot-eye {
-  position: absolute;
-  top: 45px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: white;
-  box-shadow: inset 0 5px 0 rgba(0, 0, 0, 0.08);
-}
-
-.mascot-eye.left {
-  left: 48px;
-}
-
-.mascot-eye.right {
-  right: 48px;
-}
-
-.mascot-smile {
-  position: absolute;
-  top: 124px;
-  left: 50%;
-  width: 100px;
-  height: 40px;
-  transform: translateX(-50%);
-  border-bottom: 10px solid rgba(255, 255, 255, 0.9);
-  border-radius: 0 0 80px 80px;
-}
-
-.mascot-horn,
-.mascot-tail {
-  position: absolute;
-  background: linear-gradient(180deg, #d1ffb6 0%, #7fd68d 100%);
-  border-radius: 999px;
-}
-
-.mascot-horn {
-  top: -18px;
-  left: 50%;
-  width: 28px;
-  height: 70px;
-  transform: translateX(-50%) rotate(-8deg);
-}
-
-.mascot-tail {
-  bottom: 12px;
-  right: -24px;
-  width: 24px;
-  height: 110px;
-  transform: rotate(18deg);
-}
-
-.mascot-flames {
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  width: 260px;
-  height: 140px;
-  transform: translateX(-50%);
-  background:
-    radial-gradient(circle, rgba(255, 178, 0, 0.5) 0%, transparent 60%),
-    radial-gradient(circle, rgba(255, 81, 0, 0.35) 0%, transparent 45%);
-  filter: blur(6px);
-  z-index: -1;
-  animation: float 5s ease-in-out infinite;
-}
-
-.visual-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at 50% 20%,
-    rgba(0, 210, 91, 0.2),
-    transparent 34%
-  );
-}
-/* ==========================================
-   WHY NI MBAYA? TIMELINE SECTION
-   ========================================== */
-
-/* Page title: the one <h1> at the top of every page in pages/.
-   Same bold, tight style as the home page's hero h1, just smaller. */
-.page-title {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  line-height: 0.95;
-  margin: 16px 0 0;
-}
-
-.section {
-  padding: 46px 0;
-}
-
-.section-heading {
-  display: grid;
-  gap: 14px;
-  margin-bottom: 28px;
-}
-
-.section-heading h2 {
-  font-size: clamp(2rem, 3vw, 3rem);
-  margin: 0;
-  line-height: 1.05;
-}
-
-/* Main section containers */
-
-.cards-section,
-.feature-section,
-.chat-section,
-.mascot-section,
-.journey-section,
-.savings-section,
-.panic-section,
-.squad-section,
-.testimonial-section,
-.final-cta {
-  border-radius: 40px;
-  box-shadow: var(--shadow);
-  padding: 32px;
-}
-
-/* Grid layouts */
-
-.timeline-grid,
-.feature-grid,
-.chat-grid,
-.mascot-grid,
-.testimonial-grid {
-  display: grid;
-  gap: 18px;
-}
-
-.timeline-grid {
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-}
-
-/* Individual timeline card */
-
-.timeline-card {
-  padding: 26px;
-  border-radius: 28px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.12),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Timeline label */
-
-.timeline-day {
-  font-size: 0.9rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-
-  color: var(--electric);
-
-  margin-bottom: 12px;
-}
-
-/* Timeline description */
-
-.timeline-card p {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
-
-  color: var(--text);
-}
-/* ==========================================
-   HOW IT ALL WORKS SECTION
-   ========================================== */
-
-.feature-grid {
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-
-/* Individual Feature Card */
-
-.feature-card {
-  padding: 28px;
-  border-radius: 32px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.12),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.3);
-}
-
-/* Feature Icon */
-
-.feature-icon {
-  width: 56px;
-  height: 56px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 18px;
-
-  background: rgba(0, 200, 83, 0.15);
-
-  color: var(--electric);
-
-  font-size: 1.5rem;
-  margin-bottom: 18px;
-}
-
-/* Feature Title */
-
-.feature-card h3 {
-  margin: 0 0 12px;
-  color: var(--text);
-}
-
-/* Feature Description */
-
-.feature-card p {
-  margin: 0;
-  line-height: 1.7;
-  color: rgba(245, 247, 250, 0.75);
-}
-
-/* ==========================================
-   ACCOUNTABILITY CHAT SECTION
-   Users motivate, challenge, and support
-   each other inside accountability squads.
-   ========================================== */
-
-.chat-grid {
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-/* Base Chat Bubble */
-
-.chat-bubble {
-  position: relative;
-
-  padding: 18px 22px;
-  border-radius: 28px;
-
-  line-height: 1.7;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Received Message */
-
-.chat-bubble.received {
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.1),
-      transparent 40%
-    ),
-    #111418;
-
-  color: var(--text);
-
-  text-align: left;
-}
-
-/* Sent Message */
-
-.chat-bubble.sent {
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(206, 17, 38, 0.12),
-      transparent 40%
-    ),
-    #171b20;
-
-  color: var(--text);
-
-  text-align: left;
-}
-
-/* Bubble Tails */
-
-.chat-bubble.received::after,
-.chat-bubble.sent::after {
-  content: "";
-
-  position: absolute;
-  bottom: 14px;
-
-  width: 18px;
-  height: 18px;
-
-  background: inherit;
-
-  border-radius: 5px 0 0 5px;
-}
-
-/* Left Bubble Tail */
-
-.chat-bubble.received::after {
-  left: -8px;
-  transform: rotate(30deg);
-}
-
-/* Right Bubble Tail */
-
-.chat-bubble.sent::after {
-  right: -8px;
-  transform: rotate(-30deg);
-}
-/* ==========================================
-   MEET MBAYA SECTION
-   The mascot representing temptation,
-   excuses, and bad habits.
-   ========================================== */
-
-.mascot-grid {
-  grid-template-columns: repeat(auto-fit, minmax(206px, 1fr));
-}
-
-/* Mascot Card */
-
-.mascot-card {
-  display: grid;
-  gap: 18px;
-
-  padding: 28px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.1),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgba(206, 17, 38, 0.08),
-      transparent 40%
-    ),
-    #111418;
-
-  border-radius: 32px;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
-}
-
-/* Progress Badge */
-
-.mascot-progress {
-  display: inline-flex;
-  align-items: center;
-
-  width: fit-content;
-
-  padding: 10px 14px;
-
-  background: rgba(0, 200, 83, 0.15);
-
-  border: 1px solid rgba(0, 200, 83, 0.25);
-
-  border-radius: 999px;
-
-  font-size: 0.85rem;
-  font-weight: 700;
-
-  color: var(--electric);
-}
-
-/* Card Title */
-
-.mascot-card h3 {
-  margin: 0;
-  color: var(--text);
-}
-
-/* Card Description */
-
-.mascot-card p {
-  margin: 0;
-
-  line-height: 1.7;
-
-  color: rgba(245, 247, 250, 0.75);
-}
-
-/* ==========================================
-   STREAK JOURNEY SECTION
-   Track your progress and milestones.
-   ========================================== */
-
-.journey-track {
-  display: grid;
-  gap: 18px;
-
-  padding: 22px;
-  border-radius: 32px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.12),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Individual Milestone */
-
-.journey-point {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 16px;
-
-  padding: 18px 22px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.01)
-  );
-
-  border-radius: 24px;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Milestone Label */
-
-.journey-point span {
-  font-size: 0.95rem;
-  font-weight: 700;
-
-  color: var(--electric);
-}
-
-/* Milestone Description */
-
-.journey-point strong {
-  color: var(--text);
-}
-
-/* ==========================================
-   SAVINGS CALCULATOR
-   See how much money you're keeping
-   by beating Mbaya.
-   ========================================== */
-
-.savings-shell {
-  display: grid;
-  gap: 24px;
-}
-
-/* Main Cards */
-
-.savings-card,
-.savings-results {
-  padding: 28px;
-
-  border-radius: 32px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.12),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Form Label */
-
-.savings-card label {
-  display: block;
-  margin-bottom: 12px;
-
-  font-weight: 700;
-  color: var(--text);
-}
-
-/* Input Container */
-
-.input-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  padding: 14px 16px;
-
-  background: rgba(255, 255, 255, 0.04);
-
-  border-radius: 18px;
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-/* Currency Label */
-
-.input-group span {
-  color: rgba(245, 247, 250, 0.65);
-  font-weight: 700;
-}
-
-/* Input Field */
-
-input[type="number"] {
-  width: 100%;
-
-  border: none;
-  outline: none;
-
+.btn-red:hover { background: #f23a40; }
+
+.btn-ghost {
+  border-color: var(--chalk);
+  color: var(--chalk);
   background: transparent;
-
-  font-size: 1.2rem;
-  font-weight: 700;
-
-  color: var(--text);
+}
+.btn-ghost:hover {
+  background: var(--chalk);
+  color: var(--night);
 }
 
-/* Helper Text */
-
-.savings-tip {
-  margin: 14px 0 0;
-
-  color: rgba(245, 247, 250, 0.65);
-
-  line-height: 1.6;
-}
-
-/* Summary Grid */
-
-.savings-summary {
-  display: grid;
-  gap: 16px;
-
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-/* Summary Boxes */
-
-.savings-summary div {
-  padding: 22px;
-
-  border-radius: 28px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(0, 200, 83, 0.12),
-    rgba(0, 200, 83, 0.05)
-  );
-
-  border: 1px solid rgba(0, 200, 83, 0.15);
-}
-
-/* Summary Label */
-
-.savings-summary span {
-  display: block;
-
-  margin-bottom: 8px;
-
-  color: rgba(245, 247, 250, 0.65);
-}
-
-/* Summary Amount */
-
-.savings-summary strong {
+.btn-big {
+  min-height: 4rem;
+  padding: 0 var(--s4);
   font-size: 1.5rem;
-  color: var(--text);
 }
 
-/* Reward Items */
+/* The small red "PANIC" button that lives in the header on every page */
+.btn-panic {
+  min-height: 2.5rem;
+  padding: 0 var(--s2);
+  font-size: 1rem;
+}
 
-.savings-items {
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;           /* buttons drop to a new line on small screens */
+  gap: var(--s2);
+}
+
+/* SPEECH BUBBLES: Malebo talking, straight off the poster.
+   --bubble is a "local" variable: each colour class below changes it,
+   and the border AND the tail both pick it up automatically. */
+.bubble {
+  --bubble: var(--chalk);
+  position: relative;
+  display: inline-block;
+  max-width: 17rem;
+  margin: 0;
+  padding: 0.8rem 1.1rem;
+  border: 2px solid var(--bubble);
+  border-radius: 20px;
+  background: var(--night);
+  font-family: var(--marker);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  text-transform: uppercase;
+  transform: rotate(-2deg);  /* hand-drawn things are never perfectly straight */
+}
+/* The little tail: a small square, rotated 45°, with only two borders
+   showing, tucked under the bubble's bottom-left corner. */
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 1.4rem;
+  bottom: -9px;
+  width: 16px;
+  height: 16px;
+  background: var(--night);
+  border-right: 2px solid var(--bubble);
+  border-bottom: 2px solid var(--bubble);
+  transform: rotate(45deg);
+}
+.bubble em {
+  font-style: normal;
+  color: var(--red-text);
+}
+.bubble--green { --bubble: var(--green); }
+.bubble--red { --bubble: var(--red); }
+.bubble--right { transform: rotate(2deg); }
+.bubble--right::after {
+  left: auto;
+  right: 1.4rem;
+}
+
+/* THE SHUKA BAND
+   repeating-linear-gradient paints stripes. Each "colour start end" pair is
+   one stripe. Change the numbers and you change the pattern. */
+.shuka {
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--red) 0 28px,
+    var(--night) 28px 32px,
+    var(--green) 32px 44px,
+    var(--night) 44px 48px,
+    var(--chalk) 48px 52px,
+    var(--night) 52px 56px
+  );
+}
+
+/* MOOD COLOURS
+   Put .mood--calm (etc.) on anything and it gets --mood set to the right
+   colour. Children then use var(--mood) for borders, dots, text… */
+.mood--calm { --mood: var(--calm); }
+.mood--hype { --mood: var(--hype); }
+.mood--pressure { --mood: var(--pressure); }
+.mood--chaos { --mood: var(--chaos); }
+
+/* "Steps" list: big numbered rows. Used on Home and How It Works.
+   We use the list's own numbering with a CSS counter, so the numbers are
+   always right even if you add or remove a step. */
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;       /* "start a counter called step at 0" */
+  border-top: 1px solid var(--ash);
+}
+.step {
+  counter-increment: step;   /* "add 1 for every step" */
   display: grid;
-
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-
-  gap: 12px;
-
-  margin-top: 22px;
+  grid-template-columns: 3.5rem 1fr;
+  gap: var(--s2);
+  padding-block: var(--s3);
+  border-bottom: 1px solid var(--ash);
+}
+.step::before {
+  content: counter(step, decimal-leading-zero);   /* 01, 02, 03… */
+  font-family: var(--display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--red);
+}
+/* On phones: number in column 1, and EVERYTHING else (title + text) in
+   column 2. Without this, the paragraph would wrap into the skinny
+   number column. */
+.step > * { grid-column: 2; }
+.step h3 { margin-bottom: var(--s1); }
+.step p {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--muted);
+}
+.step a {
+  display: inline-block;
+  margin-top: var(--s1);
+  font-weight: 700;
+  color: var(--chalk);
+}
+@media (min-width: 900px) {
+  .step {
+    grid-template-columns: 6rem 1fr 1.4fr;
+    align-items: baseline;
+  }
+  .step > * { grid-column: auto; }   /* laptops: number | title | text */
+  .step::before { font-size: 3rem; }
+  .step h3 { margin: 0; font-size: 2rem; }
 }
 
-/* Reward Chip */
+/* THE EXCUSES: Monday / Friday / Sunday. Three cards in a row. */
+.excuses {
+  display: grid;
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 700px) {
+  .excuses { grid-template-columns: repeat(3, 1fr); }
+}
+.excuse {
+  margin: 0;
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+.excuse-day {
+  display: block;
+  margin-bottom: var(--s3);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+.excuse blockquote {
+  margin: 0;
+  font-family: var(--marker);
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+/* The last card (Sunday, "Kesho officially") is crossed out in red.
+   :last-child = "only the last one in its group". */
+.excuse:last-child { border-color: var(--red); }
+.excuse:last-child blockquote {
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 3px;
+}
 
-.savings-items span {
-  display: inline-flex;
+/* CHAT THREAD: WhatsApp energy. Used on Home and Community. */
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  max-width: 34rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.msg {
+  max-width: 85%;
+  padding: 0.65rem 0.95rem;
+  border-radius: 16px 16px 16px 4px;   /* one sharp corner = the "tail" side */
+  background: var(--coal);
+  border: 1px solid var(--ash);
+}
+.msg-from {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--green);
+}
+/* Your own messages go on the right, in red. */
+.msg--me {
+  align-self: flex-end;      /* in a flex column, this pushes it right */
+  border-radius: 16px 16px 4px 16px;
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+/* QUOTE BAND: one big sentence across the whole screen */
+.quote-band {
+  padding-block: var(--s6);
+  text-align: center;
+}
+.quote-band blockquote {
+  margin: 0 auto var(--s2);
+  max-width: 20ch;           /* ch = width of one character, so ~20 letters wide */
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+.quote-band blockquote em {
+  font-style: normal;
+  color: var(--green);
+}
+.quote-band figcaption {
+  font-family: var(--marker);
+  font-size: 1.2rem;
+  color: var(--red-text);
+}
+
+/* CTA BAND: the "ok, now go do it" block near the end of a page */
+.cta-band {
+  display: grid;
+  gap: var(--s4);
   align-items: center;
-  gap: 10px;
-
-  padding: 12px 14px;
-
-  border-radius: 18px;
-
-  background: rgba(0, 200, 83, 0.1);
-
-  border: 1px solid rgba(0, 200, 83, 0.15);
-
-  color: var(--text);
-
-  font-size: 0.95rem;
+  padding-block: var(--s5);
 }
-/* ==========================================
-   PANIC BUTTON SECTION
-   Emergency anti-relapse system.
-   This is the “Mbaya is winning” moment UI.
-   ========================================== */
+.cta-band h2 { max-width: 14ch; }
+.cta-band p { color: var(--muted); }
+.cta-band img {
+  width: min(320px, 70%);
+  margin-inline: auto;
+}
+@media (min-width: 900px) {
+  .cta-band { grid-template-columns: 1.3fr 1fr; }
+}
 
-.panic-card {
+
+/* ---------------------------------------------------------------------
+   6. HOME PAGE
+   --------------------------------------------------------------------- */
+
+/* HERO: words on the left, Malebo on the right (on phones: words first,
+   then Malebo underneath). */
+.hero {
   display: grid;
-  gap: 24px;
+  gap: var(--s4);
+  padding-block: var(--s4) var(--s5);
+}
+@media (min-width: 1000px) {
+  .hero {
+    grid-template-columns: 1.05fr 1fr;
+    align-items: center;
+    padding-block: var(--s5);
+  }
+}
+/* The "MEET MALEBO" brush logo. It's an image because that brush lettering
+   can't be made with a font. The photo is on pure black, same as our page,
+   so it has no visible edges. */
+.hero-logo {
+  width: min(360px, 80%);
+  margin-bottom: var(--s3);
+}
+.hero h1 {
+  font-size: clamp(3.6rem, 13vw, 8rem);
+}
+.hero-lead {
+  max-width: 30rem;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+.hero-lead strong { color: var(--green); }
+.hero .btn-row { margin-top: var(--s3); }
+
+/* Malebo + his speech bubbles.
+   position: relative here lets the bubbles be placed ON TOP of the picture
+   (with position: absolute) on big screens. */
+.hero-figure {
+  position: relative;
+  margin: 0;
+}
+.hero-figure img {
+  width: min(560px, 100%);
+  margin-inline: auto;
+}
+/* On phones the bubbles just stack under the picture in a column. */
+.hero-bubbles {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s3);
+  margin: var(--s2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.hero-bubbles li:nth-child(2) { align-self: flex-end; }
+@media (min-width: 1000px) {
+  /* On laptops each bubble floats around Malebo, like on the poster. */
+  .hero-bubbles li { position: absolute; }
+  .hero-bubbles li:nth-child(1) { top: 4%; right: -2%; }
+  .hero-bubbles li:nth-child(2) { top: 36%; right: -6%; }
+  .hero-bubbles li:nth-child(3) { bottom: 14%; left: -4%; }
 }
 
-.panic-copy {
-  max-width: 600px;
-}
-
-.panic-preview {
+/* THE STAT STRIP: three example numbers under the hero */
+.stat-strip {
   display: grid;
-  gap: 18px;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--ash);
+}
+.stat {
+  padding: var(--s3) var(--s1);
+  text-align: center;
+}
+/* Every stat except the first gets a line on its left, so we get dividers
+   BETWEEN them. "+" means "the one right after". */
+.stat + .stat { border-left: 1px solid var(--ash); }
+.stat strong {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 6vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+}
+.stat span {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.stat-note {
+  margin-top: var(--s1);
+  text-align: right;
 }
 
-/* ==========================================
-   LIVE PANIC PANEL
-   ========================================== */
-
-.panic-panel {
+/* MALEBO'S MOODS: four cards, each with his picture and a quote.
+   auto-fit + minmax = "as many 240px+ columns as fit". 4 on a laptop,
+   2 on a tablet, 1 on a phone, no media queries needed. */
+.moods {
   display: grid;
-  gap: 14px;
-
-  padding: 22px;
-
-  border-radius: 28px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(206, 17, 38, 0.18),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(206, 17, 38, 0.25);
-
-  box-shadow: 0 20px 50px rgba(206, 17, 38, 0.15);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mood {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;          /* keeps the picture inside the rounded corners */
+  background: var(--coal);
+  border: 1px solid var(--ash);
+  border-top: 4px solid var(--mood);
+  border-radius: var(--radius);
+}
+.mood img {
+  width: 100%;
+  aspect-ratio: 4 / 3;       /* every picture gets the same shape... */
+  object-fit: cover;         /* ...and gets cropped to fit, never squashed */
+  object-position: top;      /* crop from the bottom, so we keep his face */
+}
+.mood-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--s3);
+}
+.mood h3 { color: var(--mood); }
+.mood-when {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.mood blockquote {
+  margin: auto 0 0;          /* margin-top: auto pushes the quote to the bottom
+                                of the card, so all four quotes line up */
+  padding-top: var(--s2);
+  font-family: var(--marker);
+  font-size: 1.15rem;
+  line-height: 1.3;
 }
 
-/* Stats inside panic panel */
 
-.panic-panel div {
+/* ---------------------------------------------------------------------
+   7. STREAK PAGE
+   --------------------------------------------------------------------- */
+
+/* The giant day number */
+.streak-hero {
+  display: grid;
+  gap: var(--s3);
+  align-items: end;
+}
+@media (min-width: 900px) {
+  .streak-hero { grid-template-columns: auto 1fr; gap: var(--s5); }
+}
+.streak-count {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(7rem, 30vw, 15rem);
+  line-height: 0.8;
+}
+.streak-count small {
+  display: block;
+  margin-bottom: 1em;        /* room so it doesn't touch the big number
+                                (em here = the SMALL text's size) */
+  font-size: 0.18em;         /* em here = "relative to the big number" */
+  letter-spacing: 0.1em;
+  color: var(--green);
+}
+.streak-meta {
+  margin: 0;
+  display: grid;
+  gap: var(--s2);
+}
+/* <dl> = description list: pairs of "term" (<dt>) and "detail" (<dd>).
+   Perfect for "Rank: Weekend Survivor"-style info. */
+.streak-meta div {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--s2);
+  padding-bottom: var(--s1);
+  border-bottom: 1px solid var(--ash);
 }
+.streak-meta dt { color: var(--muted); }
+.streak-meta dd { margin: 0; font-weight: 700; }
 
-/* Key values */
-
-.panic-panel strong {
-  color: var(--text);
-}
-
-/* Warning message */
-
-.panic-message {
-  padding: 18px;
-  border-radius: 24px;
-
-  background: rgba(206, 17, 38, 0.12);
-
-  border: 1px solid rgba(206, 17, 38, 0.25);
-
-  color: var(--text);
-
-  font-weight: 700;
-}
-
-/* ==========================================
-   PANIC MODAL (FULL SCREEN INTERRUPTION)
-   ========================================== */
-
-.panic-modal {
-  position: fixed;
-  inset: 0;
-
+/* THE MONTH: 30 little squares, one per day.
+   repeat(10, 1fr) = 10 per row on phones; 15 on laptops. */
+.month {
   display: grid;
-  place-items: center;
-
-  background: rgba(0, 0, 0, 0.75);
-
-  padding: 24px;
-
-  z-index: 20;
-}
-
-/* Modal Card */
-
-.panic-modal-card {
-  width: min(520px, 100%);
-
-  padding: 28px;
-
-  border-radius: 36px;
-
-  background:
-    radial-gradient(circle at top, rgba(206, 17, 38, 0.15), transparent 50%),
-    #111418;
-
-  border: 1px solid rgba(206, 17, 38, 0.25);
-
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
-}
-
-/* Modal Label */
-
-.modal-label {
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-
-  color: var(--danger);
-
-  font-weight: 800;
-
-  margin-bottom: 10px;
-}
-
-/* Title */
-
-.panic-modal-card h3 {
-  margin: 0 0 18px;
-  color: var(--text);
-}
-
-/* List */
-
-.panic-modal-card ul {
-  list-style: none;
-
+  grid-template-columns: repeat(10, 1fr);
+  gap: 6px;
+  margin: 0;
   padding: 0;
-  margin: 0 0 22px;
-
+  list-style: none;
+}
+@media (min-width: 900px) {
+  .month { grid-template-columns: repeat(15, 1fr); gap: 8px; }
+}
+.day {
   display: grid;
-  gap: 12px;
+  place-items: center;       /* centres the number both ways in one line */
+  aspect-ratio: 1;           /* always a perfect square */
+  border-radius: 6px;
+  border: 1px solid var(--ash);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
 }
-
-.panic-modal-card li {
-  color: var(--text);
+.day--done {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--night);
 }
-
-/* Note */
-
-.modal-note {
-  color: rgba(245, 247, 250, 0.65);
-  line-height: 1.7;
-  margin-bottom: 18px;
+.day--missed {
+  background: transparent;
+  border: 2px solid var(--red);
+  color: var(--red-text);
 }
-
-/* Hidden utility */
-
-.hidden {
-  display: none !important;
+.day--today {
+  outline: 3px solid var(--chalk);
+  outline-offset: 2px;
 }
-
-/* ==========================================
-   COMMUNITY / SQUAD SECTION
-   Accountability squads: users push each
-   other to stay disciplined and avoid Mbaya.
-   ========================================== */
-
-.squad-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px;
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+  margin: var(--s3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
-
-/* ==========================================
-   SQUAD CARD (GROUP ENERGY)
-   ========================================== */
-
-.squad-card {
-  padding: 20px;
-  border-radius: 28px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.12),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+.legend li::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 0.4rem;
+  vertical-align: -1px;
+  border-radius: 3px;
+  background: var(--green);
 }
+.legend li:nth-child(2)::before { background: none; border: 2px solid var(--red); }
+.legend li:nth-child(3)::before { background: none; border: 1px solid var(--ash); }
 
-/* Squad Title */
-
-.squad-card strong {
+/* THE RANKS: Day 1 → Legend of the Republic */
+.ranks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 2px solid var(--ash);
+}
+.rank {
+  position: relative;
+  padding: 0 0 var(--s3) var(--s3);
+}
+/* The dot on the line, for each rank */
+.rank::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 0.35rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--night);
+  border: 2px solid var(--smoke);
+}
+.rank-day {
   display: block;
-  font-size: 1.1rem;
-
-  margin-bottom: 8px;
-
-  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--muted);
 }
-
-/* ==========================================
-   SQUAD NOTICE (GROUP WARNING / INSIGHT)
-   ========================================== */
-
-.squad-notice {
-  margin-top: 18px;
-  padding: 22px;
-  border-radius: 26px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(255, 209, 0, 0.08),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 209, 0, 0.15);
-
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+.rank strong {
+  font-family: var(--display);
+  font-size: 1.7rem;
+  font-weight: 400;
+  text-transform: uppercase;
 }
+/* Ranks you already reached: green dot */
+.rank--reached::before { background: var(--green); border-color: var(--green); }
+/* The rank you're working towards: a ring + a note */
+.rank--next::before { border-color: var(--hype); }
+.rank--next .rank-day { color: var(--hype); }
 
-/* Notice Title */
 
-.squad-notice strong {
-  display: block;
-  margin-top: 8px;
+/* ---------------------------------------------------------------------
+   8. CHECK-IN & SETTINGS (forms)
+   --------------------------------------------------------------------- */
 
-  color: var(--text);
+/* <fieldset> groups related inputs. It comes with an ugly default border,
+   so we reset it and style it ourselves. */
+fieldset {
+  min-width: 0;              /* fixes a weird bug where fieldsets refuse to shrink */
+  margin: 0 0 var(--s4);
+  padding: 0;
+  border: 0;
 }
-
-/* ==========================================
-   PERSONAL TESTIMONIES SECTION
-   Real users sharing their wins vs Mbaya.
-   ========================================== */
-
-.testimonial-grid {
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+/* <legend> = the title of a fieldset. Screen readers read it before each
+   option inside, e.g. "Leo hali iko aje? Nimeshinda, radio button". */
+legend {
+  margin-bottom: var(--s2);
+  padding: 0;
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1;
+  text-transform: uppercase;
 }
-
-/* ==========================================
-   TESTIMONIAL CARD
-   ========================================== */
-
-.testimonial-card {
-  margin: 0; /* <figure> has a default 40px side margin */
-  padding: 26px;
-  border-radius: 32px;
-
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(0, 200, 83, 0.1),
-      transparent 40%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-}
-
-/* Testimonial Text */
-
-.testimonial-card blockquote {
-  margin: 0 0 16px; /* <blockquote> also has a default 40px side margin */
-
-  font-size: 1rem;
-  line-height: 1.7;
-
-  color: var(--text);
-}
-
-/* User Name / Tag */
-
-.testimonial-card figcaption {
-  color: rgba(245, 247, 250, 0.65);
-
+.hint {
+  margin-top: calc(var(--s1) * -1);
+  color: var(--muted);
   font-size: 0.95rem;
 }
-/* ==========================================
-   FINAL MESSAGE SECTION
-   The decision moment: You vs Mbaya.
-   ========================================== */
 
-.final-shell {
+/* PICK CARDS: radio buttons that look like big tappable cards.
+   The real radio circle is still there (small, top corner), because hiding
+   it completely can make it harder for some people to use. */
+.picks {
   display: grid;
-  gap: 30px;
-  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--s2);
 }
-
-/* Text Side */
-
-.final-copy h2 {
-  font-size: clamp(2.6rem, 4vw, 4rem);
-  margin: 0 0 18px;
-
-  color: var(--text);
-}
-
-.final-copy p {
-  color: rgba(245, 247, 250, 0.65);
-
-  margin-bottom: 24px;
-
-  line-height: 1.7;
-}
-
-/* ==========================================
-   VISUAL SECTION
-   ========================================== */
-
-.final-visual {
-  display: grid;
-  place-items: center;
-}
-
-/* Main Illustration Card */
-
-.final-illustration {
+.pick {
   position: relative;
-
-  width: min(420px, 100%);
-  aspect-ratio: 1.3;
-
-  border-radius: 42px;
-
-  background:
-    radial-gradient(circle at top, rgba(0, 200, 83, 0.14), transparent 40%),
-    radial-gradient(
-      circle at bottom right,
-      rgba(206, 17, 38, 0.1),
-      transparent 45%
-    ),
-    #111418;
-
-  border: 1px solid rgba(255, 255, 255, 0.05);
-
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.4);
-
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  background: var(--coal);
+  border: 2px solid var(--ash);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
 }
-
-/* ==========================================
-   YOU (USER SIDE)
-   ========================================== */
-
-.final-user {
+.pick:hover { border-color: var(--smoke); }
+.pick input {
   position: absolute;
-
-  width: 130px;
-  height: 130px;
-
-  bottom: 18px;
-  left: 22px;
-
-  border-radius: 999px;
-
-  background: linear-gradient(135deg, #2c7be5, #6d95ff);
-
-  box-shadow: 0 22px 48px rgba(44, 123, 229, 0.25);
+  top: 0.6rem;
+  left: 0.6rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: var(--mood, var(--red));   /* colours the real radio circle */
 }
-
-/* ==========================================
-   MBAYA (TEMPTATION SIDE)
-   ========================================== */
-
-.final-mbaya {
-  position: absolute;
-
-  width: 120px;
-  height: 120px;
-
-  top: 32px;
-  right: 36px;
-
-  border-radius: 999px;
-
-  background: linear-gradient(135deg, #00cf68, #17a862);
-
-  box-shadow: 0 20px 40px rgba(0, 200, 83, 0.2);
-}
-/* ==========================================
-   BOTTOM NAVBAR
-   ========================================== */
-
-.footer {
-  position: fixed;
-  bottom: 10px;
-  left: 10%;
-  width: 80%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 12px;
-
-  border-radius: 30px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.98) 60%,
-    rgba(0, 0, 0, 1) 100%
-  );
-
-  border: 1px solid rgba(255, 255, 255, 0.06);
-
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-
-  backdrop-filter: blur(20px);
-
-  z-index: 1000;
-}
-
-/* Action Buttons Container */
-
-.footer-links {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-
+.pick img {
   width: 100%;
-  gap: 12px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top;
+}
+.pick-text {
+  padding: var(--s2);
+  font-weight: 700;
+  line-height: 1.3;
+}
+/* Pick cards WITHOUT a picture (like "What should Malebo call you?"):
+   push the text down so the radio circle in the corner doesn't cover it.
+   :not(:has(img)) = "a .pick that does NOT contain an image". */
+.pick:not(:has(img)) .pick-text { padding-top: 2.6rem; }
+.pick-text small {
+  display: block;
+  margin-top: 0.2rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+/* :has() = "a parent that CONTAINS something". Here: any .pick whose radio
+   inside is checked gets its mood-coloured border. Pure CSS, no JS! */
+.pick:has(input:checked) {
+  border-color: var(--mood, var(--red));
+}
+/* And when the radio has keyboard focus, show it on the whole card */
+.pick:has(input:focus-visible) {
+  outline: 3px solid var(--hype);
+  outline-offset: 3px;
 }
 
-/* Action Buttons */
+/* MALEBO'S REPLY on the check-in page.
+   All four replies are in the HTML, but hidden. When you pick a feeling,
+   :has() notices which radio is checked and shows only the matching reply.
+   Read it like a sentence:
+     "If the check-in form HAS #feel-calm checked, show .reply--calm." */
+.reply {
+  display: none;             /* hidden until its feeling is picked (below) */
+  align-items: center;
+  gap: var(--s2);
+  margin-bottom: var(--s4);
+  padding: var(--s3);
+  border: 1px solid var(--mood);
+  border-radius: var(--radius);
+}
+.reply .bubble { --bubble: var(--mood); max-width: none; }
+.reply-label {
+  margin: 0 0 var(--s2);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--mood);
+}
+.checkin:has(#feel-calm:checked) .reply--calm,
+.checkin:has(#feel-hype:checked) .reply--hype,
+.checkin:has(#feel-pressure:checked) .reply--pressure,
+.checkin:has(#feel-chaos:checked) .reply--chaos {
+  display: flex;
+}
+/* Before you pick anything, a "waiting" reply shows instead.
+   As soon as ANY feeling is checked, it hides itself. */
+.reply--none {
+  --mood: var(--smoke);
+  display: flex;
+}
+.checkin:has(.picks input:checked) .reply--none {
+  display: none;
+}
+.reply img {
+  flex: none;                /* don't let the picture get squashed */
+  width: 5rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50%;
+  border: 2px solid var(--mood);
+}
 
-.footer-links a {
+/* Checkbox list ("What did you do today?") */
+.ticks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tick {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: var(--s2);
+  padding: var(--s2);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.tick input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--green);
+}
+.tick:has(input:checked) { border-color: var(--green); }
 
-  min-width: 60px;
-  height: 60px;
+/* Text fields: inputs, textareas and dropdowns */
+.field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: var(--s3);
+}
+.field label {
+  font-weight: 700;
+}
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.7rem 0.9rem;
+  font: inherit;             /* form fields DON'T use the page font by default */
+  color: var(--chalk);
+  background: var(--coal);
+  border: 1px solid var(--smoke);
+  border-radius: 6px;
+}
+.field textarea { min-height: 7rem; resize: vertical; }
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  border-color: var(--chalk);
+}
+.field small { color: var(--muted); }
 
-  border-radius: 18px;
+/* TOGGLE SWITCHES (Settings page)
+   A real checkbox, restyled. appearance: none removes the browser's own
+   look, and then we draw a pill with a circle that slides across. */
+.switches {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ash);
+}
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding-block: var(--s2);
+  border-bottom: 1px solid var(--ash);
+  cursor: pointer;
+}
+.switch small {
+  display: block;
+  color: var(--muted);
+}
+.switch input {
+  appearance: none;
+  flex: none;                /* don't let flexbox squash the switch */
+  position: relative;
+  width: 3.2rem;
+  height: 1.8rem;
+  margin: 0;
+  border-radius: 999px;      /* huge radius = fully round ends */
+  background: var(--smoke);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+/* The circle */
+.switch input::before {
+  content: "";
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: var(--chalk);
+  transition: transform 0.2s ease;
+}
+.switch input:checked { background: var(--green); }
+.switch input:checked::before { transform: translateX(1.4rem); }
 
-  color: var(--text);
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s2);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--ash);
+}
+.form-actions p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
 
-  background: rgba(255, 255, 255, 0.05);
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  transition:
-    transform 180ms ease,
-    background-color 180ms ease,
-    border-color 180ms ease;
-
+/* Settings: two columns on laptops, a short "jump to" list on the left */
+.settings-layout {
+  display: grid;
+  gap: var(--s4);
+}
+@media (min-width: 900px) {
+  .settings-layout { grid-template-columns: 14rem 1fr; }
+  .settings-toc {
+    position: sticky;
+    top: 6rem;
+    align-self: start;       /* without this, sticky won't stick inside grid */
+  }
+}
+.settings-toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--s1);
+}
+.settings-toc a {
+  color: var(--muted);
+  font-weight: 700;
   text-decoration: none;
 }
+.settings-toc a:hover { color: var(--chalk); }
+/* Gives each settings group room at the top when you jump to it, so the
+   sticky header doesn't cover its title. */
+.settings-form fieldset { scroll-margin-top: 6rem; }
 
-/* Hover Animation */
 
-.footer-links a:hover {
-  transform: translateY(-2px);
+/* ---------------------------------------------------------------------
+   9. SAVINGS PAGE
+   --------------------------------------------------------------------- */
 
-  background: rgba(0, 200, 83, 0.14);
-
-  border-color: rgba(0, 200, 83, 0.24);
+/* THE CALCULATOR, with zero maths in the browser.
+   We can't calculate without JavaScript, so we calculated the answers
+   ahead of time and wrote them all into the HTML. CSS just shows the set
+   that matches the amount you picked. Same :has() trick as the check-in. */
+.calc {
+  display: grid;
+  gap: var(--s4);
+}
+@media (min-width: 900px) {
+  .calc { grid-template-columns: 1fr 1.2fr; align-items: start; }
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem;
+  border: 2px solid var(--ash);
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.chip input { accent-color: var(--green); }
+.chip:has(input:checked) {
+  border-color: var(--green);
+  color: var(--green);
+}
+.chip:has(input:focus-visible) {
+  outline: 3px solid var(--hype);
+  outline-offset: 3px;
 }
 
-/* Active Button */
-
-.footer-links a.active {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 200, 83, 0.18),
-    rgba(255, 255, 255, 0.08)
-  );
-
-  border-color: rgba(0, 200, 83, 0.35);
+.result {
+  display: none;
 }
-/* ==========================================
-   NI MBAYA RESPONSIVE SYSTEM (FIXED PRIMARY VERSION)
-   Keeps mobile behavior stable + fixes hamburger + account bugs
-   ========================================== */
+.calc:has(#amt-50:checked) .result--50,
+.calc:has(#amt-100:checked) .result--100,
+.calc:has(#amt-200:checked) .result--200,
+.calc:has(#amt-500:checked) .result--500 {
+  display: block;
+}
+.result dl {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--ash);
+}
+.result dl div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s2);
+  padding-block: var(--s2);
+  border-bottom: 1px solid var(--ash);
+}
+.result dt { color: var(--muted); }
+.result dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1;
+}
+/* The year row is the punchline, so it's bigger and green */
+.result dl div:last-child dd {
+  font-size: clamp(2.6rem, 9vw, 4.5rem);
+  color: var(--green);
+}
+.result-buys {
+  margin-top: var(--s2);
+  font-family: var(--marker);
+  font-size: 1.2rem;
+}
 
-/* =========================
-   1. TABLET + DESKTOP LAYOUTS (SAFE FIXED VERSION)
-   ========================= */
+/* THE LEAKS TABLE: where the money goes.
+   A real <table>, because this IS table data (rows and columns). */
+.leaks {
+  width: 100%;
+  border-collapse: collapse; /* merge the double borders between cells into one */
+  font-size: 0.95rem;
+}
+.leaks caption {
+  margin-bottom: var(--s2);
+  text-align: left;
+  color: var(--muted);
+}
+.leaks th,
+.leaks td {
+  padding: var(--s2) var(--s1);
+  text-align: left;
+  border-bottom: 1px solid var(--ash);
+}
+.leaks thead th {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* Numbers line up best on the right */
+.leaks td:last-child,
+.leaks th:last-child { text-align: right; }
+.leaks td:last-child { font-weight: 800; color: var(--red-text); }
+/* The total row: no line under it, bigger number */
+.leaks tfoot th,
+.leaks tfoot td {
+  border-bottom: 0;
+  font-size: 1.1rem;
+}
+/* The table can be wider than a phone. This box scrolls sideways instead
+   of making the whole PAGE scroll sideways. */
+.table-scroll { overflow-x: auto; }
 
-/*
-  IMPORTANT RULE:
-  DO NOT change nav structure on desktop.
-  ONLY adjust spacing, sizing, and alignment.
-*/
+/* GOALS: what your savings turn into */
+.goals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.goal {
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+.goal strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.goal span { color: var(--muted); font-size: 0.9rem; }
 
-@media (min-width: 768px) {
-  /* Topbar spacing only */
-  .topbar {
-    padding: 18px 0;
+
+/* ---------------------------------------------------------------------
+   10. PANIC PAGE
+   The whole page goes red-hot. .page-panic is a class on <body>.
+   --------------------------------------------------------------------- */
+.page-panic {
+  /* A dark red glow from the top. The only gradient on the whole site,
+     and it's here on purpose: this page should feel like an alarm. */
+  background: var(--night) radial-gradient(ellipse at top, #3a0508 0%, var(--night) 60%) no-repeat;
+  /* no-repeat: without it the glow repeats itself down a long page */
+}
+.panic-hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--s3);
+  padding-block: var(--s5);
+  text-align: center;
+}
+.panic-hero .lede { color: var(--muted); }
+
+/* THE BUTTON. A big red circle, with a slow pulse to catch your eye. */
+.panic-btn {
+  display: grid;
+  place-items: center;
+  width: min(17rem, 75vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  /* Two rings: a thin black gap and a darker red ring, made with box-shadow */
+  box-shadow: 0 0 0 10px var(--night), 0 0 0 14px var(--red);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.panic-btn:hover { background: #f23a40; }
+/* @keyframes describes an animation step by step: at 0% / 50% / 100% */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* THE "HOLD UP" POP-UP, done with :target.
+   The panic button is a link to "#hold-up". When the address bar ends in
+   #hold-up, the element with id="hold-up" becomes the ":target", and only
+   then do we show it. The "Stay on track" link goes to "#" to close it.
+   (In Phase 2, JavaScript can do this more smoothly.) */
+.hold-up {
+  display: none;
+  position: fixed;
+  inset: 0;                  /* top, right, bottom, left all 0 = cover the screen */
+  z-index: 80;
+  overflow-y: auto;
+  padding: var(--s3) var(--gutter);
+  background: rgba(0, 0, 0, 0.94);
+}
+.hold-up:target {
+  display: grid;
+  place-items: center;
+}
+.hold-up-card {
+  width: min(36rem, 100%);
+  padding: var(--s4) var(--s3);
+  background: var(--coal);
+  border: 2px solid var(--pressure);
+  border-radius: var(--radius);
+}
+.hold-up-card img {
+  width: 7rem;
+  margin-bottom: var(--s2);
+  border-radius: 50%;
+  border: 3px solid var(--pressure);
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top;
+}
+.hold-up-card h2 { font-size: clamp(2rem, 7vw, 3rem); }
+.proof {
+  margin: var(--s3) 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ash);
+}
+.proof li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding-block: 0.8rem;
+  border-bottom: 1px solid var(--ash);
+  color: var(--muted);
+}
+.proof strong { color: var(--chalk); text-align: right; }
+.hold-up-card .btn-row { margin-top: var(--s4); }
+
+/* "The next 10 minutes": a numbered list of things to do instead */
+.ten {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: ten;
+}
+.ten li {
+  counter-increment: ten;
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--night);
+}
+.ten li::before {
+  content: counter(ten);
+  display: block;
+  margin-bottom: var(--s1);
+  font-family: var(--display);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--red);
+}
+.ten strong { display: block; margin-bottom: 0.2rem; }
+.ten span { color: var(--muted); font-size: 0.95rem; }
+
+
+/* ---------------------------------------------------------------------
+   11. COMMUNITY PAGE
+   --------------------------------------------------------------------- */
+.split {
+  display: grid;
+  gap: var(--s5);
+  align-items: start;        /* each column keeps its own height, instead of
+                                stretching to match the taller one */
+}
+@media (min-width: 900px) {
+  .split { grid-template-columns: 1fr 1fr; gap: var(--s5); }
+}
+
+/* THE SQUAD: a leaderboard. Each member has a coloured mood dot. */
+.squad {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: squad;
+  border-top: 1px solid var(--ash);
+}
+.member {
+  counter-increment: squad;
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: center;
+  gap: var(--s2);
+  padding-block: var(--s2);
+  border-bottom: 1px solid var(--ash);
+}
+.member::before {
+  content: counter(squad);
+  font-family: var(--display);
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+.member-name { font-weight: 800; }
+.member-name small {
+  display: block;
+  font-weight: 500;
+  color: var(--mood);
+}
+.member-day {
+  font-family: var(--display);
+  font-size: 1.6rem;
+}
+/* "You" in the list gets highlighted */
+.member--you {
+  background: var(--coal);
+  padding-inline: var(--s1);
+  border-radius: 6px;
+}
+
+/* The nudge notification */
+.nudge {
+  display: flex;
+  gap: var(--s2);
+  align-items: flex-start;
+  margin-top: var(--s3);
+  padding: var(--s3);
+  border: 1px solid var(--pressure);
+  border-left-width: 6px;
+  border-radius: var(--radius);
+  background: var(--coal);
+}
+.nudge p { margin: 0; }
+.nudge-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pressure);
+}
+
+/* TESTIMONIALS: four quotes in marker font */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--s2);
+}
+.testimonial {
+  margin: 0;
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+.testimonial blockquote {
+  margin: 0 0 var(--s3);
+  font-family: var(--marker);
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+.testimonial figcaption {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+
+/* ---------------------------------------------------------------------
+   12. FOOTER
+   Every page ends the same way: the shuka band, the brush logo, the motto.
+   --------------------------------------------------------------------- */
+.site-footer {
+  margin-top: var(--s5);
+}
+.footer-inner {
+  display: grid;
+  gap: var(--s4);
+  padding-block: var(--s5) var(--s4);
+}
+@media (min-width: 900px) {
+  .footer-inner {
+    grid-template-columns: 1.2fr 1fr 1fr;
+    align-items: start;
   }
+}
+.footer-logo { width: min(260px, 70%); }
+.footer-motto {
+  margin-top: var(--s2);
+  font-family: var(--marker);
+  font-size: 1.15rem;
+  color: var(--muted);
+}
+.footer-col h2 {
+  margin-bottom: var(--s2);
+  font-family: var(--body);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+.footer-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+.footer-col a {
+  text-decoration: none;
+  font-weight: 600;
+}
+.footer-col a:hover { color: var(--red-text); }
+.footer-base {
+  padding-block: var(--s3);
+  border-top: 1px solid var(--ash);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.footer-base p { margin: 0; }
 
-  /* Hamburger stays top-right, NOT centered */
-  .nav-toggle {
+
+/* =====================================================================
+   PART 2: THE GAME  (v3, "gamify it")
+
+   Ideas borrowed (and made Kenyan):
+     Duolingo  → streak flame, XP, levels, a daily goal ring, daily quests,
+                 weekly leagues, and the streak freeze (ours is "Streak Bima",
+                 because bima = insurance)
+     Quitzilla → a counter for every habit you quit: days clean, money not
+                 spent, trophies
+     Flamy     → a pet that grows with your streak. Ours is Moto, a flame
+                 that goes Kibiriti → Mshumaa → Jiko → Moto wa Kambi → Longonot
+
+   STILL ZERO JAVASCRIPT. Nothing here is saved. But CSS can do more than
+   you'd think: it can COUNT ticked boxes (counters), draw rings
+   (conic-gradient) and HTML can open pop-ups (the popover attribute).
+
+   FILE MAP (part 2)
+    13. Icons + stat chips      18. Leagues (Ligi)
+    14. Progress bars + ring    19. Badges + pop-ups
+    15. Leo (today) page        20. Duka (shop)
+    16. The Safari route        21. Anasa zako (habit counters)
+    17. Moto, the flame pet     22. Celebration, nags, landing extras
+   ===================================================================== */
+
+
+/* ---------------------------------------------------------------------
+   13. ICONS + STAT CHIPS
+   The icons are little .svg files in Images/icons/. An SVG is a picture
+   made of maths instead of pixels, so it's sharp at any size.
+   --------------------------------------------------------------------- */
+.icon {
+  display: inline-block;
+  width: 1.25em;             /* em = "the current text size", so icons grow */
+  height: 1.25em;            /* with whatever text they sit next to */
+  vertical-align: -0.25em;   /* nudge down so it lines up with the letters */
+}
+
+/* The Duolingo-style row in the header: flame 23 · bima 1 · mbao 460 */
+.stat-chips {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.stat-chips a {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+.chip-flame { color: #ff9a3c; }
+.chip-bima { color: #5fb3ff; }
+.chip-mbao { color: #e8b04a; }
+/* On small phones there's no room for all three, so Bima hides. */
+@media (max-width: 420px) {
+  .chip-bima { display: none; }
+}
+
+
+/* ---------------------------------------------------------------------
+   14. PROGRESS BARS + THE RING
+   --------------------------------------------------------------------- */
+
+/* <progress> is a real HTML element for "how far along". Browsers draw it
+   differently, so we wipe their look (appearance: none) and draw our own.
+   The ::-webkit-… and ::-moz-… rules are the same idea for different
+   browser families. Ugly, but that's how it is. */
+progress {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--ash);
+}
+progress::-webkit-progress-bar { background: var(--ash); }
+progress::-webkit-progress-value { background: var(--bar, var(--green)); border-radius: 999px; }
+progress::-moz-progress-bar { background: var(--bar, var(--green)); border-radius: 999px; }
+.bar-xp { --bar: #ffd23f; }
+.bar-red { --bar: var(--red); }
+.bar-blue { --bar: #3aa0ff; }
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s1);
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.bar-label span:last-child { color: var(--muted); }
+
+/* THE DAILY GOAL RING
+   conic-gradient paints colour around a circle, like a clock hand sweeping.
+   Yellow from 0 up to --pct, grey for the rest. A dark circle on top
+   (::before) turns the pie into a ring. Change --pct, the ring changes. */
+.ring {
+  --pct: 60%;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 9rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(#ffd23f var(--pct), var(--ash) 0);
+}
+.ring::before {
+  content: "";
+  position: absolute;
+  inset: 0.8rem;             /* = the thickness of the ring */
+  border-radius: 50%;
+  background: var(--coal);
+}
+.ring-text {
+  position: relative;        /* sits above the ::before circle */
+  text-align: center;
+  line-height: 1.1;
+}
+.ring-text strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 2rem;
+  font-weight: 400;
+}
+.ring-text span { font-size: 0.8rem; color: var(--muted); }
+
+
+/* ---------------------------------------------------------------------
+   15. LEO (TODAY) PAGE: the app's home screen
+   --------------------------------------------------------------------- */
+.leo {
+  display: grid;
+  gap: var(--s3);
+  padding-block: var(--s4);
+}
+@media (min-width: 1000px) {
+  .leo {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+  }
+}
+.leo-main,
+.leo-side {
+  display: grid;
+  gap: var(--s3);
+  min-width: 0;              /* lets grid columns shrink on small screens */
+}
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s2);
+  margin-bottom: var(--s2);
+}
+.panel-title h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+.panel-title a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* The event banner (Mashujaa Day challenge, etc.)
+   border-image paints the Kenyan flag colours along the top edge. */
+.event {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s2);
+  align-items: center;
+  padding: var(--s3);
+  border-top: 6px solid;
+  border-image: linear-gradient(90deg, #111 0 25%, var(--red) 25% 50%, var(--green) 50% 75%, var(--chalk) 75%) 1;
+  background: var(--coal);
+}
+.event img { width: 3rem; }
+.event h2 { margin: 0 0 0.3rem; font-size: 1.4rem; }
+.event p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.event-time {
+  display: inline-block;
+  margin-top: var(--s1);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hype);
+}
+
+/* The big check-in card with the ring */
+.goal-card {
+  display: grid;
+  gap: var(--s3);
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+}
+@media (min-width: 600px) {
+  .goal-card {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    text-align: left;
+  }
+}
+.goal-card h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: var(--s1); }
+.goal-card p { color: var(--muted); }
+
+/* THE WEEK: 7 little flames, Monday to Sunday */
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--s1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.week li {
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+.week img { width: 1.8rem; height: 1.8rem; }
+.week .is-today { color: var(--chalk); }
+.week .is-today img {
+  outline: 2px solid var(--chalk);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+/* DAILY QUESTS — and CSS that COUNTS.
+   1. .quests says "start two counters at zero": done and xp.
+   2. Every quest whose box is ticked adds 1 to done, and its XP to xp.
+      (.quest--10 adds 10, .quest--20 adds 20, and so on.)
+   3. .quest-total comes AFTER the quests, and prints the totals with
+      counter(). Tick a box and watch the total change. No JavaScript! */
+.quests {
+  counter-reset: done xp;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--s1);
+}
+.quest {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--s2);
+  align-items: center;
+  padding: var(--s2);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.quest input {
+  width: 1.4rem;
+  height: 1.4rem;
+  accent-color: var(--green);
+}
+.quest small {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.quest-xp {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #ffd23f;
+  white-space: nowrap;
+}
+.quest:has(input:checked) {
+  border-color: var(--green);
+  background: rgba(47, 176, 76, 0.08);   /* rgba = a colour you can see through */
+}
+.quest:has(input:checked) .quest-text { text-decoration: line-through; color: var(--muted); }
+.quest--10:has(input:checked) { counter-increment: done 1 xp 10; }
+.quest--20:has(input:checked) { counter-increment: done 1 xp 20; }
+.quest--30:has(input:checked) { counter-increment: done 1 xp 30; }
+.quest--50:has(input:checked) { counter-increment: done 1 xp 50; }
+.quest-total {
+  margin: var(--s2) 0 0;
+  font-weight: 800;
+}
+/* The text inside the quotes is printed as-is, counter() prints a number */
+.quest-total::after {
+  content: counter(done) " of 4 done · +" counter(xp) " XP";
+  color: #ffd23f;
+}
+/* Same counting trick on the check-in page: each "win" is worth 10 XP */
+.ticks { counter-reset: wins; }
+.tick:has(input:checked) { counter-increment: wins 10; }
+.wins-total::after {
+  content: "+" counter(wins) " XP from wins";
+  color: #ffd23f;
+  font-weight: 800;
+}
+
+/* Little cards linking to other parts of the app */
+.minis {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s2);
+}
+.mini {
+  display: block;
+  padding: var(--s2);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+  text-decoration: none;
+  transition: border-color 0.15s ease;
+}
+.mini:hover { border-color: var(--smoke); }
+.mini img { width: 1.6rem; margin-bottom: 0.4rem; }
+.mini strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.mini span { font-size: 0.82rem; color: var(--muted); }
+
+
+/* ---------------------------------------------------------------------
+   16. THE SAFARI ROUTE: Nairobi → Mombasa, Duolingo-path style
+   Each stop is a circle. They zig-zag left and right like Duolingo's
+   lesson path. The trick: every stop gets a --x, and translateX(var(--x))
+   slides it sideways. nth-child picks which stop gets which --x.
+   --------------------------------------------------------------------- */
+.route {
+  display: grid;
+  justify-items: center;
+  gap: var(--s4);
+  margin: 0;
+  padding: var(--s3) 0;
+  list-style: none;
+}
+.stop {
+  --x: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  transform: translateX(var(--x));
+  text-align: center;
+}
+/* The zig-zag repeats every 8 stops: 0, right, further right, right,
+   0, left, further left, left. */
+.stop:nth-child(8n + 2) { --x: 3.5rem; }
+.stop:nth-child(8n + 3) { --x: 5.5rem; }
+.stop:nth-child(8n + 4) { --x: 3.5rem; }
+.stop:nth-child(8n + 6) { --x: -3.5rem; }
+.stop:nth-child(8n + 7) { --x: -5.5rem; }
+.stop:nth-child(8n + 8) { --x: -3.5rem; }
+.stop-dot {
+  display: grid;
+  place-items: center;
+  width: 4.2rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ash);
+  /* the chunky "3D button" look: a darker shadow straight underneath */
+  box-shadow: 0 6px 0 #1a1a1a;
+  font-family: var(--display);
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+.stop-dot img { width: 1.8rem; }
+.stop-name {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.stop small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.stop--done .stop-dot {
+  background: var(--green);
+  box-shadow: 0 6px 0 #1d7a33;
+}
+.stop--here .stop-dot {
+  width: 5.2rem;
+  background: var(--red);
+  box-shadow: 0 6px 0 #8f1016, 0 0 0 10px var(--night), 0 0 0 13px var(--red);
+  color: #fff;
+}
+/* "UKO HAPA" (you are here) tag above the current stop */
+.stop--here::before {
+  content: "Uko hapa";
+  margin-bottom: var(--s1);
+  padding: 0.25rem 0.7rem;
+  border-radius: 6px;
+  background: var(--chalk);
+  color: var(--night);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.stop--goal .stop-dot {
+  background: #ffd23f;
+  box-shadow: 0 6px 0 #b38f00;
+}
+.stop--goal .stop-dot img { width: 2.2rem; }
+
+
+/* ---------------------------------------------------------------------
+   18. LEAGUES (LIGI)
+   --------------------------------------------------------------------- */
+/* The five leagues in a row. You're in Matatu. */
+.tiers {
+  display: flex;
+  gap: var(--s2);
+  margin: 0 0 var(--s4);
+  padding: var(--s1) 0;
+  list-style: none;
+  overflow-x: auto;          /* swipe sideways on phones if they don't fit */
+}
+.tier {
+  flex: none;
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  width: 6.5rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--muted);
+}
+.tier-badge {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  aspect-ratio: 1;
+  /* clip-path cuts the square into a shield shape, point by point */
+  clip-path: polygon(50% 0, 100% 20%, 100% 70%, 50% 100%, 0 70%, 0 20%);
+  background: var(--tier, var(--ash));
+  font-family: var(--display);
+  font-size: 1.5rem;
+  color: var(--night);
+}
+.tier--1 { --tier: #8a6a4a; }   /* Mkokoteni: wood */
+.tier--2 { --tier: #c0c0c0; }   /* Boda: chrome */
+.tier--3 { --tier: #ffd23f; }   /* Matatu: the yellow stripe */
+.tier--4 { --tier: #b14bff; }   /* Nganya: neon purple, like the lights */
+.tier--5 { --tier: #3aa0ff; }   /* SGR: blue */
+.tier.is-current { color: var(--chalk); }
+.tier.is-current .tier-badge { transform: scale(1.12); }
+.tier.is-locked .tier-badge { opacity: 0.3; }
+
+/* THE LEADERBOARD. CSS numbers the places with a counter. */
+.board {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: place;
+}
+.racer {
+  counter-increment: place;
+  display: grid;
+  grid-template-columns: 2rem 2.6rem 1fr auto;
+  gap: var(--s2);
+  align-items: center;
+  padding: 0.7rem var(--s1);
+  border-bottom: 1px solid var(--ash);
+}
+.racer::before {
+  content: counter(place);
+  font-family: var(--display);
+  font-size: 1.3rem;
+  text-align: center;
+  color: var(--muted);
+}
+/* The top 3 get medal colours */
+.racer:nth-child(1)::before { color: #ffd23f; }
+.racer:nth-child(2)::before { color: #c0c0c0; }
+.racer:nth-child(3)::before { color: #cd7f32; }
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--av, var(--smoke));
+  font-weight: 800;
+  color: var(--night);
+}
+.racer-name { font-weight: 700; }
+.racer-name small { display: block; font-weight: 500; font-size: 0.78rem; color: var(--muted); }
+.racer-xp { font-weight: 800; color: var(--muted); }
+.racer--you {
+  background: var(--coal);
+  outline: 1px solid var(--red);
+  border-radius: 8px;
+}
+.racer--you .racer-xp { color: var(--chalk); }
+/* The rows that mark the promotion and demotion zones.
+   They're real <li>s in the list but CSS skips them in the count. */
+.zone {
+  padding: var(--s1);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.zone--up { color: var(--green); border-top: 2px dashed var(--green); }
+.zone--down { color: var(--red-text); border-top: 2px dashed var(--red); }
+
+/* <details> + <summary> = a box that opens and closes with NO JavaScript.
+   It's built into HTML. The <summary> is the part you click. */
+details.explain {
+  margin-top: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+details.explain summary {
+  padding: var(--s2) var(--s3);
+  font-weight: 800;
+  cursor: pointer;
+}
+details.explain[open] summary { border-bottom: 1px solid var(--ash); }
+details.explain > div { padding: var(--s3); color: var(--muted); }
+details.explain ul { margin: 0; padding-left: 1.2rem; display: grid; gap: var(--s1); }
+
+
+/* ---------------------------------------------------------------------
+   19. BADGES + POP-UPS
+   Each badge is a <button popovertarget="…">. Clicking it opens the
+   element with that id, which has the "popover" attribute. A built-in
+   HTML pop-up: no JavaScript, closes with Esc or a tap outside.
+   --------------------------------------------------------------------- */
+.badges {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.badge {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: var(--s1);
+  width: 100%;
+  height: 100%;
+  padding: var(--s3) var(--s2);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+  color: inherit;
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+.badge:hover { border-color: var(--smoke); }
+/* The medal: a coloured circle with a darker ring inside its edge */
+.medal {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--medal, var(--ash));
+  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, 0.25);
+  font-family: var(--display);
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--night);
+}
+.badge strong { font-size: 0.95rem; line-height: 1.2; }
+.badge small { font-size: 0.75rem; color: var(--muted); }
+.badge progress { height: 0.5rem; }
+.badge.is-locked .medal { --medal: var(--ash); color: var(--muted); }
+
+/* The pop-up itself. [popover] = "any element with a popover attribute". */
+[popover] {
+  width: min(24rem, calc(100% - 2rem));
+  padding: var(--s4) var(--s3);
+  border: 2px solid var(--smoke);
+  border-radius: var(--radius);
+  background: var(--coal);
+  color: var(--chalk);
+  text-align: center;
+}
+/* ::backdrop = the dark layer behind an open pop-up */
+[popover]::backdrop { background: rgba(0, 0, 0, 0.8); }
+[popover] .medal { margin: 0 auto var(--s2); width: 6rem; font-size: 1.8rem; }
+[popover] h2 { font-size: 2rem; }
+[popover] p { color: var(--muted); }
+[popover] .btn { margin-top: var(--s2); }
+
+
+/* ---------------------------------------------------------------------
+   20. DUKA (SHOP)
+   --------------------------------------------------------------------- */
+.wallet {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1);
+  padding: var(--s1) var(--s2);
+  border: 1px solid #c98a1e;
+  border-radius: 999px;
+  font-weight: 800;
+  color: #e8b04a;
+}
+.shelf {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  height: 100%;
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+}
+.item-art {
+  display: grid;
+  place-items: center;
+  height: 6rem;
+  margin-bottom: var(--s1);
+  border-radius: 8px;
+  background: var(--night);
+}
+.item-art img { width: 3.5rem; }
+.item h3 { margin: 0; font-size: 1.35rem; }
+.item p { flex: 1; margin: 0; color: var(--muted); font-size: 0.92rem; }
+.price {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  margin-top: var(--s1);
+  border: 2px solid #c98a1e;
+  border-radius: 6px;
+  background: none;
+  color: #e8b04a;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.price:hover { background: rgba(232, 176, 74, 0.1); }
+.item.is-owned .price { border-color: var(--green); color: var(--green); cursor: default; }
+/* Jersey "art": stripes painted with gradients, cut out with clip-path */
+.jersey {
+  width: 3.6rem;
+  height: 4rem;
+  clip-path: polygon(25% 0, 75% 0, 100% 18%, 88% 35%, 80% 30%, 80% 100%, 20% 100%, 20% 30%, 12% 35%, 0 18%);
+}
+.jersey--gor { background: linear-gradient(90deg, #0f7a3a 0 46%, #fff 46% 54%, #0f7a3a 54%); }
+.jersey--ingwe { background: linear-gradient(90deg, #1565c0 0 38%, #fff 38% 62%, #1565c0 62%); }
+.jersey--stars { background: linear-gradient(180deg, #111 0 25%, var(--red) 25% 55%, var(--green) 55% 85%, var(--chalk) 85%); }
+
+
+/* ---------------------------------------------------------------------
+   21. ANASA ZAKO: one counter per habit (Quitzilla style)
+   --------------------------------------------------------------------- */
+.habits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.habit {
+  display: grid;
+  align-content: start;
+  gap: var(--s2);
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-left: 6px solid var(--mood, var(--green));
+  border-radius: var(--radius);
+  background: var(--coal);
+}
+.habit h3 { margin: 0; font-size: 1.6rem; }
+.habit-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mood, var(--muted));
+}
+/* The "time clean" clock: 23 days · 14 hrs · 05 min */
+.clean {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  text-align: center;
+}
+.clean div {
+  display: flex;
+  flex-direction: column;
+}
+.clean div + div { border-left: 1px solid var(--ash); }
+.clean dd {
+  order: -1;                 /* <dt> comes first in the HTML, but we want the
+                                NUMBER on top. order: -1 moves it up visually. */
+  margin: 0;
+  font-family: var(--display);
+  font-size: 2.4rem;
+  line-height: 1;
+}
+.clean dt {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.habit-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+.habit-facts strong { color: var(--green); }
+.habit-why {
+  margin: 0;
+  font-family: var(--marker);
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+/* The slip log: honest, not shameful */
+.log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--ash);
+}
+.log li {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: var(--s2);
+  padding-block: var(--s2);
+  border-bottom: 1px solid var(--ash);
+}
+.log time { font-weight: 800; color: var(--muted); }
+.log p { margin: 0; }
+
+
+/* ---------------------------------------------------------------------
+   22. CELEBRATION, MALEBO'S NAGS, LANDING EXTRAS
+   --------------------------------------------------------------------- */
+.celebrate {
+  display: grid;
+  justify-items: center;
+  gap: var(--s3);
+  padding-block: var(--s5);
+  text-align: center;
+}
+.big-day {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(6rem, 28vw, 12rem);
+  font-weight: 400;
+  line-height: 0.85;
+  color: #ff9a3c;
+}
+.big-day small {
+  display: block;
+  margin-bottom: 0.3em;
+  font-size: 0.16em;
+  letter-spacing: 0.15em;
+  color: var(--chalk);
+}
+/* The "pops in" animation. It runs once, when the page opens.
+   cubic-bezier with a number above 1 = it overshoots, then settles. Bouncy. */
+.pop { animation: pop 0.6s cubic-bezier(0.2, 1.6, 0.4, 1) both; }
+@keyframes pop {
+  from { transform: scale(0.3); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.rewards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.reward {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  min-width: 7rem;
+  padding: var(--s2);
+  border: 2px solid var(--rw, var(--ash));
+  border-radius: var(--radius);
+}
+.reward img { width: 1.8rem; }
+.reward strong {
+  font-family: var(--display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--rw);
+}
+.reward span { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.reward--xp { --rw: #ffd23f; }
+.reward--mbao { --rw: #e8b04a; }
+.reward--bead { --rw: #ffd23f; }
+/* Stagger: each reward pops in a moment after the one before */
+.rewards .pop:nth-child(2) { animation-delay: 0.15s; }
+.rewards .pop:nth-child(3) { animation-delay: 0.3s; }
+
+/* MALEBO'S NAGS: fake phone notifications. Duolingo-owl energy. */
+.nags {
+  display: grid;
+  gap: var(--s1);
+  max-width: 28rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nag {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: var(--s2);
+  align-items: start;
+  padding: 0.8rem var(--s2);
+  border-radius: 16px;
+  background: #1c1c1c;
+}
+.nag img { width: 2.6rem; border-radius: 10px; }
+.nag-top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s1);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.nag-top strong { color: var(--chalk); letter-spacing: 0.05em; }
+.nag p { margin: 0.15rem 0 0; font-size: 0.92rem; line-height: 1.4; }
+/* Each one leans a tiny bit, like a messy stack of real notifications */
+.nag:nth-child(odd) { transform: rotate(-0.6deg); }
+.nag:nth-child(even) { transform: rotate(0.6deg); }
+
+/* "The game" feature grid on the landing page */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.feature {
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+}
+.feature img { width: 2.4rem; margin-bottom: var(--s2); }
+.feature-moto { height: 2.4rem; margin-bottom: var(--s2); display: flex; align-items: end; }
+.feature h3 { margin-bottom: var(--s1); }
+.feature p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+.feature-from {
+  display: block;
+  margin-top: var(--s2);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The anasa Kenya fights, on the landing page */
+.anasa-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.anasa-list li {
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-top: 3px solid var(--red);
+  border-radius: var(--radius);
+}
+.anasa-list strong {
+  display: block;
+  margin-bottom: var(--s1);
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.anasa-list span { color: var(--muted); font-size: 0.95rem; }
+.anasa-list em { font-style: normal; font-family: var(--marker); color: var(--chalk); }
+
+/* Two-up layout for the stat bars on Wewe/Leo */
+.bars { display: grid; gap: var(--s2); }
+
+/* Tiny helpers */
+.mt { margin-top: var(--s2); }   /* "margin-top": a bit of space above */
+figure.card { margin: 0; }       /* <figure> comes with side margins; remove them */
+
+/* Avatar colours for the leaderboard. Five colours, reused in turn. */
+.av-1 { --av: #ff9a3c; }
+.av-2 { --av: #5fb3ff; }
+.av-3 { --av: #c58bff; }
+.av-4 { --av: #6fd38a; }
+.av-5 { --av: #ff7a8a; }
+.av-you { --av: var(--chalk); }
+
+/* Medal colours on the Wewe page */
+.medal-green { --medal: var(--green); }
+.medal-gold { --medal: #ffd23f; }
+.medal-red { --medal: var(--red); }
+.medal-blue { --medal: #5fb3ff; }
+.medal-orange { --medal: #ff9a3c; }
+
+/* The stats on Wewe: as many 160px+ columns as fit */
+.profile-stats { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+
+/* Malebo's face as shop "art", and the icons in shop pop-ups */
+.item-art .item-face {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+}
+.pop-icon { width: 4rem; margin: 0 auto var(--s2); }
+.pop-face {
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* The glossary on How It Works: word on the left, meaning on the right */
+.glossary {
+  margin: 0;
+  border-top: 1px solid var(--ash);
+}
+.glossary div {
+  display: grid;
+  gap: 0.2rem var(--s3);
+  padding-block: var(--s2);
+  border-bottom: 1px solid var(--ash);
+}
+@media (min-width: 600px) {
+  .glossary div { grid-template-columns: 11rem 1fr; }
+}
+.glossary dt {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+.glossary dd { margin: 0; color: var(--muted); }
+
+/* The panic button's text is longer now, so give it some inner room */
+.panic-btn { padding: var(--s3); text-align: center; }
+
+/* Two lines in the footer base: a little gap between them */
+.footer-base p + p { margin-top: 0.4rem; }
+.footer-base a { color: var(--chalk); font-weight: 700; }
+
+/* MEME YA LEO card on Leo: a fake "Me vs my anasa" meme, in marker font */
+.meme .eyebrow { margin-bottom: var(--s2); font-family: var(--body); font-size: 0.78rem; }
+.meme-line {
+  margin: 0 0 0.4rem;
+  font-family: var(--marker);
+  font-size: 1.1rem;
+  line-height: 1.35;
+}
+.meme-line span {
+  font-family: var(--body);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+
+/* =====================================================================
+   PART 3: LANDING PAGE POLISH (index.html only)
+   ===================================================================== */
+
+/* No bottom tab bar on the landing page, so no space saved for it */
+.page-landing { padding-bottom: 0; }
+
+/* The landing header: wordmark · jump links · one button.
+   On phones the jump links hide and margin-left: auto pushes the
+   button to the right edge. */
+.landing-nav { display: none; }
+.landing-cta { margin-left: auto; }
+@media (min-width: 900px) {
+  .landing-nav {
     display: flex;
+    gap: var(--s3);
     margin-left: auto;
   }
+  .landing-nav a {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .landing-nav a:hover { color: var(--chalk); }
+  .landing-cta { margin-left: var(--s3); }
+}
 
-  /* ❌ FIX: REMOVE "display: flex + static" override
-     We keep mobile dropdown behavior active always */
+/* Hero: the logo steps back so the headline wins */
+.page-landing .hero-logo { width: min(230px, 55%); margin-bottom: var(--s2); }
 
-  .nav-links {
-    /* ONLY override size, NOT behavior */
-    max-width: 280px;
+/* The reassurance line under the buttons: Free · 18+ · Zero betting ads */
+.trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s3);
+  margin: var(--s3) 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+/* A green tick before each item, except the last one (the link) */
+.trust li:not(:last-child)::before {
+  content: "✓ ";
+  color: var(--green);
+}
+.trust a { color: var(--chalk); }
+
+/* On phones and tablets: a smaller Malebo and only ONE speech bubble,
+   so visitors reach the actual content faster. */
+@media (max-width: 999px) {
+  .page-landing .hero-figure img { width: min(320px, 85%); }
+  .page-landing .hero-bubbles li:nth-child(n + 2) { display: none; }
+  .page-landing .hero-bubbles { align-items: center; }
+}
+
+/* START IN 30 SECONDS: reuses .stat-strip, but numbered, and stacked on
+   phones (three columns of sentences are too cramped at 375px). */
+.start-steps {
+  counter-reset: start;
+  grid-template-columns: 1fr;
+}
+.start-steps .stat {
+  counter-increment: start;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: var(--s2);
+  align-items: baseline;
+  text-align: left;
+  padding: var(--s3) var(--s2);
+}
+.start-steps .stat + .stat { border-left: 0; border-top: 1px solid var(--ash); }
+.start-steps .stat::before {
+  content: counter(start);
+  grid-row: span 2;          /* the number sits beside BOTH lines */
+  font-family: var(--display);
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--red);
+}
+.start-steps .stat strong { font-size: 1.5rem; }
+@media (min-width: 800px) {
+  .start-steps { grid-template-columns: repeat(3, 1fr); }
+  .start-steps .stat + .stat { border-top: 0; border-left: 1px solid var(--ash); }
+}
+
+/* "What's in it for you" tag at the bottom of each game card */
+.feature-tag {
+  display: inline-block;
+  margin-top: var(--s2);
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--green);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--green);
+}
+
+/* 6 game cards: 3 + 3 on laptops looks tidier than 4 + 2 with a gap.
+   minmax(300px, 1fr) = never narrower than 300px, so 3 fit across. */
+.page-landing .features { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+
+/* =====================================================================
+   SHANGA: YOUR BEADED BRACELET (replaces the old monster)
+   A bracelet = a string with beads on it.
+   - .shanga is the row. Its ::before is the string: a thin line drawn
+     right through the middle, BEHIND the beads (z-index: 0 vs 1).
+   - Each .bead is a circle. The colour class picks the Kenyan colour.
+   ===================================================================== */
+.shanga {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.shanga::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: #6b5a45;       /* a leather-brown string */
+}
+.bead {
+  position: relative;
+  z-index: 1;                /* beads sit IN FRONT of the string */
+  display: inline-block;
+  width: 1.6rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* the little shine on each bead: a soft white spot, top-left */
+  background-image: radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.55) 0 12%, transparent 30%);
+  background-color: var(--bead, var(--ash));
+}
+.bead--black { --bead: #1b1b1b; border: 1px solid #3a3a3a; }
+.bead--red { --bead: #c8102e; }
+.bead--green { --bead: #0f8a3c; }
+.bead--white { --bead: #f2f0ea; }
+.bead--gold {
+  --bead: #e8b04a;
+  width: 2rem;               /* milestone beads are a bit bigger */
+  box-shadow: 0 0 10px rgba(232, 176, 74, 0.5);
+}
+/* The next bead: an empty dashed circle, waiting to be earned */
+.bead--next {
+  width: 2rem;
+  background: var(--night);
+  border: 2px dashed #e8b04a;
+}
+@media (min-width: 700px) {
+  .shanga { gap: 8px; }
+  .bead { width: 2rem; }
+  .bead--gold,
+  .bead--next { width: 2.4rem; }
+}
+.shanga-card .shanga { align-items: center; }
+.shanga-shout {
+  margin: var(--s2) 0 0;
+  font-family: var(--marker);
+  font-size: 1.3rem;
+  color: #e8b04a;
+}
+/* The tiny 5-bead bracelet on the landing page card */
+.shanga--mini { gap: 4px; margin-bottom: var(--s2); align-items: center; }
+.shanga--mini .bead { width: 1.3rem; }
+.shanga--mini .bead--gold { width: 1.6rem; }
+/* The bead inside the "+1 Shanga bead" reward on the celebration screen */
+.reward .bead { width: 1.8rem; }
+
+
+/* THE RING: the bracelet as an actual circle.
+   How it works:
+   1. Every bead is placed in the CENTRE of the ring (position: absolute).
+   2. Each bead gets a number --i (0 to 29) from the nth-child rules below.
+   3. transform: rotate(--i × 12deg) turns it to its own angle
+      (360° ÷ 30 beads = 12° each), then translateY(-radius) pushes it
+      out to the edge. 30 beads, 30 angles = a full circle.
+   4. The ring's own border is the string. */
+.shanga-ring-wrap {
+  position: relative;
+  width: min(20rem, 100%);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  container-type: inline-size;   /* lets the beads measure THIS box (cqi) */
+}
+.shanga--ring {
+  --radius: 42cqi;               /* 42% of the ring's width, on any screen */
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.shanga--ring::before {
+  /* the string: a circle instead of a straight line */
+  inset: calc(50% - var(--radius));
+  height: auto;
+  border: 2px solid #6b5a45;
+  border-radius: 50%;
+  background: none;
+}
+.shanga--ring .bead {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.6rem;
+  margin: -0.8rem 0 0 -0.8rem;   /* centre the bead on its spot */
+  transform: rotate(calc(var(--i) * 12deg)) translateY(calc(var(--radius) * -1));
+}
+.shanga--ring .bead--gold,
+.shanga--ring .bead--next {
+  width: 2.1rem;
+  margin: -1.05rem 0 0 -1.05rem;
+}
+.shanga--ring .bead:nth-child(1) { --i: 0; }
+.shanga--ring .bead:nth-child(2) { --i: 1; }
+.shanga--ring .bead:nth-child(3) { --i: 2; }
+.shanga--ring .bead:nth-child(4) { --i: 3; }
+.shanga--ring .bead:nth-child(5) { --i: 4; }
+.shanga--ring .bead:nth-child(6) { --i: 5; }
+.shanga--ring .bead:nth-child(7) { --i: 6; }
+.shanga--ring .bead:nth-child(8) { --i: 7; }
+.shanga--ring .bead:nth-child(9) { --i: 8; }
+.shanga--ring .bead:nth-child(10) { --i: 9; }
+.shanga--ring .bead:nth-child(11) { --i: 10; }
+.shanga--ring .bead:nth-child(12) { --i: 11; }
+.shanga--ring .bead:nth-child(13) { --i: 12; }
+.shanga--ring .bead:nth-child(14) { --i: 13; }
+.shanga--ring .bead:nth-child(15) { --i: 14; }
+.shanga--ring .bead:nth-child(16) { --i: 15; }
+.shanga--ring .bead:nth-child(17) { --i: 16; }
+.shanga--ring .bead:nth-child(18) { --i: 17; }
+.shanga--ring .bead:nth-child(19) { --i: 18; }
+.shanga--ring .bead:nth-child(20) { --i: 19; }
+.shanga--ring .bead:nth-child(21) { --i: 20; }
+.shanga--ring .bead:nth-child(22) { --i: 21; }
+.shanga--ring .bead:nth-child(23) { --i: 22; }
+.shanga--ring .bead:nth-child(24) { --i: 23; }
+.shanga--ring .bead:nth-child(25) { --i: 24; }
+.shanga--ring .bead:nth-child(26) { --i: 25; }
+.shanga--ring .bead:nth-child(27) { --i: 26; }
+.shanga--ring .bead:nth-child(28) { --i: 27; }
+.shanga--ring .bead:nth-child(29) { --i: 28; }
+.shanga--ring .bead:nth-child(30) { --i: 29; }
+.shanga-count {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+  font-weight: 700;
+}
+.shanga-count strong {
+  font-family: var(--display);
+  font-size: 4rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #e8b04a;
+}
+
+
+/* =====================================================================
+   SHANGA, THE GAME: special beads + the jewellery pieces
+   ===================================================================== */
+
+/* THE NGAO: the Maasai shield from the middle of the Kenyan flag.
+   It's the charm at the centre of real Kenyan bracelets, and you earn one
+   for every 7 days in a row. Drawn with CSS:
+   - an oval (taller than wide, border-radius 50%)
+   - vertical stripes with linear-gradient: black edge, red, a white
+     centre line, red, black edge. Just like the shield on the flag. */
+.bead--ngao {
+  width: 1.5rem;
+  aspect-ratio: 3 / 4;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #111 0 16%, #c8102e 16% 42%, #f2f0ea 42% 58%, #c8102e 58% 84%, #111 84%);
+  box-shadow: 0 0 0 2px #111, 0 0 12px rgba(200, 16, 46, 0.5);
+}
+.shanga--ring .bead--ngao { width: 1.6rem; margin: -1.07rem 0 0 -0.8rem; }
+.shanga--mini .bead--ngao { width: 1.2rem; }
+/* The gap: a missed day. An empty socket on the string, never a red X.
+   Kind on purpose: a missed day is a gap, not a failure. */
+.bead--gap {
+  background: var(--night);
+  border: 2px solid var(--smoke);
+  transform-origin: center;
+}
+.shanga--ring .bead--gap { width: 1rem; margin: -0.5rem 0 0 -0.5rem; }
+/* A small bead used as a colour key next to text */
+.bead--swatch {
+  width: 1.1rem;
+  margin-right: 0.4rem;
+  vertical-align: -0.15em;
+}
+.bead-rules dt { display: flex; align-items: center; }
+
+/* The big bead that pops in on the celebration screen */
+.bead--hero {
+  width: 7rem;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+}
+
+/* JEWELLERY PIECES in the sanduku (jewellery box).
+   All drawn with CSS borders and gradients, no images:
+     bangili = a dotted circle (dotted border = a ring of beads!)
+     double  = the same, plus a second dotted ring (outline)
+     mkufu   = a dotted "U" (no top border, round bottom corners)
+     shujaa  = a solid ring of colour: conic-gradient paints the colours
+               around the centre, and a mask cuts out the middle */
+.pieces {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.piece {
+  display: grid;
+  justify-items: center;
+  align-content: end;
+  gap: var(--s1);
+  min-height: 13rem;
+  padding: var(--s3) var(--s2);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  text-align: center;
+}
+.piece strong {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.piece span:last-child { font-size: 0.8rem; color: var(--muted); }
+.piece.is-current { border-color: var(--red); background: var(--coal); }
+.piece.is-locked .piece-art { filter: grayscale(1); opacity: 0.3; }
+
+.piece-art {
+  display: block;
+  width: 5rem;
+  aspect-ratio: 1;
+  margin-bottom: var(--s2);
+  border-radius: 50%;
+}
+.piece-art--bangili {
+  border: 8px dotted var(--red);
+  outline: 3px solid #111;          /* the string */
+  outline-offset: -5px;
+  box-shadow: 0 0 0 3px var(--green), inset 0 0 0 3px var(--chalk);
+}
+.piece-art--double {
+  width: 4.2rem;
+  border: 7px dotted var(--red);
+  outline: 7px dotted var(--green);
+  outline-offset: 5px;
+}
+.piece-art--mkufu {
+  width: 6rem;
+  aspect-ratio: 3 / 2;
+  border: 8px dotted var(--chalk);
+  border-top: 0;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+.piece-art--shujaa {
+  width: 6rem;
+  background: repeating-conic-gradient(var(--red) 0 15deg, var(--chalk) 15deg 22deg, var(--green) 22deg 37deg, #111 37deg 45deg);
+  /* the mask keeps only a ring: transparent in the middle, solid outside */
+  -webkit-mask: radial-gradient(circle, transparent 38%, #000 39%);
+  mask: radial-gradient(circle, transparent 38%, #000 39%);
+}
+.piece-art--big { width: 7rem; border-width: 10px; }
+
+/* The mini bracelet is only as wide as its beads, so the string
+   doesn't run off across the whole card. */
+.shanga--mini { width: fit-content; }
+
+/* =====================================================================
+   ENGLISH EDITION (en/): the illustrated Malebo in the footer
+   ===================================================================== */
+.footer-mascot { width: 9rem; margin-bottom: var(--s2); }
+.footer-inner p.wordmark { margin: 0; font-size: 2rem; }
+
+
+/* =====================================================================
+   PART 4: THE QUIT-APP STRUCTURE (English edition)
+   Inspired by how Quitzilla, Flamy, I Am Sober and Nomo are built.
+   ===================================================================== */
+
+/* THE SOS TAB: the middle tab, always red, like an emergency button */
+.tabbar a.tab-sos { color: #fff; }
+.tabbar a.tab-sos::before { display: none; }       /* no little dot */
+@media (max-width: 899px) {
+  /* On phones it's a red circle that sticks up out of the tab bar */
+  .tabbar a.tab-sos {
+    flex: none;
+    width: 3.6rem;
+    height: 3.6rem;
+    margin: -1.2rem 0.4rem 0;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 4px var(--night);
+    font-family: var(--display);
     font-size: 0.95rem;
-  }
-
-  /* HERO GRID (safe enhancement only) */
-  .hero {
-    grid-template-columns: 1.1fr 0.9fr;
-    align-items: center;
-  }
-
-  .hero-copy {
-    padding-right: 20px;
-  }
-
-  .hero-actions {
-    flex-wrap: nowrap;
-  }
-
-  .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .hero-visual {
-    min-height: 520px;
-  }
-
-  /* SECTION LAYOUTS */
-  .panic-card {
-    grid-template-columns: 0.95fr 0.9fr;
-  }
-
-  .savings-shell {
-    grid-template-columns: 1fr 1.3fr;
+    letter-spacing: 0.06em;
   }
 }
-
-/* =========================
-   2. MOTION SYSTEM (UNCHANGED - CLEAN)
-   ========================= */
-
-@keyframes float {
-  0% {
-    transform: translateY(0px);
+@media (min-width: 900px) {
+  .tabbar a.tab-sos {
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: var(--red);
   }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+  .tabbar a.tab-sos:hover { background: #f23a40; color: #fff; }
 }
 
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 0 0 rgba(0, 200, 83, 0);
-  }
-  50% {
-    box-shadow: 0 0 25px rgba(0, 200, 83, 0.25);
-  }
-  100% {
-    box-shadow: 0 0 0 rgba(0, 200, 83, 0);
-  }
+/* THE MORNING PLEDGE: tick it and :has() turns the card green */
+.pledge {
+  padding: var(--s3);
+  border: 2px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.pledge h2 { font-size: 1.8rem; margin-bottom: var(--s2); }
+.pledge-time {
+  margin: 0 0 var(--s1);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pledge-box {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pledge-box input { width: 1.8rem; height: 1.8rem; accent-color: var(--green); flex: none; }
+.pledge-done { display: none; margin: var(--s2) 0 0; color: var(--green); font-weight: 700; }
+.pledge:has(input:checked) { border-color: var(--green); background: rgba(47, 176, 76, 0.08); }
+.pledge:has(input:checked) .pledge-done { display: block; }
+
+/* THE CLOCKS: one card per habit on Today (Quitzilla's dashboard) */
+.counters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.counter {
+  display: grid;
+  gap: 0.4rem;
+  height: 100%;
+  padding: var(--s2) var(--s3) var(--s3);
+  border: 1px solid var(--ash);
+  border-top: 4px solid var(--mood);
+  border-radius: var(--radius);
+  background: var(--coal);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.counter:hover { transform: translateY(-2px); border-color: var(--smoke); border-top-color: var(--mood); }
+.counter-name {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mood);
+}
+.counter-time { font-size: 0.9rem; color: var(--muted); }
+.counter-time strong {
+  font-family: var(--display);
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--chalk);
+}
+.counter-money { font-weight: 700; color: var(--green); }
+.counter progress { height: 0.5rem; --bar: var(--mood); }
+.counter-next { font-size: 0.8rem; color: var(--muted); }
+
+/* A grid of 6 stats (Progress, habit pages) */
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+
+/* THE QUIT PLAN */
+.plan-hero {
+  display: grid;
+  gap: var(--s3);
+  align-items: center;
+}
+@media (min-width: 800px) { .plan-hero { grid-template-columns: 1fr auto; } }
+.plan-malebo { width: 9rem; border-radius: 50%; }
+/* The 6 step links at the top, numbered by a CSS counter */
+.plan-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin: 0 0 var(--s4);
+  padding: 0;
+  list-style: none;
+  counter-reset: planstep;
+}
+.plan-steps li { counter-increment: planstep; }
+.plan-steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.45rem;
+  border: 1px solid var(--ash);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.plan-steps a::before {
+  content: counter(planstep);
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.8rem;
+}
+.plan-steps a:hover { border-color: var(--chalk); }
+.plan-step {
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+  scroll-margin-top: 6rem;   /* room under the sticky header when jumping here */
+}
+.plan-step legend {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  float: left;               /* a trick: lets the legend sit INSIDE the box's padding */
+  width: 100%;
+  margin-bottom: var(--s2);
+}
+.plan-step legend + * { clear: both; }
+.plan-no {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  font-size: 1.2rem;
 }
 
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* HABIT DETAIL */
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--s2);
+  font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
 }
+.back-link:hover { color: var(--chalk); }
+.clean--big { max-width: 40rem; margin-top: var(--s2); }
+.clean--big dd { font-size: clamp(4rem, 14vw, 8rem); }
+.clean--big dt { font-size: 0.9rem; }
+.rank-note { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.9rem; }
+.habit-open { font-weight: 800; color: var(--chalk); }
 
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+/* TRIGGER BARS: each bar's width = --pct, set by a class */
+.triggers { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s2); }
+.trigger {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem var(--s2);
+  border-radius: 8px;
+  background: var(--coal);
+  overflow: hidden;
+  font-weight: 700;
 }
-.animate-pulse {
-  animation: pulse-glow 2.5s ease-in-out infinite;
+/* the bar itself, drawn behind the text with ::before */
+.trigger::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--pct);
+  background: rgba(227, 38, 45, 0.35);
 }
-.animate-fade {
-  animation: fade-up 0.6s ease-out forwards;
-}
+.trigger > * { position: relative; }
+.trigger--50 { --pct: 50%; }
+.trigger--33 { --pct: 33%; }
+.trigger--17 { --pct: 17%; }
 
-/* =========================
-   3. ACCESSIBILITY (UNCHANGED)
-   ========================= */
-
+/* SOS: THE BREATHING CIRCLE
+   One 12-second loop: grow for 4s (breathe in), stay big for 4s (hold),
+   shrink for 4s (breathe out). Each label is only visible during its
+   third of the loop, thanks to its own little animation. */
+.sos-hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--s3);
+  padding-block: var(--s5);
+  text-align: center;
+}
+.sos-hero .lede { color: var(--muted); }
+.breathe {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(16rem, 70vw);
+  aspect-ratio: 1;
+  margin: var(--s3) 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(63, 191, 90, 0.35), rgba(63, 191, 90, 0.08) 70%);
+  border: 3px solid var(--calm);
+  animation: breathe 12s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%   { transform: scale(0.6); }
+  33%  { transform: scale(1); }     /* in for 4s */
+  66%  { transform: scale(1); }     /* hold for 4s */
+  100% { transform: scale(0.6); }   /* out for 4s */
+}
+.breathe-label {
+  position: absolute;
+  font-family: var(--display);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  opacity: 0;
+}
+.breathe-in { animation: label-in 12s infinite; }
+.breathe-hold { animation: label-hold 12s infinite; }
+.breathe-out { animation: label-out 12s infinite; }
+@keyframes label-in { 0%, 30% { opacity: 1; } 33%, 100% { opacity: 0; } }
+@keyframes label-hold { 0%, 33% { opacity: 0; } 36%, 63% { opacity: 1; } 66%, 100% { opacity: 0; } }
+@keyframes label-out { 0%, 66% { opacity: 0; } 69%, 97% { opacity: 1; } 100% { opacity: 0; } }
+/* With "reduce motion" on, animations stop, so show one steady label */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  .breathe-in { opacity: 1; }
 }
+.why-card blockquote {
+  margin: 0 0 var(--s2);
+  font-family: var(--marker);
+  font-size: 1.4rem;
+  line-height: 1.3;
+}
+.sos-cta { width: 100%; }
+
+/* small legends inside cards */
+.legend-small { font-family: var(--body); font-size: 1rem; font-weight: 800; text-transform: none; }
+
+/* JOURNAL */
+.entries { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--s2); }
+.entry {
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-left: 5px solid var(--mood);
+  border-radius: var(--radius);
+  background: var(--coal);
+}
+.entry p { margin: 0; }
+.entry-top {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s2);
+  margin-bottom: var(--s1);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+.entry-top span { color: var(--mood); }
+
+/* ME: THE HUB of everything that isn't a main tab */
+.hub {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.hub-link {
+  display: grid;
+  gap: 0.2rem;
+  padding: var(--s3);
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--coal);
+  text-decoration: none;
+}
+.hub-link strong { font-family: var(--display); font-size: 1.5rem; font-weight: 400; text-transform: uppercase; }
+.hub-link strong::after { content: " →"; color: var(--red); }
+.hub-link span { color: var(--muted); font-size: 0.9rem; }
+.hub-link:hover { border-color: var(--red); }

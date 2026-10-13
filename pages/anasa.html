@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anasa Zako · Ni Mbaya!</title>
+    <meta name="description" content="Every habit you're quitting, with its own clean-time counter and money not spent." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">Anasa yako?</span>
+          <h1>Mara kasongo, <em>mara chapati.</em></h1>
+          <p class="lede">
+            Anasa rarely comes alone. Track every habit on its own clock: how
+            long you've been clean, and what it's no longer costing you.
+          </p>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           01: THE COUNTERS (the Quitzilla part)
+           Each habit card has:
+             - a <dl> "clock": days / hours / minutes clean
+               (CSS flips each pair so the NUMBER sits on top, see .clean)
+             - facts: money not spent, urges beaten
+             - your reason, in Malebo's marker font
+           The mood class sets the coloured left border.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="ch1">Clean <em>time.</em></h2>
+            <p><span class="example-tag">Example</span> In the real app these clocks tick every minute (Phase 2).</p>
+          </div>
+
+          <ul class="habits">
+            <li class="habit mood--calm">
+              <span class="habit-tag">Main anasa · since Sept 15</span>
+              <h3>Betting</h3>
+              <dl class="clean">
+                <div><dt>Days</dt><dd>23</dd></div>
+                <div><dt>Hours</dt><dd>14</dd></div>
+                <div><dt>Min</dt><dd>05</dd></div>
+              </dl>
+              <ul class="habit-facts">
+                <li><strong>KSh 3,450</strong> not bet</li>
+                <li><strong>6</strong> urges beaten</li>
+                <li><strong>0</strong> "sure bets" placed</li>
+              </ul>
+              <p class="habit-why">"Hakuna sure bet. Sure ni Mombasa."</p>
+            </li>
+
+            <li class="habit mood--hype">
+              <span class="habit-tag">Added Sept 26</span>
+              <h3>Pombe</h3>
+              <dl class="clean">
+                <div><dt>Days</dt><dd>11</dd></div>
+                <div><dt>Hours</dt><dd>02</dd></div>
+                <div><dt>Min</dt><dd>40</dd></div>
+              </dl>
+              <ul class="habit-facts">
+                <li><strong>KSh 1,150</strong> kept</li>
+                <li><strong>2</strong> weekends clean</li>
+                <li><strong>3</strong> "ya mwisho kabisaa" ignored</li>
+              </ul>
+              <p class="habit-why">"Ya mwisho kabisaa" was last week too.</p>
+            </li>
+
+            <!-- A different kind of anasa: debt. No clock, just a payoff bar. -->
+            <li class="habit mood--pressure">
+              <span class="habit-tag">Debt · payoff mode</span>
+              <h3>Fuliza</h3>
+              <div>
+                <p class="bar-label"><span>Paid back</span><span>KSh 2,300 / 5,000</span></p>
+                <progress class="bar-xp" value="2300" max="5000">46%</progress>
+              </div>
+              <ul class="habit-facts">
+                <li><strong>18 days</strong> to Fuliza-free at KSh 150/day</li>
+                <li><strong>0</strong> new loans this month</li>
+              </ul>
+              <p class="habit-why">"Borrowed today, owed forever." Not anymore.</p>
+            </li>
+
+            <li class="habit mood--chaos">
+              <span class="habit-tag">Added Oct 1</span>
+              <h3>3am scrolling</h3>
+              <dl class="clean">
+                <div><dt>Days</dt><dd>6</dd></div>
+                <div><dt>Hours</dt><dd>09</dd></div>
+                <div><dt>Min</dt><dd>12</dd></div>
+              </dl>
+              <ul class="habit-facts">
+                <li><strong>14 hrs</strong> of sleep won back</li>
+              </ul>
+              <p class="habit-why">"TikTok itakuwa hapo kesho. Usingizi hautakuwa."</p>
+            </li>
+          </ul>
+
+          <div class="btn-row mt">
+            <!-- A real app would open a form here. For now it goes to Settings. -->
+            <a class="btn btn-ghost" href="settings.html">+ Add an anasa</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           02: THE SLIP LOG
+           Quitzilla keeps a history of resets. Ours is honest but kind:
+           every slip comes with what you learned. <time datetime="…">
+           gives computers the exact date while people read "Sept 14".
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">The slip <em>log.</em></h2>
+            <p>Umebant? It happens. A slip is data, not a verdict.</p>
+          </div>
+          <ol class="log">
+            <li>
+              <time datetime="2026-09-14">Mon, Sept 14</time>
+              <p><strong>Betting · Day 6 → reset.</strong> Derby weekend hangover: "ya mwisho kabisaa." Lesson: Malebo now warns before big matches.</p>
+            </li>
+            <li>
+              <time datetime="2026-09-05">Sat, Sept 5</time>
+              <p><strong>Betting · Day 2 → reset.</strong> Payday. Lesson: the lengo transfer now happens the moment salary lands.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

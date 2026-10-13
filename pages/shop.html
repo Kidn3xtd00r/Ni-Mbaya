@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duka · Ni Mbaya!</title>
+    <meta name="description" content="Spend the Mbao you earn by staying clean: Streak Bima, Double XP, and fits for Malebo." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">Duka</span>
+          <h1>Spend your <em>Mbao.</em></h1>
+          <p class="lede">
+            Mbao are game coins you earn by staying clean: quests, check-ins,
+            beating cravings. They are <strong>never</strong> real money, and
+            you can never buy them. Discipline is the only currency here.
+          </p>
+          <p class="wallet"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 460 Mbao</p>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           01: POWER-UPS
+           Each "price" is a <button> that opens a popover asking you to
+           confirm. Buying needs a server to remember it (Phase 3), so the
+           pop-up says so honestly.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="ch1">Power-<em>ups.</em></h2>
+          </div>
+          <ul class="shelf">
+            <li class="item">
+              <div class="item-art"><img src="../Images/icons/bima.svg" alt="" /></div>
+              <h3>Streak Bima</h3>
+              <p>Insurance for your streak. Covers one missed day, and you still get its bead. For when life happens: msiba, safari, network imeisha. Not for relapses. You have 1 of 2.</p>
+              <button class="price" popovertarget="buy-bima"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 200</button>
+            </li>
+            <li class="item">
+              <div class="item-art"><img src="../Images/icons/xp.svg" alt="" /></div>
+              <h3>Double XP Hour</h3>
+              <p>Every XP you earn for the next hour counts twice. Use it before the league ends on Sunday.</p>
+              <button class="price" popovertarget="buy-xp"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 100</button>
+            </li>
+            <li class="item">
+              <div class="item-art"><img src="../Images/icons/trophy.svg" alt="" /></div>
+              <h3>Chama Boost</h3>
+              <p>+10% Mbao for your whole chama for a week. Kindness, but make it a power-up.</p>
+              <button class="price" popovertarget="buy-chama"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 250</button>
+            </li>
+            <li class="item">
+              <div class="item-art"><img src="../Images/brand/moods/chaos-temptation.jpg" alt="" class="item-face" /></div>
+              <h3>Roast Mode</h3>
+              <p>Unlock Malebo's savage nags. "Aki wewe! Uliambia nani utaanza Jumatatu?" Not for the soft.</p>
+              <button class="price" popovertarget="buy-roast"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 150</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           02: FITS FOR MALEBO
+           The jerseys are drawn with CSS gradients + clip-path, no images.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">Fits for <em>Malebo.</em></h2>
+            <p>Dress him up. Purely for the drip.</p>
+          </div>
+          <ul class="shelf">
+            <li class="item is-owned">
+              <div class="item-art"><img src="../Images/brand/favicon.png" alt="" class="item-face" /></div>
+              <h3>The Shuka</h3>
+              <p>His signature. Red, green, black. Comes free with Day 1.</p>
+              <button class="price" disabled>Owned · wearing</button>
+            </li>
+            <li class="item">
+              <div class="item-art"><span class="jersey jersey--stars" aria-hidden="true"></span></div>
+              <h3>Harambee Stars Kit</h3>
+              <p>For match days. Watch the game, skip the bet.</p>
+              <button class="price" popovertarget="buy-kit"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 300</button>
+            </li>
+            <li class="item">
+              <div class="item-art"><span class="jersey jersey--gor" aria-hidden="true"></span></div>
+              <h3>K'Ogalo Green</h3>
+              <p>Gor Mahia colours. Sirkal ya Nairobi energy.</p>
+              <button class="price" popovertarget="buy-kit"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 300</button>
+            </li>
+            <li class="item">
+              <div class="item-art"><span class="jersey jersey--ingwe" aria-hidden="true"></span></div>
+              <h3>Ingwe Blue</h3>
+              <p>AFC Leopards colours. Yes, we sell both. We're neutral. Mostly.</p>
+              <button class="price" popovertarget="buy-kit"><img class="icon" src="../Images/icons/mbao.svg" alt="" /> 300</button>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- THE CONFIRM POP-UPS -->
+      <div popover id="buy-bima">
+        <img src="../Images/icons/bima.svg" alt="" class="pop-icon" />
+        <h2>Nunua Streak Bima?</h2>
+        <p>200 Mbao. You'll have 260 left and 2 of 2 Bima equipped.</p>
+        <p><span class="example-tag">Demo</span> Buying works once the app has a server (Phase 3).</p>
+        <button class="btn btn-red" popovertarget="buy-bima" popovertargetaction="hide">Sawa</button>
+      </div>
+      <div popover id="buy-xp">
+        <img src="../Images/icons/xp.svg" alt="" class="pop-icon" />
+        <h2>Double XP Hour?</h2>
+        <p>100 Mbao. Best used right before you do all four quests.</p>
+        <p><span class="example-tag">Demo</span> Buying works once the app has a server (Phase 3).</p>
+        <button class="btn btn-red" popovertarget="buy-xp" popovertargetaction="hide">Sawa</button>
+      </div>
+      <div popover id="buy-chama">
+        <img src="../Images/icons/trophy.svg" alt="" class="pop-icon" />
+        <h2>Boost the chama?</h2>
+        <p>250 Mbao. Brian, Amina, Kevin and Shani will see who sent it.</p>
+        <p><span class="example-tag">Demo</span> Buying works once the app has a server (Phase 3).</p>
+        <button class="btn btn-red" popovertarget="buy-chama" popovertargetaction="hide">Sawa</button>
+      </div>
+      <div popover id="buy-roast">
+        <img src="../Images/brand/moods/chaos-temptation.jpg" alt="" class="pop-icon pop-face" />
+        <h2>Unlock Roast Mode?</h2>
+        <p>150 Mbao. You can switch it off any time in Settings. You won't want to.</p>
+        <p><span class="example-tag">Demo</span> Buying works once the app has a server (Phase 3).</p>
+        <button class="btn btn-red" popovertarget="buy-roast" popovertargetaction="hide">Sawa</button>
+      </div>
+      <!-- One pop-up shared by all three jerseys: three buttons can point at
+           the same popover id. -->
+      <div popover id="buy-kit">
+        <img src="../Images/icons/mbao.svg" alt="" class="pop-icon" />
+        <h2>Buy this kit?</h2>
+        <p>300 Mbao. You have 460.</p>
+        <p><span class="example-tag">Demo</span> Buying works once the app has a server (Phase 3).</p>
+        <button class="btn btn-red" popovertarget="buy-kit" popovertargetaction="hide">Sawa</button>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

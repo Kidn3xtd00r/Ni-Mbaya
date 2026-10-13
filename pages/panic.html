@@ -3,88 +3,162 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NI MBAYA | Panic Button</title>
-    <meta
-      name="description"
-      content="NI MBAYA is the Kenyan app that remembers what you promised yourself. Build streaks, quit bad habits, save money, and beat Mbaya."
-    />
+    <title>Panic Button · Ni Mbaya!</title>
+    <meta name="description" content="About to relapse? Hit the panic button. Malebo shows you everything you've built before you throw it away." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../CSS/background.css" />
-    <link rel="stylesheet" href="../CSS/styles.css" />
-    <link rel="stylesheet" href="../CSS/header.css" />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
   </head>
-  <body>
-    <main>
-      <h1 class="page-title">Panic Button</h1>
-      <!--/* THIS IS THE PANIC BUTTON ,LIKE WOW IM ABOUT TO RELAPSE   -->
-      <section class="section panic-section" id="panic">
-        <div class="panic-card">
-          <div class="panic-copy">
-            <span class="section-eyebrow">THE PANIC BUTTON</span>
-            <h2>Before you relapse, check what you’ve built.</h2>
-            <p>
-              Large dramatic support for the moment you feel weak. This is your
-              accountability superpower.
-            </p>
-            <button id="panicButton" class="btn btn-danger">
-              I'M ABOUT TO RELAPSE
-            </button>
-          </div>
-          <div class="panic-preview">
-            <div class="panic-panel">
-              <div><strong>Your streak</strong><span>Day 23</span></div>
-              <div>
-                <strong>Your reason</strong><span>Started to save for trip</span>
-              </div>
-              <div><strong>Money saved</strong><span>KSh 4,600</span></div>
-            </div>
-            <div class="panic-message">
-              Boss. Before ufanye hii kitu, kumbuka ulianza kwanini.
-            </div>
-          </div>
+
+  <!-- class="page-panic" on <body> = this ONE page gets the red alarm glow
+       (section 10 of styles.css). A class on <body> is a neat way to give a
+       single page its own look without a separate stylesheet. -->
+  <body class="page-panic">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- No link is "current" in the tab bar here: Panic isn't one of the
+         five tabs, it's the red button on the right. -->
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html" aria-current="page">Panic</a>
         </div>
-        <div id="panicModal" class="panic-modal hidden">
-          <div class="panic-modal-card">
-            <p class="modal-label">Hold up.</p>
-            <h3>Before ufanye hii kitu...</h3>
-            <ul>
-              <li>Your streak is at <strong>Day 23</strong>.</li>
-              <li>Your mind already chose <strong>trip savings</strong>.</li>
-              <li>You’ve kept <strong>KSh 4,600</strong> away from Mbaya.</li>
-            </ul>
-            <p class="modal-note">
-              This app’s superpower is making your progress louder than the
-              temptation.
-            </p>
-            <button id="closePanic" class="btn btn-secondary">
-              Stay on track
-            </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="wrap panic-hero" aria-labelledby="panic-title">
+        <span class="eyebrow">The panic button</span>
+        <h1 id="panic-title">Before you relapse, <em>breathe.</em></h1>
+        <p class="lede">
+          The craving peaks and then it passes, usually in minutes. Press the
+          button. Look at what you've built. Then decide.
+        </p>
+
+        <!-- THE BUTTON is a LINK to "#hold-up" (the pop-up below).
+             Clicking it puts #hold-up at the end of the address, and CSS
+             shows whatever element is the ":target". No JavaScript. -->
+        <!-- "Driver, nishukishe hapo" = "driver, drop me off here!", the KOT
+             line for getting off a ride you don't like. Here the ride is
+             headed straight for your anasa. -->
+        <a class="panic-btn" href="#hold-up">Driver, nishukishe hapo!</a>
+        <p class="hint">Beat the craving: <strong>+50 XP</strong> and <strong>+10 Mbao</strong>. Every time.</p>
+      </section>
+
+      <!-- =============================================================
+           THE NEXT 10 MINUTES
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="ch1">Just get through <em>the next 10 minutes.</em></h2>
+            <p>Not forever. Ten minutes. Pick one and do it now. If it's bigger than ten minutes, that's what 1192 is for.</p>
           </div>
+          <ol class="ten">
+            <li><strong>Move</strong><span>Leave the room. Walk to the gate and back.</span></li>
+            <li><strong>Cold water</strong><span>Drink a full glass. Splash your face.</span></li>
+            <li><strong>Text the chama</strong><span>"Niko kwa struggle." That's the whole message.</span></li>
+            <li><strong>Call 1192</strong><span>NACADA's free, 24/7 helpline for alcohol and drugs. Real people, no judgement.</span></li>
+            <li><strong>Look at your why</strong><span>The Mombasa trip. The money. The person you're becoming.</span></li>
+          </ol>
         </div>
       </section>
 
-      <!-- THIS IS THE FINAL MESSAGE TO THE USER -->
-      <section class="section final-cta" id="final-cta">
-        <div class="final-shell">
-          <div class="final-copy">
-            <h2>Become the person you keep talking about.</h2>
-            <p>One check-in. One day. One streak at a time.</p>
-            <a href="streak.html" class="btn btn-primary btn-large">START TODAY</a>
-          </div>
-          <div class="final-visual">
-            <div class="final-illustration">
-              <div class="final-user"></div>
-              <div class="final-mbaya"></div>
-            </div>
+      <section class="wrap cta-band" aria-labelledby="cta">
+        <div>
+          <h2 id="cta">Become the person you keep <em>talking about.</em></h2>
+          <p class="lede">One check-in. One day. One streak at a time.</p>
+          <a class="btn btn-red btn-big" href="checkIn.html">Check in instead</a>
+        </div>
+        <img src="../Images/brand/moods/calm-coach.jpg" alt="" width="166" height="218" loading="lazy" />
+      </section>
+
+      <!-- =============================================================
+           THE "HOLD UP" POP-UP
+           Hidden until the address ends in #hold-up (see .hold-up:target
+           in CSS). role="dialog" + aria-labelledby tell screen readers
+           "this is a pop-up called 'Before ufanye hii kitu'".
+           ============================================================= -->
+      <section class="hold-up" id="hold-up" role="dialog" aria-labelledby="hold-up-title">
+        <div class="hold-up-card">
+          <img src="../Images/brand/moods/pressure-friend.jpg" alt="Malebo, unimpressed, raising an eyebrow." width="168" height="218" />
+          <span class="eyebrow">Hold up.</span>
+          <h2 id="hold-up-title">Before ufanye hii kitu…</h2>
+          <p>Kumbuka ulianza kwanini. Here's what you'd be throwing away:</p>
+          <ul class="proof">
+            <li>Your streak <strong>Day 23</strong></li>
+            <li>Your why <strong>Mombasa trip</strong></li>
+            <li>Kept from your anasa <strong>KSh 4,600</strong></li>
+            <li>Next rank <strong>7 days away</strong></li>
+          </ul>
+          <p class="bubble bubble--red">Aki wewe! "Ya mwisho kabisaa" ulisema last week pia.</p>
+          <div class="btn-row">
+            <!-- "I beat it" takes you to the celebration screen.
+                 href="#" on Close = "go to the top of this page", which
+                 removes #hold-up from the address, so the pop-up hides. -->
+            <a class="btn btn-red" href="celebrate.html">I beat it · +50 XP</a>
+            <a class="btn btn-ghost" href="community.html">Call the chama</a>
+            <a class="btn btn-ghost" href="#">Close</a>
           </div>
         </div>
       </section>
-  
     </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
   </body>
 </html>

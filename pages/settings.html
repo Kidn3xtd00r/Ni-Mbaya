@@ -3,24 +3,298 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NI MBAYA | Settings</title>
-    <meta
-      name="description"
-      content="NI MBAYA is the Kenyan app that remembers what you promised yourself. Build streaks, quit bad habits, save money, and beat Mbaya."
-    />
+    <title>Settings · Ni Mbaya!</title>
+    <meta name="description" content="Your Ni Mbaya! settings: your why, Malebo's tone, reminders and language." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../CSS/background.css" />
-    <link rel="stylesheet" href="../CSS/styles.css" />
-    <link rel="stylesheet" href="../CSS/header.css" />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
   </head>
+
   <body>
-    <main>
-      <h1 class="page-title">Settings</h1>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">Settings</span>
+          <h1>Your <em>rules.</em></h1>
+          <p class="lede">Tell Malebo who you are, why you started, and how hard to push.</p>
+        </div>
+      </section>
+
+      <div class="wrap chapter settings-layout">
+        <!-- A small "jump to" menu. Each link points at a fieldset's id.
+             On laptops it sticks to the side while you scroll. -->
+        <nav class="settings-toc" aria-label="Settings sections">
+          <ul>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#call-me">What to call you</a></li>
+            <li><a href="#nags">Nag level</a></li>
+            <li><a href="#tone">Malebo's tone</a></li>
+            <li><a href="#reminders">Reminders</a></li>
+            <li><a href="#language">Language</a></li>
+          </ul>
+        </nav>
+
+        <!-- action="#" = "submit to this same page". Nothing is actually
+             saved yet, because saving needs a server (Phase 3). The form is
+             here so the design and the HTML are ready for that day. -->
+        <form class="settings-form" action="#">
+          <!-- PROFILE: text inputs.
+               Every <input> has a <label> with for="" matching its id="".
+               That's what lets a screen reader say "Your name, edit text",
+               and lets you click the label to jump into the box. -->
+          <fieldset id="profile">
+            <legend>Profile</legend>
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" value="Joe" autocomplete="given-name" />
+            </div>
+            <div class="field">
+              <label for="habit">The habit you're beating</label>
+              <input id="habit" name="habit" type="text" value="Weekend drinking" />
+            </div>
+            <div class="field">
+              <label for="why">Your why</label>
+              <!-- <small> under a field = a hint. aria-describedby links it to
+                   the input, so screen readers read the hint too. -->
+              <input id="why" name="why" type="text" value="Saving for a Mombasa trip" aria-describedby="why-hint" />
+              <small id="why-hint">Malebo shows you this on the panic screen. Make it something that hits.</small>
+            </div>
+            <div class="field">
+              <label for="daily">Daily saving (KSh)</label>
+              <!-- type="number" brings up the number keypad on phones -->
+              <input id="daily" name="daily" type="number" min="0" step="10" value="200" inputmode="numeric" />
+            </div>
+          </fieldset>
+
+          <!-- WHAT SHOULD MALEBO CALL YOU?
+               Malebo is a guy, but the people using the app are not all guys.
+               So NOBODY gets "bro" by default. Each person picks, and
+               "prefer not to say" is a real option: Malebo then only uses
+               words that work for anyone (rafiki, boss, cuzo, your name).
+               We never ask for your gender, because the app doesn't need it. -->
+          <fieldset id="call-me">
+            <legend>What should Malebo call you?</legend>
+            <p class="hint">He'll use this in check-ins, nags and the chama chat. Change it any time.</p>
+            <div class="picks">
+              <label class="pick">
+                <input type="radio" name="call-me" value="name" checked />
+                <span class="pick-text">My name<small>"Joe, rada? Leo hali iko aje?"</small></span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="call-me" value="neutral" />
+                <span class="pick-text">Prefer not to say<small>Neutral words only: rafiki, boss, cuzo.</small></span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="call-me" value="rafiki" />
+                <span class="pick-text">Rafiki<small>"Rafiki, jipange!"</small></span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="call-me" value="boss" />
+                <span class="pick-text">Boss<small>"Boss, Day 23 iko kwa line."</small></span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="call-me" value="bro" />
+                <span class="pick-text">Bro<small>"Bro… ni mbaya!"</small></span>
+              </label>
+              <label class="pick">
+                <input type="radio" name="call-me" value="sis" />
+                <span class="pick-text">Sis<small>"Sis… ni mbaya!"</small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- HOW HARD SHOULD THE NAGS HIT?
+               Research on Duolingo: guilt-trip notifications bring people
+               back, but about a third of users say they make them ANXIOUS.
+               So the user controls the volume. -->
+          <fieldset id="nags">
+            <legend>Nag level</legend>
+            <p class="hint">Malebo's notifications, from gentle to unhinged.</p>
+            <div class="picks">
+              <label class="pick mood--calm">
+                <input type="radio" name="nags" value="chill" />
+                <span class="pick-text">Chill<small>"Hey, check in when you can."</small></span>
+              </label>
+              <label class="pick mood--hype">
+                <input type="radio" name="nags" value="normal" checked />
+                <span class="pick-text">Normal<small>"Day 23 iko kwa line. Usiniangushe."</small></span>
+              </label>
+              <label class="pick mood--chaos">
+                <input type="radio" name="nags" value="unhinged" />
+                <span class="pick-text">Unhinged<small>"Nimekupigia mara tatu. Unaniambia 'sema'?"</small></span>
+              </label>
+            </div>
+            <!-- A pause that FREEZES the streak (no loss) for life events.
+                 Rigid streaks make people feel guilty and quit; a pause
+                 keeps the game kind. -->
+            <ul class="switches mt">
+              <li>
+                <label class="switch">
+                  <span>Pause the game<small>Exams, msiba, sickness, a rough week. Your streak freezes, nothing is lost.</small></span>
+                  <input type="checkbox" role="switch" name="pause" />
+                </label>
+              </li>
+              <li>
+                <label class="switch">
+                  <span>Quiet hours<small>No nags between 10pm and 7am. Sleep is part of the plan.</small></span>
+                  <input type="checkbox" role="switch" name="quiet" checked />
+                </label>
+              </li>
+            </ul>
+          </fieldset>
+
+          <!-- MALEBO'S TONE: same "pick cards" as the check-in page,
+               reused for something different. That's why we write CSS as
+               reusable classes instead of styling one page at a time. -->
+          <fieldset id="tone">
+            <legend>How hard should Malebo push?</legend>
+            <div class="picks">
+              <label class="pick mood--calm">
+                <input type="radio" name="tone" value="calm" />
+                <img src="../Images/brand/moods/calm-coach.jpg" alt="" width="166" height="218" loading="lazy" />
+                <span class="pick-text">Gentle<small>Calm Coach, always.</small></span>
+              </label>
+              <label class="pick mood--hype">
+                <input type="radio" name="tone" value="balanced" checked />
+                <img src="../Images/brand/moods/motivator.jpg" alt="" width="168" height="218" loading="lazy" />
+                <span class="pick-text">Balanced<small>Hype when I win, honest when I don't.</small></span>
+              </label>
+              <label class="pick mood--pressure">
+                <input type="radio" name="tone" value="tough" />
+                <img src="../Images/brand/moods/pressure-friend.jpg" alt="" width="168" height="218" loading="lazy" />
+                <span class="pick-text">Tough love<small>Pressure Friend on speed dial.</small></span>
+              </label>
+              <label class="pick mood--chaos">
+                <input type="radio" name="tone" value="roast" />
+                <img src="../Images/brand/moods/chaos-temptation.jpg" alt="" width="156" height="218" loading="lazy" />
+                <span class="pick-text">Roast me<small>No mercy. I asked for it.</small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- REMINDERS: on/off switches. Each is a normal checkbox that
+               CSS redraws as a switch (see "TOGGLE SWITCHES" in styles.css).
+               role="switch" tells screen readers to say "on/off" instead of
+               "checked/not checked". -->
+          <fieldset id="reminders">
+            <legend>Reminders</legend>
+            <ul class="switches">
+              <li>
+                <label class="switch">
+                  <span>Daily check-in reminder<small>"Niaje! Leo hali iko aje?"</small></span>
+                  <input type="checkbox" role="switch" name="remind-daily" checked />
+                </label>
+              </li>
+              <li>
+                <label class="switch">
+                  <span>Squad alerts<small>When someone in your squad is struggling.</small></span>
+                  <input type="checkbox" role="switch" name="remind-squad" checked />
+                </label>
+              </li>
+              <li>
+                <label class="switch">
+                  <span>Weekend warning<small>A heads-up on Friday evening. You know why.</small></span>
+                  <input type="checkbox" role="switch" name="remind-weekend" checked />
+                </label>
+              </li>
+              <li>
+                <label class="switch">
+                  <span>Savings milestones<small>Every time you pass another KSh 1,000.</small></span>
+                  <input type="checkbox" role="switch" name="remind-savings" />
+                </label>
+              </li>
+            </ul>
+            <div class="field">
+              <label for="time">Reminder time</label>
+              <input id="time" name="time" type="time" value="20:30" />
+            </div>
+          </fieldset>
+
+          <!-- LANGUAGE: a dropdown. <select> + <option>s. -->
+          <fieldset id="language">
+            <legend>Language</legend>
+            <div class="field">
+              <label for="lang">Malebo speaks</label>
+              <select id="lang" name="lang">
+                <option value="sheng" selected>Sheng (the default, obviously)</option>
+                <option value="sw">Kiswahili</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button class="btn btn-red" type="submit">Save settings</button>
+            <p>Prototype: settings don't save yet.</p>
+          </div>
+        </form>
+      </div>
     </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
   </body>
 </html>

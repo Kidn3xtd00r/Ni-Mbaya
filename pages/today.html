@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leo · Ni Mbaya!</title>
+    <meta name="description" content="Your day in Ni Mbaya!: check in, finish your quests, keep the streak alive." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
+  </head>
+
+  <!-- =====================================================================
+       LEO = "TODAY". This is the app's home screen, like the first thing
+       you see when you open Duolingo: your streak, today's goal, quests.
+       The marketing page (index.html) is for people who don't have the app
+       yet. This page is for people who do.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html" aria-current="page">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="wrap leo">
+      <h1 class="sr-only">Leo: your day</h1>
+
+      <!-- LEFT COLUMN (on laptops). On phones everything just stacks. -->
+      <div class="leo-main">
+        <!-- EVENT BANNER: limited-time challenges, like Duolingo's events,
+             but tied to Kenyan dates people actually struggle around. -->
+        <section class="event" aria-labelledby="event-title">
+          <img src="../Images/icons/trophy.svg" alt="" width="48" height="48" />
+          <div>
+            <h2 id="event-title">Mashujaa Weekend Challenge</h2>
+            <p>Long weekend, long temptation. Stay clean 17–20 Oct for <strong>double XP</strong> and the Shujaa badge.</p>
+            <span class="event-time">Starts in 10 days</span>
+          </div>
+        </section>
+
+        <!-- THE DAILY GOAL: the ring + the big check-in button.
+             The ring's fill is set by --pct in CSS (60% = 30 of 50 XP).
+             The <p class="sr-only"> says the same thing in words, because
+             a screen reader can't "see" a ring. -->
+        <section class="card goal-card" aria-labelledby="goal-title">
+          <div class="ring" aria-hidden="true">
+            <div class="ring-text"><strong>30</strong><span>of 50 XP</span></div>
+          </div>
+          <div>
+            <h2 id="goal-title">Day 23 is waiting. <em>Check in.</em></h2>
+            <p class="sr-only">Daily goal: 30 of 50 XP done.</p>
+            <p>Your bangili is waiting for today's bead, and Malebo hajasikia kutoka kwako leo. Thirty seconds.</p>
+            <a class="btn btn-red btn-big" href="checkIn.html">Check in · +20 XP</a>
+          </div>
+        </section>
+
+        <!-- THIS WEEK: seven flames. Lit = checked in. The today one has
+             a ring. flame-off.svg is the same flame in grey. -->
+        <section class="card" aria-labelledby="week-title">
+          <div class="panel-title">
+            <h2 id="week-title">This week</h2>
+            <a href="streak.html">Your Shanga →</a>
+          </div>
+          <ol class="week">
+            <li><img src="../Images/icons/flame.svg" alt="" />Mon<span class="sr-only">: checked in</span></li>
+            <li><img src="../Images/icons/flame.svg" alt="" />Tue<span class="sr-only">: checked in</span></li>
+            <li class="is-today"><img src="../Images/icons/flame-off.svg" alt="" />Wed<span class="sr-only">: today, not yet</span></li>
+            <li><img src="../Images/icons/flame-off.svg" alt="" />Thu</li>
+            <li><img src="../Images/icons/flame-off.svg" alt="" />Fri</li>
+            <li><img src="../Images/icons/flame-off.svg" alt="" />Sat</li>
+            <li><img src="../Images/icons/flame-off.svg" alt="" />Sun</li>
+          </ol>
+        </section>
+
+        <!-- DAILY QUESTS — go on, tick them. The total at the bottom is
+             counted by CSS, not JavaScript (section 15 of styles.css).
+             The class quest--20 means "this one is worth 20 XP". -->
+        <section class="card" aria-labelledby="quests-title">
+          <div class="panel-title">
+            <h2 id="quests-title">Daily quests</h2>
+            <a href="shop.html">Earn Mbao →</a>
+          </div>
+          <ul class="quests">
+            <li>
+              <label class="quest quest--20">
+                <input type="checkbox" />
+                <span class="quest-text">Check in before 9pm<small>Late night is when anasa calls. Beat it to it.</small></span>
+                <span class="quest-xp">+20 XP</span>
+              </label>
+            </li>
+            <li>
+              <label class="quest quest--30">
+                <input type="checkbox" />
+                <span class="quest-text">Say no to one kabej<small>Someone asks for "kabej ya mtu ya pombe"? Pass.</small></span>
+                <span class="quest-xp">+30 XP</span>
+              </label>
+            </li>
+            <li>
+              <label class="quest quest--10">
+                <input type="checkbox" />
+                <span class="quest-text">Send "niko sawa" to the chama<small>One message. That's it.</small></span>
+                <span class="quest-xp">+10 XP</span>
+              </label>
+            </li>
+            <li>
+              <label class="quest quest--50">
+                <input type="checkbox" />
+                <span class="quest-text">Move KSh 150 to your lengo<small>The betting money goes to Mombasa instead.</small></span>
+                <span class="quest-xp">+50 XP</span>
+              </label>
+            </li>
+          </ul>
+          <!-- aria-live: screen readers announce the new total when it changes -->
+          <p class="quest-total" aria-live="polite">Today: </p>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="leo-side">
+        <!-- LEVEL + LEAGUE -->
+        <section class="card" aria-labelledby="level-title">
+          <div class="panel-title">
+            <h2 id="level-title">Level 8</h2>
+            <a href="profile.html">Wewe →</a>
+          </div>
+          <div class="bars">
+            <div>
+              <!-- <progress value max> = the real HTML progress bar.
+                   value="2340" max="2500" → 93.6% full. The text inside
+                   only shows in very old browsers. -->
+              <p class="bar-label"><span>XP to Level 9</span><span>2,340 / 2,500</span></p>
+              <progress class="bar-xp" value="2340" max="2500">2,340 of 2,500 XP</progress>
+            </div>
+            <div>
+              <!-- Shanga: beads on your bracelet. 30 beads = one full bangili. -->
+              <p class="bar-label"><span>Shanga · 2 beads to a full bangili</span><span>28 / 30</span></p>
+              <progress class="bar-xp" value="28" max="30">28 of 30 beads</progress>
+            </div>
+          </div>
+        </section>
+
+        <!-- MINI CARDS: shortcuts into the rest of the game -->
+        <div class="minis">
+          <a class="mini" href="league.html">
+            <img src="../Images/icons/trophy.svg" alt="" />
+            <strong>#4</strong>
+            <span>Matatu League · 2 days left</span>
+          </a>
+          <a class="mini" href="savings.html">
+            <img src="../Images/icons/mbao.svg" alt="" />
+            <strong>KSh 4,600</strong>
+            <span>Saved for Mombasa</span>
+          </a>
+          <a class="mini" href="anasa.html">
+            <img src="../Images/icons/flame.svg" alt="" />
+            <strong>2 anasa</strong>
+            <span>Betting 23d · Pombe 11d</span>
+          </a>
+          <a class="mini" href="shop.html">
+            <img src="../Images/icons/bima.svg" alt="" />
+            <strong>1 Bima</strong>
+            <span>Your streak is insured</span>
+          </a>
+        </div>
+
+        <!-- CHAMA QUEST: a shared goal, like Duolingo's Friends Quest -->
+        <section class="card" aria-labelledby="chama-title">
+          <div class="panel-title">
+            <h2 id="chama-title">Chama quest</h2>
+            <a href="community.html">Chama →</a>
+          </div>
+          <p class="bar-label"><span>35 check-ins together this week</span><span>22 / 35</span></p>
+          <progress class="bar-blue" value="22" max="35">22 of 35</progress>
+          <p class="hint mt">Kevin hajacheck-in siku mbili. <a href="community.html">Nudge him</a>.</p>
+        </section>
+
+        <!-- MEME YA LEO (meme of the day)
+             The ONE thing in the app that's a surprise every day is the
+             joke, never a prize. Surprise prizes = slot machine psychology,
+             and many users are quitting betting. A new joke = just fun.
+             The format is Gen Z: absurd, self-roasting, "if I don't laugh
+             I'll cry". (In Phase 2 JavaScript will pick a new one daily.) -->
+        <section class="card meme" aria-labelledby="meme-title">
+          <h2 id="meme-title" class="eyebrow">Meme ya leo</h2>
+          <p class="meme-line"><span>Me on Monday:</span> "Entering my discipline era."</p>
+          <p class="meme-line"><span>Me on Friday, 5:01pm:</span> "Ya mwisho kabisaa."</p>
+          <p class="meme-line"><span>Anasa:</span> *thriving, rent-free in my head*</p>
+          <p class="meme-line"><span>My bangili:</span> *missing a bead*</p>
+          <p class="hint mt">Delulu is not the solulu. Discipline siku zombo is.</p>
+        </section>
+
+        <a class="btn btn-ghost" href="panic.html">Driver, nishukishe hapo! (Panic)</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

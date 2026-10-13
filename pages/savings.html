@@ -3,64 +3,255 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NI MBAYA | Savings</title>
-    <meta
-      name="description"
-      content="NI MBAYA is the Kenyan app that remembers what you promised yourself. Build streaks, quit bad habits, save money, and beat Mbaya."
-    />
+    <title>Savings · Ni Mbaya!</title>
+    <meta name="description" content="Save kidogo kidogo. See what your daily savings turn into with Ni Mbaya!." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../CSS/background.css" />
-    <link rel="stylesheet" href="../CSS/styles.css" />
-    <link rel="stylesheet" href="../CSS/header.css" />
+    <link rel="stylesheet" href="../CSS/styles.css?v=5" />
+    <link rel="icon" href="../Images/brand/favicon.png" />
   </head>
+
   <body>
-    <main>
-      <h1 class="page-title">Savings</h1>
-      <!-- THIS IS THE SAVINGS SECTION - HOW MUCH YOUR SAVING -->
-      <section class="section savings-section" id="calculator">
-        <div class="section-heading">
-          <span class="section-eyebrow">MONEY SAVED</span>
-          <h2>Make your savings feel real.</h2>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Ni <span>Mbaya!</span></a>
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html">Leo</a>
+          <a href="streak.html">Shanga</a>
+          <a href="league.html">Ligi</a>
+          <a href="community.html">Chama</a>
+          <a href="profile.html">Wewe</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Duolingo-style stat chips: your streak, Streak Bima, Mbao coins.
+               alt="" on the icons because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your stats (example)">
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../Images/icons/flame.svg" alt="" />23<span class="sr-only"> day streak</span></a></li>
+            <li class="chip-bima"><a class="chip-bima" href="shop.html"><img class="icon" src="../Images/icons/bima.svg" alt="" />1<span class="sr-only"> Streak Bima</span></a></li>
+            <li><a class="chip-mbao" href="shop.html"><img class="icon" src="../Images/icons/mbao.svg" alt="" />460<span class="sr-only"> Mbao</span></a></li>
+          </ul>
+          <a class="btn btn-red btn-panic" href="panic.html">Panic</a>
         </div>
-        <div class="savings-shell">
-          <div class="savings-card">
-            <label for="dailyAmount">Your daily saving</label>
-            <div class="input-group">
-              <span>KSh</span>
-              <input id="dailyAmount" type="number" min="0" value="200" />
-            </div>
-            <p class="savings-tip">
-              Tip: cut one small habit and watch the savings stack.
-            </p>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <span class="eyebrow">Money saved</span>
+          <h1>Save kidogo kidogo, <em>utafika mbali.</em></h1>
+          <!-- "Januari ina siku 90" = the classic Kenyan joke that January
+               feels three months long after December spending. -->
+          <p class="lede">
+            Every day you skip the habit, the money it would have eaten stays
+            with you. Here's what that actually looks like. (Remember: Januari
+            ina siku 90.)
+          </p>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           01: THE CALCULATOR (with no JavaScript!)
+           Pick an amount → CSS shows the answers for that amount.
+           All four answer sets are already in the HTML below; the maths
+           was done by hand (KSh × 7, × 30, × 365). The CSS rule reads:
+           "if .calc HAS #amt-200 checked, show .result--200".
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch1">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="ch1">Make your savings <em>feel real.</em></h2>
           </div>
-          <div class="savings-results">
-            <div class="savings-summary">
-              <div>
-                <span>30 Days</span>
-                <strong id="daysValue">30</strong>
+
+          <div class="calc">
+            <fieldset>
+              <legend>How much do you save a day?</legend>
+              <p class="hint">Whatever the habit used to cost you.</p>
+              <!-- "checked" on the 200 one = it's picked when the page loads,
+                   so there's always an answer showing. -->
+              <div class="chips">
+                <label class="chip"><input type="radio" name="amount" id="amt-50" /> KSh 50</label>
+                <label class="chip"><input type="radio" name="amount" id="amt-100" /> KSh 100</label>
+                <label class="chip"><input type="radio" name="amount" id="amt-200" checked /> KSh 200</label>
+                <label class="chip"><input type="radio" name="amount" id="amt-500" /> KSh 500</label>
               </div>
-              <div>
-                <span>Saved</span>
-                <strong id="savedValue">KSh 6,000</strong>
+            </fieldset>
+
+            <div aria-live="polite">
+              <div class="result result--50">
+                <dl>
+                  <div><dt>1 week</dt><dd>KSh 350</dd></div>
+                  <div><dt>30 days</dt><dd>KSh 1,500</dd></div>
+                  <div><dt>1 year</dt><dd>KSh 18,250</dd></div>
+                </dl>
+                <p class="result-buys">A year of data bundles. From mutura money.</p>
               </div>
-            </div>
-            <div class="savings-items">
-              <span>✓ New Shoes</span>
-              <span>✓ Gym Membership</span>
-              <span>✓ Date Night</span>
-              <span>✓ Data Bundles</span>
-              <span>✓ Chicken Feed</span>
-              <span>✓ Weekend Trip</span>
+              <div class="result result--100">
+                <dl>
+                  <div><dt>1 week</dt><dd>KSh 700</dd></div>
+                  <div><dt>30 days</dt><dd>KSh 3,000</dd></div>
+                  <div><dt>1 year</dt><dd>KSh 36,500</dd></div>
+                </dl>
+                <p class="result-buys">A term of day-school fees. Or a new phone, cash, no Fuliza.</p>
+              </div>
+              <div class="result result--200">
+                <dl>
+                  <div><dt>1 week</dt><dd>KSh 1,400</dd></div>
+                  <div><dt>30 days</dt><dd>KSh 6,000</dd></div>
+                  <div><dt>1 year</dt><dd>KSh 73,000</dd></div>
+                </dl>
+                <p class="result-buys">That Mombasa trip. And the one after it.</p>
+              </div>
+              <div class="result result--500">
+                <dl>
+                  <div><dt>1 week</dt><dd>KSh 3,500</dd></div>
+                  <div><dt>30 days</dt><dd>KSh 15,000</dd></div>
+                  <div><dt>1 year</dt><dd>KSh 182,500</dd></div>
+                </dl>
+                <p class="result-buys">Wueh. That's a boda deposit. Or a whole kuku business.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
-  
+
+      <!-- =============================================================
+           THE LENGO (goal)
+           Money kept from your anasa needs somewhere to go, or the anasa finds it
+           again. Pick a real goal. The radio "picks" reuse the check-in
+           card style; the bar is a <progress> element.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="lengo">
+        <div class="wrap split">
+          <div>
+            <div class="chapter-head">
+              <span class="chapter-no" aria-hidden="true">★</span>
+              <h2 id="lengo">Your <em>lengo.</em></h2>
+              <p>Pesa bila lengo inarudi kwa anasa. Give every shilling a job.</p>
+            </div>
+            <p class="bar-label"><span>Mombasa trip</span><span>KSh 4,600 / 15,000</span></p>
+            <progress value="4600" max="15000">31%</progress>
+            <p class="hint mt">At KSh 150 a day: there by mid-December. <span class="example-tag">Example</span></p>
+          </div>
+          <fieldset>
+            <legend>What's the money for?</legend>
+            <ul class="ticks">
+              <li><label class="tick"><input type="radio" name="lengo" /> School fees</label></li>
+              <li><label class="tick"><input type="radio" name="lengo" /> Rent, on time</label></li>
+              <li><label class="tick"><input type="radio" name="lengo" /> Chama contribution</label></li>
+              <li><label class="tick"><input type="radio" name="lengo" /> Sending money home</label></li>
+              <li><label class="tick"><input type="radio" name="lengo" /> Side hustle (kuku, salon, boda deposit)</label></li>
+              <li><label class="tick"><input type="radio" name="lengo" checked /> A trip (Mombasa, obviously)</label></li>
+            </ul>
+          </fieldset>
+        </div>
+      </section>
+
+      <div class="shuka" aria-hidden="true"></div>
+
+      <!-- =============================================================
+           02: WHERE THE MONEY LEAKS
+           A real <table>, because this IS a table: rows of habits, columns
+           of facts. <caption> is the table's title. <th scope="col"> marks a
+           column heading, so screen readers can say "Per month: KSh 3,000".
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch2">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="ch2">Where the money <em>leaks.</em></h2>
+            <p>Nobody plans to spend KSh 16,000 a month on "small things". It just happens.</p>
+          </div>
+
+          <div class="table-scroll">
+            <table class="leaks">
+              <caption><span class="example-tag">Example</span> A typical month of "ni moja tu"</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Habit</th>
+                  <th scope="col">How often</th>
+                  <th scope="col">Per month</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Mutura &amp; smokie on the way home</td><td>Every night</td><td>KSh 3,000</td></tr>
+                <tr><td>"Ni moja tu" rounds</td><td>Every weekend</td><td>KSh 6,000</td></tr>
+                <tr><td>Late-night delivery</td><td>Twice a week</td><td>KSh 4,800</td></tr>
+                <tr><td>"Small" bets</td><td>Every day</td><td>KSh 1,500</td></tr>
+                <tr><td>Impulse bundles</td><td>Every day</td><td>KSh 900</td></tr>
+              </tbody>
+              <!-- <tfoot> = the totals row at the bottom -->
+              <tfoot>
+                <tr><th scope="row" colspan="2">Total</th><td>KSh 16,200</td></tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           03: WHAT IT TURNS INTO
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="ch3">
+        <div class="wrap">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="ch3">What it <em>turns into.</em></h2>
+            <p>Pick a goal. Malebo will remind you of it every time your anasa calls.</p>
+          </div>
+          <ul class="goals">
+            <li class="goal"><strong>New shoes</strong><span>The ones you keep screenshotting.</span></li>
+            <li class="goal"><strong>Gym membership</strong><span>And actually going.</span></li>
+            <li class="goal"><strong>Date night</strong><span>Without checking M-Pesa first.</span></li>
+            <li class="goal"><strong>Data bundles</strong><span>For the whole month. At once.</span></li>
+            <li class="goal"><strong>Chicken feed</strong><span>The side hustle starts small.</span></li>
+            <li class="goal"><strong>Weekend trip</strong><span>Naivasha? Diani? You choose.</span></li>
+          </ul>
+        </div>
+      </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-logo" src="../Images/brand/logo-meet-malebo.jpg" alt="Meet Malebo" width="964" height="477" loading="lazy" />
+          <p class="footer-motto">Hukupressure, hukujudge. Anakuboost.</p>
+        </div>
+        <nav class="footer-col" aria-label="Play">
+          <h2>Play</h2>
+          <ul>
+            <li><a href="today.html">Leo (today)</a></li>
+            <li><a href="checkIn.html">Daily check-in</a></li>
+            <li><a href="streak.html">Shanga</a></li>
+            <li><a href="league.html">Ligi</a></li>
+            <li><a href="community.html">Chama</a></li>
+            <li><a href="shop.html">Duka</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="You">
+          <h2>You</h2>
+          <ul>
+            <li><a href="profile.html">Wewe (profile)</a></li>
+            <li><a href="anasa.html">Anasa zako</a></li>
+            <li><a href="savings.html">Savings</a></li>
+            <li><a href="panic.html">Panic button</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+            <li><a href="settings.html">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>Proudly Kenyan. Built for us. For ages 18+. · Struggling with alcohol or drugs? Call <a href="tel:1192">1192</a> (NACADA, free, 24/7).</p>
+        <p>Ni Mbaya! is a prototype: every name, number and score in it is an example. Mbao are game coins, never real money. · <a href="../en/index.html">English edition: Bead by Bead</a></p>
+      </div>
+    </footer>
   </body>
 </html>
