@@ -8,13 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <body>
@@ -45,223 +46,73 @@
     </header>
 
     <main id="main">
+      <!-- =============================================================
+           ME: everything that isn't one of the main tabs, one tap away.
+           No levels, no league, no coins: just your plan, your record,
+           your settings and your data.
+           ============================================================= -->
       <section class="page-hero">
-        <div class="wrap streak-hero">
+        <div class="wrap today-hero">
           <div>
-            <span class="eyebrow">Me · joined September 2026</span>
-            <h1>Joe</h1>
-            <p class="lede">Level 8 · Minibus League · Fighting betting and alcohol. Saving for Mombasa.</p>
-
+            <p class="eyebrow">Me · since 14 September 2026</p>
+            <h1>Your <em>corner.</em></h1>
+            <p class="lede">Your plan, your record, your settings. Nobody else sees any of it.</p>
           </div>
-          <!-- Your piece in progress as your "profile picture":
-               the same CSS jewellery as the sanduku on the Shanga page -->
-          <span class="piece-art piece-art--bangili piece-art--big" aria-hidden="true"></span>
+          <img src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" />
         </div>
       </section>
 
-      <!-- =============================================================
-           THE HUB
-           Quit apps keep 5 tabs and put everything else one tap away
-           under "Me". These cards are that menu.
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="hub">
+      <section class="chapter chapter--tight" aria-labelledby="hub">
         <div class="wrap">
-          <h2 id="hub" class="sr-only">Your stuff</h2>
+          <h2 id="hub" class="sr-only">Your things</h2>
           <ul class="hub">
-            <li><a class="hub-link" href="anasa.html"><strong>Your habits</strong><span>3 clocks · betting, alcohol, Fuliza</span></a></li>
+            <li><a class="hub-link" href="start.html"><strong>Your plan</strong><span>Your reason, hard moments and "when… I will…"</span></a></li>
+            <li><a class="hub-link" href="streak.html"><strong>Your bracelet</strong><span>24 beads · history and rules</span></a></li>
             <li><a class="hub-link" href="journal.html"><strong>Journal</strong><span>Private · 3 entries</span></a></li>
-            <li><a class="hub-link" href="savings.html"><strong>Savings goals</strong><span>Mombasa · 31%</span></a></li>
-            <li><a class="hub-link" href="shop.html"><strong>Shop</strong><span>460 coins to spend</span></a></li>
-            <li><a class="hub-link" href="start.html"><strong>Your quit plan</strong><span>Reasons, costs, partner</span></a></li>
-            <li><a class="hub-link" href="settings.html"><strong>Settings</strong><span>Nags, name, pause</span></a></li>
+            <li><a class="hub-link" href="pause.html"><strong>Take a pause</strong><span>Exams, a funeral, sickness</span></a></li>
+            <li><a class="hub-link" href="settings.html"><strong>Settings</strong><span>Name, tone, reminders, language</span></a></li>
+            <li><a class="hub-link" href="how-it-works.html"><strong>How it works</strong><span>The rules, privacy and help</span></a></li>
           </ul>
         </div>
       </section>
 
-      <!-- =============================================================
-           01: STATS
-           A plain <ul> of mini cards. Same .minis component as Leo, reused.
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="ch1">
-        <div class="wrap">
+      <!-- YOUR DATA: plain words about what's kept and where -->
+      <section class="chapter" aria-labelledby="data-title">
+        <div class="wrap split">
           <div class="chapter-head">
             <span class="chapter-no" aria-hidden="true">01</span>
-            <h2 id="ch1">The <em>numbers.</em></h2>
+            <h2 id="data-title">Your <em>data.</em></h2>
+            <p>What Bead by Bead keeps, where, and how to get rid of it.</p>
           </div>
-          <div class="minis profile-stats">
-            <div class="mini"><img src="../../Images/icons/flame.svg" alt="" /><strong>23</strong><span>Day streak (best: 23)</span></div>
-            <div class="mini"><img src="../../Images/icons/xp.svg" alt="" /><strong>2,340</strong><span>Total XP</span></div>
-            <div class="mini"><img src="../../Images/icons/trophy.svg" alt="" /><strong>Minibus</strong><span>League · #4 this week</span></div>
-            <div class="mini"><img src="../../Images/icons/mbao.svg" alt="" /><strong>KSh 4,600</strong><span>Kept from habits</span></div>
-            <div class="mini"><img src="../../Images/icons/bima.svg" alt="" /><strong>9</strong><span>Cravings beaten</span></div>
-            <div class="mini"><img src="../../Images/icons/check.svg" alt="" /><strong>28</strong><span>Beads earned</span></div>
+          <div class="card">
+            <ul class="plain-list">
+              <li><strong>What's kept:</strong> your plan, one record per day (kept, slipped or paused), and any notes you write. No name needed, no phone number, no location.</li>
+              <li><strong>Where:</strong> right now, nowhere. This is a prototype and nothing is saved. Later, it will be saved only on this phone.</li>
+              <li><strong>Who can see it:</strong> only someone holding your unlocked phone. Use a screen lock.</li>
+              <li><strong>Discreet:</strong> the app's name and icon never mention weed.</li>
+            </ul>
+            <!-- Disabled for now: deleting needs saving, which needs JavaScript -->
+            <button class="btn btn-ghost" type="button" disabled>Delete everything (coming with saving)</button>
           </div>
-          <p class="stat-note"><span class="example-tag">Example numbers</span></p>
         </div>
       </section>
 
-      <div class="shuka" aria-hidden="true"></div>
-
-      <!-- =============================================================
-           02: BADGES
-           Each badge is a <button> with popovertarget="some-id". Clicking
-           it opens the <div popover id="some-id"> further down. That's a
-           built-in HTML feature: no JavaScript, and Esc or tapping outside
-           closes it. (Works in all up-to-date browsers.)
-           --medal sets each medal's colour (see .medal-* in CSS).
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="ch2">
+      <!-- IDEAS FOR LATER: the old game pages, kept but clearly parked -->
+      <section class="chapter" aria-labelledby="later-title">
         <div class="wrap">
           <div class="chapter-head">
             <span class="chapter-no" aria-hidden="true">02</span>
-            <h2 id="ch2">Badges. <em>Earned, not bought.</em></h2>
-            <p>6 of 11 earned. Tap one to see the story behind it.</p>
+            <h2 id="later-title">Ideas <em>for later.</em></h2>
+            <p>Designs we kept, but left out of the first version. We'll only build them if testing shows people need them.</p>
           </div>
-
-          <ul class="badges">
-            <li>
-              <button class="badge" popovertarget="b-weekend">
-                <span class="medal medal-green">7</span>
-                <strong>Weekend Survivor</strong><small>Earned · Day 7</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge" popovertarget="b-14">
-                <span class="medal medal-gold">14</span>
-                <strong>Two Weeks Strong</strong><small>Earned · Day 14</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge" popovertarget="b-month">
-                <span class="medal medal-red">30th</span>
-                <strong>Payday Survivor</strong><small>Earned · survived payday</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge" popovertarget="b-night">
-                <span class="medal medal-blue">10</span>
-                <strong>Early Night</strong><small>Earned · 10 early check-ins</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge" popovertarget="b-malisaa">
-                <span class="medal medal-orange">9</span>
-                <strong>Let's Go!</strong><small>Earned · beat 9 cravings</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge" popovertarget="b-comeback">
-                <span class="medal medal-green">↺</span>
-                <strong>Comeback</strong><small>Earned · back after a slip</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge is-locked" popovertarget="b-greatness">
-                <span class="medal">5/7</span>
-                <strong>Pure Greatness</strong><small>All quests, 7 days straight</small>
-                <progress value="5" max="7">5 of 7</progress>
-              </button>
-            </li>
-            <li>
-              <button class="badge is-locked" popovertarget="b-fuliza">
-                <span class="medal">46%</span>
-                <strong>Fuliza Free</strong><small>Clear your Fuliza</small>
-                <progress value="2300" max="5000">46%</progress>
-              </button>
-            </li>
-            <li>
-              <button class="badge is-locked" popovertarget="b-shujaa">
-                <span class="medal">20/10</span>
-                <strong>Hero</strong><small>Event · Heroes' Day weekend</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge is-locked" popovertarget="b-chama">
-                <span class="medal">C</span>
-                <strong>Group Champion</strong><small>Top saver in your group</small>
-              </button>
-            </li>
-            <li>
-              <button class="badge is-locked" popovertarget="b-december">
-                <span class="medal">DEC</span>
-                <strong>Detty December, Clean</strong><small>Event · all of December</small>
-              </button>
-            </li>
+          <ul class="hub hub--quiet">
+            <li><a class="hub-link" href="community.html"><strong>Group &amp; partner</strong><span>Accountability with friends</span></a></li>
+            <li><a class="hub-link" href="league.html"><strong>League</strong><span>Weekly rankings</span></a></li>
+            <li><a class="hub-link" href="shop.html"><strong>Shop</strong><span>Game coins and extras</span></a></li>
+            <li><a class="hub-link" href="savings.html"><strong>Savings goals</strong><span>Money not spent, with a purpose</span></a></li>
           </ul>
         </div>
       </section>
-
-      <!-- THE POP-UPS. They're hidden until their button opens them.
-           popovertargetaction="hide" on the inner button = "close me". -->
-      <div popover id="b-weekend">
-        <span class="medal medal-green">7</span>
-        <h2>Weekend Survivor</h2>
-        <p>Friday 5pm to Monday morning, clean. Seven days in. Most people never get this far.</p>
-        <button class="btn btn-ghost" popovertarget="b-weekend" popovertargetaction="hide">Okay</button>
-      </div>
-      <div popover id="b-14">
-        <span class="medal medal-gold">14</span>
-        <h2>Two Weeks Strong</h2>
-        <p>Day 14. Two full weeks, two shield charms.</p>
-        <button class="btn btn-ghost" popovertarget="b-14" popovertargetaction="hide">Okay</button>
-      </div>
-      <div popover id="b-month">
-        <span class="medal medal-red">30th</span>
-        <h2>Payday Survivor</h2>
-        <p>Salary landed, and you didn't bet it, drink it or Fuliza on top of it. The hardest weekend of the month, done.</p>
-        <button class="btn btn-ghost" popovertarget="b-month" popovertargetaction="hide">Okay</button>
-      </div>
-      <div popover id="b-night">
-        <span class="medal medal-blue">10</span>
-        <h2>Early Night</h2>
-        <p>10 check-ins before 9pm. You beat the night shift. Your habit never stood a chance.</p>
-        <button class="btn btn-ghost" popovertarget="b-night" popovertargetaction="hide">Okay</button>
-      </div>
-      <div popover id="b-malisaa">
-        <span class="medal medal-orange">9</span>
-        <h2>Let's Go!</h2>
-        <p>9 times you hit the panic button and walked away. Next level at 10.</p>
-        <button class="btn btn-ghost" popovertarget="b-malisaa" popovertargetaction="hide">Okay</button>
-      </div>
-      <!-- A badge for coming BACK after a slip. Rewarding the return,
-           not just the unbroken run, is how you keep a slip from turning
-           into quitting. -->
-      <div popover id="b-comeback">
-        <span class="medal medal-green">↺</span>
-        <h2>Comeback</h2>
-        <p>You slipped on Day 6 and checked in again the very next day. Messed up? Fine. You came back. That's the whole game.</p>
-        <button class="btn btn-ghost" popovertarget="b-comeback" popovertargetaction="hide">Let's go</button>
-      </div>
-      <div popover id="b-greatness">
-        <span class="medal">5/7</span>
-        <h2>Pure Greatness</h2>
-        <p>Finish all four daily quests seven days in a row. You're on 5. Don't fumble it now.</p>
-        <button class="btn btn-ghost" popovertarget="b-greatness" popovertargetaction="hide">Let's go</button>
-      </div>
-      <div popover id="b-fuliza">
-        <span class="medal">46%</span>
-        <h2>Fuliza Free</h2>
-        <p>KSh 2,300 of 5,000 paid back. At KSh 150 a day, you're free in about 18 days.</p>
-        <button class="btn btn-ghost" popovertarget="b-fuliza" popovertargetaction="hide">Let's go</button>
-      </div>
-      <div popover id="b-shujaa">
-        <span class="medal">20/10</span>
-        <h2>Hero</h2>
-        <p>Stay clean through the Heroes' Day long weekend, 17 to 20 October. Real heroes don't relapse on public holidays.</p>
-        <button class="btn btn-ghost" popovertarget="b-shujaa" popovertargetaction="hide">I'm ready</button>
-      </div>
-      <div popover id="b-chama">
-        <span class="medal">C</span>
-        <h2>Group Champion</h2>
-        <p>Save the most in your group in one month. Brian is ahead. For now.</p>
-        <button class="btn btn-ghost" popovertarget="b-chama" popovertargetaction="hide">Okay</button>
-      </div>
-      <div popover id="b-december">
-        <span class="medal">DEC</span>
-        <h2>Detty December, Clean</h2>
-        <p>All of December, clean. Then January comes with its 90 days, and you'll have money for it.</p>
-        <button class="btn btn-ghost" popovertarget="b-december" popovertargetaction="hide">Okay</button>
-      </div>
     </main>
 
     <footer class="site-footer">

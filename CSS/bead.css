@@ -96,16 +96,36 @@ h1 em, h2 em {
    3. HEADER: a floating pill
    The header floats over the page with a little gap around it, like a
    phone's island. backdrop-filter blurs whatever scrolls under it.
+
+   Gotcha: the blur goes on a ::before layer, NOT on the header itself.
+   An element with backdrop-filter (or transform, or filter) becomes the
+   "frame" for any position: fixed child inside it. The phone tab bar
+   lives inside the header, so with the blur on the header, the tab bar's
+   "bottom: 0.75rem" meant "bottom of the HEADER", and it sat right on
+   top of the wordmark instead of at the bottom of the screen.
    --------------------------------------------------------------------- */
 .site-header {
   top: 0.6rem;
   margin: 0.6rem var(--gutter) 0;
-  background: rgb(255 253 248 / 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  /* see-through, so only the ::before glass shows (styles.css gives the
+     header a dark background, which would tint the glass grey) */
+  background: transparent;
   border: 1px solid var(--ash);
   border-radius: 999px;
   box-shadow: var(--lift);
+}
+/* The frosted-glass layer: fills the pill and sits behind its contents.
+   z-index: -1 stays inside the header, because the header already has
+   its own z-index and so keeps its layers to itself. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: rgb(255 253 248 / 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 .site-header .wrap { padding-inline: var(--s2); }
 .header-inner { min-height: 3.5rem; }
@@ -405,3 +425,253 @@ h1 em, h2 em {
   .chapter-head { grid-template-columns: 1fr; }
 }
 .glossary dt { text-transform: none; letter-spacing: 0; font-size: 1.05rem; }
+
+
+/* ---------------------------------------------------------------------
+   9. TODAY
+   A grid of cards. On a phone they stack; on a laptop they sit in two
+   columns, with the check-in card spanning both.
+   --------------------------------------------------------------------- */
+.today-hero { display: flex; align-items: end; justify-content: space-between; gap: var(--s3); }
+.today-hero img { width: clamp(90px, 18vw, 170px); border-radius: 28px; }
+.today-grid {
+  display: grid;
+  align-items: start;
+  gap: var(--s2);
+  padding-block: var(--s3) var(--s5);
+}
+@media (min-width: 900px) {
+  .today-grid { grid-template-columns: 1fr 1fr; gap: var(--s3); }
+  .today-grid .tonight,
+  .today-grid .sos-cta,
+  .today-grid .signoff { grid-column: 1 / -1; }
+}
+.today-grid h2:not(.eyebrow) { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+
+/* The pledge card turns green when ticked (the :has trick in styles.css) */
+.pledge {
+  padding: var(--s3);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--coal);
+  box-shadow: var(--lift);
+}
+.pledge-box {
+  border-radius: calc(var(--radius) * 0.7);
+  border-color: var(--ash);
+  background: var(--night);
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.pledge h2.eyebrow { font-family: var(--body); font-size: 0.78rem; margin-bottom: var(--s1); }
+.pledge-box { padding: var(--s2); border: 1.5px solid var(--ash); }
+.pledge:has(input:checked) { background: var(--coal); }
+.pledge:has(input:checked) .pledge-box { background: var(--green); color: #fff; border-color: var(--green); }
+
+/* The nudge: a gentle question, outlined, not alarming.
+   (styles.css has an older .nudge laid out in a row; we undo that.) */
+.nudge {
+  display: block;
+  margin: 0;
+  background: transparent;
+  box-shadow: none;
+  border: 2px dashed var(--smoke);
+}
+.nudge p { margin-bottom: var(--s2); }
+
+/* Your reason, in big handwriting */
+.why-card blockquote {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  line-height: 1.15;
+  color: var(--chalk);
+}
+.why-card figcaption { margin-top: var(--s2); }
+
+/* "When… I will…" on two lines, the label words in green */
+.if-then { margin: 0 0 var(--s1); font-size: 1.2rem; font-weight: 600; }
+.if-then span { display: inline-block; min-width: 3.6rem; color: var(--green); font-weight: 800; }
+.text-link { font-weight: 800; color: var(--green); }
+
+/* Small bands (Today, check-in cards) use a fixed bead size */
+.week-card .band,
+.answer .band { --b: 11px; box-shadow: 0 3px 0 #d8cfbf; }
+
+/* The check-in card: dark, the evening of the day */
+.tonight { background: var(--chalk); color: #fff; }
+.tonight .eyebrow { color: #9da396; }
+.tonight h2 em { color: var(--leaf); background: none; }
+.tonight .btn { background: #fff; color: var(--chalk); box-shadow: 0 4px 0 #9fa69b; }
+
+.sos-cta { width: 100%; }
+
+
+/* ---------------------------------------------------------------------
+   10. CHECK-IN: three equal answers
+   --------------------------------------------------------------------- */
+.day-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  margin: 0 0 var(--s3);
+  padding: 0;
+  border: 0;
+}
+.day-pick legend { margin-bottom: var(--s1); }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--smoke);
+  border-radius: 999px;
+  background: var(--coal);
+  font-weight: 700;
+  cursor: pointer;
+}
+.chip:has(input:checked) { border-color: var(--chalk); background: var(--chalk); color: #fff; }
+.chip input { accent-color: var(--leaf); }
+
+.answers {
+  display: grid;
+  gap: var(--s2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 800px) { .answers { grid-template-columns: repeat(3, 1fr); } }
+.answer {
+  display: grid;
+  gap: var(--s1);
+  align-content: start;
+  height: 100%;
+  padding: var(--s3);
+  border: 2px solid transparent;
+  border-radius: calc(var(--radius) * 1.2);
+  background: var(--coal);
+  box-shadow: var(--lift);
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.answer strong {
+  font-family: var(--display);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.answer span { color: var(--muted); }
+.answer:hover { transform: translateY(-4px); }
+.answer--kept:hover { border-color: var(--green); }
+.answer--slip:hover { border-color: var(--red); }
+.answer--pause:hover { border-color: var(--muted); }
+.center { text-align: center; margin-top: var(--s3); }
+
+
+/* ---------------------------------------------------------------------
+   11. RESULT SCREENS (kept) + THE NEW BEAD
+   --------------------------------------------------------------------- */
+.kept-result {
+  display: grid;
+  justify-items: center;
+  gap: var(--s2);
+  padding-block: var(--s4) var(--s5);
+  text-align: center;
+}
+.kept-result h1 { margin: 0; }
+.kept-result .lede { margin-inline: auto; color: var(--muted); }
+.kept-result > img { width: clamp(120px, 22vw, 200px); }
+.kept-result .stat-row { width: min(100%, 34rem); grid-template-columns: 1fr 1fr; text-align: left; }
+.kept-result .band { --b: clamp(9px, 3vw, 18px); }
+
+/* THE NEW BEAD drops in last and bounces, with a green glow under it */
+@media (prefers-reduced-motion: no-preference) {
+  .band .is-new { animation: drop 0.9s cubic-bezier(0.2, 1.6, 0.4, 1) 0.9s both; }
+}
+@keyframes drop {
+  from { opacity: 0; translate: 0 -120%; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.note-form { width: min(100%, 34rem); display: grid; gap: var(--s2); text-align: left; }
+
+
+/* ---------------------------------------------------------------------
+   12. SLIP: NEXT STEPS
+   Each option is a <label> with a radio inside. The extra words
+   (.step-more) are hidden until that radio is checked: :has(:checked).
+   --------------------------------------------------------------------- */
+.next-steps fieldset { display: grid; gap: var(--s1); margin: 0 0 var(--s3); padding: 0; border: 0; }
+.step-pick {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem var(--s2);
+  padding: var(--s2) var(--s3);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  background: var(--coal);
+  box-shadow: var(--lift);
+  cursor: pointer;
+}
+.step-pick input { width: 1.3rem; height: 1.3rem; margin-top: 0.2rem; accent-color: var(--green); }
+.step-name { font-weight: 800; font-size: 1.15rem; }
+.step-more { display: none; grid-column: 2; color: var(--muted); }
+.step-more .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: var(--s1) 0; }
+.step-more .chip { cursor: default; font-size: 0.85rem; padding: 0.3rem 0.8rem; }
+.step-pick:has(input:checked) { border-color: var(--green); }
+.step-pick:has(input:checked) .step-more { display: block; }
+
+.help-note {
+  max-width: 46rem;
+  padding-block: var(--s3);
+  border-top: 1px solid var(--ash);
+}
+
+
+/* ---------------------------------------------------------------------
+   13. FORMS (plan, pause): light inputs with soft corners
+   --------------------------------------------------------------------- */
+.field input,
+.field textarea,
+.field select {
+  border-radius: 14px;
+  border: 1.5px solid var(--smoke);
+  background: var(--coal);
+  color: var(--chalk);
+}
+.field input:focus,
+.field textarea:focus { border-color: var(--green); }
+/* Two fields side by side, e.g. the pause dates. "minmax(0, 1fr)" instead
+   of plain "1fr": plain 1fr won't shrink below what's inside it, and date
+   boxes are wide, so on a phone they pushed the page sideways. */
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); margin-top: var(--s2); }
+.field-row input { min-width: 0; width: 100%; }
+/* Small phones: there's no room for two, so stack them */
+@media (max-width: 30rem) {
+  .field-row { grid-template-columns: 1fr; }
+}
+.pause-form { display: grid; gap: var(--s2); align-content: start; }
+.plain-list { padding-left: 1.1rem; color: var(--muted); }
+.plain-list li { margin-bottom: var(--s1); }
+.plain-list strong { color: var(--chalk); }
+.plan-step { border-radius: var(--radius); background: var(--coal); border: 0; box-shadow: var(--lift); }
+.plan-steps a { border-radius: 999px; }
+.tick { border-radius: 14px; }
+/* Small card titles stay small (styles.css makes .panel-title h2 big) */
+.panel-title h2.eyebrow { font-family: var(--body); font-size: 0.78rem; letter-spacing: 0.14em; margin: 0; }
+.panel-title a { color: var(--green); font-weight: 800; }
+/* A short piece of bracelet (a week or so) gets bigger beads */
+.band.band--short { --b: clamp(10px, 2.8vw, 22px); }
+.kept-result > img { border-radius: 28px; }
+.switch-link { text-decoration: none; }
+
+/* Promise cards on How it works: a simple responsive grid */
+.fair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--s2);
+}
+.fair h3 { font-size: 1.5rem; margin-bottom: var(--s1); }
+.fair p { margin: 0; color: var(--muted); }

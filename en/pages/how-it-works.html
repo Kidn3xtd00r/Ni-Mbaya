@@ -8,13 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <body>
@@ -45,156 +46,67 @@
     </header>
 
     <main id="main">
+      <!-- =============================================================
+           HOW IT WORKS: the whole app, explained in plain words.
+           Also where we keep our promises (privacy, fairness) and our
+           sources, so anything we claim can be checked.
+           ============================================================= -->
       <section class="page-hero">
         <div class="wrap">
-          <span class="eyebrow">How it works</span>
-          <h1>They gamified your habits. <em>We gamified your comeback.</em></h1>
-          <p class="lede">
-            Betting apps, loan apps and "just one" are all built to keep you
-            coming back. Bead by Bead uses the same tricks (streaks, XP, leagues)
-            to pull you the other way.
-          </p>
+          <p class="eyebrow">How it works</p>
+          <h1>A slip is a day, <em>not the end.</em></h1>
+          <p class="lede">Most trackers drop you to zero after one slip, and that's exactly when people give up. Bead by Bead keeps every day you earned in plain sight, and helps you take the next step.</p>
         </div>
       </section>
 
-      <!-- =============================================================
-           01: THE DAILY LOOP
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="ch1">
+      <section class="chapter" aria-labelledby="loop">
         <div class="wrap">
           <div class="chapter-head">
             <span class="chapter-no" aria-hidden="true">01</span>
-            <h2 id="ch1">The daily <em>loop.</em></h2>
-            <p>Thirty seconds a day. That's the whole commitment.</p>
+            <h2 id="loop">The <em>daily loop.</em></h2>
+            <p>Under a minute a day.</p>
           </div>
-          <ol class="steps">
-            <li class="step">
-              <h3>Check in</h3>
-              <p>"Hey! How did today go?" Tell Malebo how today went. +20 XP, and the streak grows. <a href="checkIn.html">Check in →</a></p>
-            </li>
-            <li class="step">
-              <h3>Do your quests</h3>
-              <p>Four small missions a day, like turning down one "buy me a drink". Each one pays XP. <a href="today.html">See today's quests →</a></p>
-            </li>
-            <li class="step">
-              <h3>Climb the league</h3>
-              <p>Your XP puts you on a weekly leaderboard with 14 Kenyans. Top 5 move up. <a href="league.html">See the league →</a></p>
-            </li>
-            <li class="step">
-              <h3>Hit panic, not relapse</h3>
-              <p>Craving? Driver, drop me here! Beat it and you earn +50 XP. <a href="panic.html">Panic button →</a></p>
-            </li>
-            <li class="step">
-              <h3>Give the money a job</h3>
-              <p>Everything your habit used to eat goes to your goal: fees, rent, your group, home. <a href="savings.html">Savings →</a></p>
-            </li>
+          <ol class="ten">
+            <li><strong>Morning: pledge</strong><span>"Just for today, I won't smoke." One tap. <a href="today.html">Today</a></span></li>
+            <li><strong>All day: your plan</strong><span>Your reason and your "when… I will…" plan for the hard moment. <a href="start.html">Your plan</a></span></li>
+            <li><strong>Any time: SOS</strong><span>Breathing, your reason, and ten-minute ways through a craving. <a href="panic.html">SOS</a></span></li>
+            <li><strong>Evening: check in</strong><span>Kept, slipped, or need a pause. All three are fine answers if they're true. <a href="checkIn.html">Check in</a></span></li>
+            <li><strong>Watch it grow</strong><span>One bead per kept day, in the flag's colours, and the shield every 7th day in a row. <a href="streak.html">Your bracelet</a></span></li>
           </ol>
         </div>
       </section>
 
-      <div class="shuka" aria-hidden="true"></div>
-
-      <!-- =============================================================
-           02: THE GLOSSARY
-           A <dl> again: each <dt> is a word, each <dd> its meaning.
-           This is exactly what description lists were made for.
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="ch2">
-        <div class="wrap split">
-          <div class="chapter-head">
-            <span class="chapter-no" aria-hidden="true">02</span>
-            <h2 id="ch2">The game, <em>word by word.</em></h2>
-            <p>Everything you'll see in the app, in one list.</p>
-          </div>
-          <dl class="glossary">
-            <div><dt><img class="icon" src="../../Images/icons/flame.svg" alt="" /> Streak</dt><dd>Days in a row you've checked in clean. Every one of them adds a bead.</dd></div>
-            <div><dt><img class="icon" src="../../Images/icons/bima.svg" alt="" /> Streak Saver</dt><dd>Insurance for one missed day. For life (a funeral, a trip, no network), not for relapses.</dd></div>
-            <div><dt><img class="icon" src="../../Images/icons/xp.svg" alt="" /> XP</dt><dd>Points for everything good you do. XP sets your level and your league place.</dd></div>
-            <div><dt><img class="icon" src="../../Images/icons/mbao.svg" alt="" /> Coins</dt><dd>Game coins from quests. Spend them in the shop. Never real money, never for sale.</dd></div>
-            <div><dt><img class="icon" src="../../Images/icons/trophy.svg" alt="" /> Leagues</dt><dd>Weekly leagues: Handcart, Motorbike, Minibus, Party Bus, Express Train.</dd></div>
-            <div><dt>Habits</dt><dd>What you're quitting: betting, alcohol, Fuliza debt, 3am scrolling. "What's your habit?" is Malebo's favourite question.</dd></div>
-            <div><dt>Beads</dt><dd>The heart of the game. One bead for every clean day, in the Kenyan flag's colours, with a shield charm every 7th. 30 beads make a bracelet, 100 a necklace, 365 the Hero's Collar. Beads are never taken away.</dd></div>
-            <div><dt>Savings group</dt><dd>Your small squad. Shared quests, a shared savings pot, and alerts when someone's struggling.</dd></div>
-          </dl>
-        </div>
-      </section>
-
-      <!-- =============================================================
-           03: FAIR PLAY
-           A game about quitting addictive things must not BECOME an
-           addictive thing. These rules are the line.
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="ch3">
+      <section class="chapter" aria-labelledby="promises">
         <div class="wrap">
           <div class="chapter-head">
-            <span class="chapter-no" aria-hidden="true">03</span>
-            <h2 id="ch3">Fair <em>play.</em></h2>
-            <p>The rules we hold ourselves to.</p>
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <h2 id="promises">Our <em>promises.</em></h2>
           </div>
-          <ul class="features">
-            <li class="feature"><h3>No pay-to-win</h3><p>You can't buy XP, coins or a streak. Ever. Discipline is the only currency.</p></li>
-            <li class="feature"><h3>No slot-machine tricks</h3><p>No spins, no mystery boxes, no "surprise" prizes. Random rewards work exactly like a slot machine, and if you're quitting betting you don't need another one in your pocket.</p></li>
-            <li class="feature"><h3>No betting ads</h3><p>Not one. Not "responsibly". Not for any amount of money.</p></li>
-            <li class="feature"><h3>We roast the habit, never you</h3><p>The jokes go at the habit, not the person. Slips are logged as lessons, and nobody gets humiliated.</p></li>
-            <li class="feature"><h3>Streaks that forgive</h3><p>Streak Savers, a pause button for exams or a funeral, and a consistency score, so one bad day isn't zero.</p></li>
-            <li class="feature"><h3>Real help, when it's serious</h3><p>Struggling with alcohol or drugs? Call <a href="tel:1192"><strong>1192</strong></a>: NACADA's free, 24/7 helpline. For betting or debt, talk to someone you trust. XP is not therapy.</p></li>
+          <div class="fair">
+            <article class="card"><h3>Honest beads</h3><p>A bead only means a day you kept. A pause gets a knot, never a bead. A missed check-in is never counted as a slip.</p></article>
+            <article class="card"><h3>Nothing taken away</h3><p>A slip ends a streak, not your progress. Every bead you earned stays on the bracelet.</p></article>
+            <article class="card"><h3>No shame</h3><p>We say "slip", never "fail" or "relapse". Malebo jokes about the weed, never about you.</p></article>
+            <article class="card"><h3>No tricks</h3><p>No coins, no spins, no mystery prizes, no buying your way to a streak.</p></article>
+            <article class="card"><h3>Private and discreet</h3><p>No name needed. When saving arrives, your record stays on your phone only. The app's name and icon never say "weed".</p></article>
+            <article class="card"><h3>Real help</h3><p>An app isn't treatment. NACADA's helpline is free, 24/7 and confidential: <a href="tel:1192">1192</a>.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter" aria-labelledby="sources">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <h2 id="sources">Where this <em>comes from.</em></h2>
+            <p>What we built on, and what we're still testing.</p>
+          </div>
+          <ul class="plain-list">
+            <li><strong>The slip moment.</strong> Relapse research describes the "abstinence violation effect": after one lapse, people feel they've failed completely and give up. The slip screen is built to interrupt that.</li>
+            <li><strong>Withdrawal.</strong> Cannabis withdrawal usually starts in days 1 to 3, peaks around days 2 to 6 and fades within about 2 weeks: <a href="https://pubmed.ncbi.nlm.nih.gov/12943018/">Budney and others, 2003</a>.</li>
+            <li><strong>The bracelet.</strong> The flag's colours and the Maasai shield and spears, which the flag's makers took from Maasai culture: <a href="https://www.worldatlas.com/articles/what-do-the-colors-and-symbols-of-the-flag-of-kenya-mean.html">WorldAtlas</a>.</li>
+            <li><strong>Still a test.</strong> We don't yet know whether the bracelet helps people keep going. That's what the first version is for.</li>
           </ul>
         </div>
-      </section>
-
-      <div class="shuka" aria-hidden="true"></div>
-
-      <!-- =============================================================
-           THE SCIENCE (SHORT VERSION)
-           Every game mechanic here is backed by research, and every risky
-           one has a safety valve. Sources are listed in the README.
-           ============================================================= -->
-      <section class="chapter" aria-labelledby="ch-sci">
-        <div class="wrap split">
-          <div class="chapter-head">
-            <span class="chapter-no" aria-hidden="true">★</span>
-            <h2 id="ch-sci">Why it's built <em>like this.</em></h2>
-            <p>Not vibes. Psychology. (Okay, also vibes.)</p>
-          </div>
-          <dl class="glossary">
-            <div><dt>Loss aversion</dt><dd>Losing a streak hurts about twice as much as growing it feels good. That's why streaks work. It's also why rigid ones make people anxious and quit, so ours come with Streak Savers and a pause button.</dd></div>
-            <div><dt>A face beats a bar</dt><dd>People look after a character more than a progress bar. That's why Malebo has moods, and why your progress is a bracelet you can see growing, not just a number.</dd></div>
-            <div><dt>Humour lowers shame</dt><dd>Recovery research finds humour helps people cope and fights self-stigma. Shame does the opposite. So Malebo jokes, but never at you.</dd></div>
-            <div><dt>Choose, grow, belong</dt><dd>Motivation lasts when you get to choose (tone, nag level, what Malebo calls you), see yourself get better (levels, beads, the jewellery box) and feel part of something (your group).</dd></div>
-            <div><dt>No random prizes</dt><dd>Habit apps often use surprise rewards, the same trick as a slot machine. We keep the surprise in the jokes (a new meme of the day, every day), never in the prizes.</dd></div>
-          </dl>
-        </div>
-      </section>
-
-      <!-- 04: MALEBO HIMSELF -->
-      <section class="chapter" aria-labelledby="ch4">
-        <div class="wrap split">
-          <div class="chapter-head">
-            <span class="chapter-no" aria-hidden="true">04</span>
-            <h2 id="ch4">Malebo's <em>vibe.</em></h2>
-            <p>
-              Fun, real, loyal, a little cheeky, always got your back. From
-              Nairobi's streets to the village, he understands the hustle, the
-              pressure and the comeback.
-            </p>
-          </div>
-          <img
-            class="card"
-            src="../../Images/illustrated/malebo.svg"
-            alt="Illustrated Malebo framed by a ring of Kenyan flag beads."
-            width="216"
-            height="208"
-            loading="lazy"
-          />
-        </div>
-      </section>
-
-      <section class="wrap cta-band" aria-labelledby="cta">
-        <div>
-          <h2 id="cta">Enough reading. <em>Day 1</em> starts now.</h2>
-          <a class="btn btn-red btn-big" href="today.html">Open the app</a>
-        </div>
-        <img src="../../Images/illustrated/malebo-hype.svg" alt="" width="200" height="200" loading="lazy" />
       </section>
     </main>
 

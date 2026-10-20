@@ -8,13 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <body>
@@ -49,7 +50,7 @@
         <div class="wrap">
           <span class="eyebrow">Settings</span>
           <h1>Your <em>rules.</em></h1>
-          <p class="lede">Tell Malebo who you are, why you started, and how hard to push.</p>
+          <p class="lede">What Malebo calls you, how hard he pushes, and when he reminds you.</p>
         </div>
       </section>
 
@@ -68,7 +69,7 @@
         </nav>
 
         <!-- action="#" = "submit to this same page". Nothing is actually
-             saved yet, because saving needs a server (Phase 3). The form is
+             saved yet: saving needs JavaScript, which comes later. The form is
              here so the design and the HTML are ready for that day. -->
         <form class="settings-form" action="#">
           <!-- PROFILE: text inputs.
@@ -79,24 +80,10 @@
             <legend>Profile</legend>
             <div class="field">
               <label for="name">Your name</label>
-              <input id="name" name="name" type="text" value="Joe" autocomplete="given-name" />
+              <input id="name" name="name" type="text" value="" placeholder="e.g. Wanjiru" autocomplete="given-name" />
             </div>
-            <div class="field">
-              <label for="habit">The habit you're beating</label>
-              <input id="habit" name="habit" type="text" value="Weekend drinking" />
-            </div>
-            <div class="field">
-              <label for="why">Your why</label>
-              <!-- <small> under a field = a hint. aria-describedby links it to
-                   the input, so screen readers read the hint too. -->
-              <input id="why" name="why" type="text" value="Saving for a Mombasa trip" aria-describedby="why-hint" />
-              <small id="why-hint">Malebo shows you this on the panic screen. Make it something that hits.</small>
-            </div>
-            <div class="field">
-              <label for="daily">Daily saving (KSh)</label>
-              <!-- type="number" brings up the number keypad on phones -->
-              <input id="daily" name="daily" type="number" min="0" step="10" value="200" inputmode="numeric" />
-            </div>
+            <p class="hint">Optional. Leave it empty and Malebo uses neutral words.</p>
+            <p class="hint">Your reason and your "when… I will…" plan live in <a href="start.html">Your plan</a>.</p>
           </fieldset>
 
           <!-- WHAT SHOULD MALEBO CALL YOU?
@@ -162,10 +149,11 @@
                  keeps the game kind. -->
             <ul class="switches mt">
               <li>
-                <label class="switch">
-                  <span>Pause the game<small>Exams, a funeral, sickness, a rough week. Your streak freezes, nothing is lost.</small></span>
-                  <input type="checkbox" role="switch" name="pause" />
-                </label>
+                <!-- A pause needs a reason and dates, so it has its own page -->
+                <a class="switch switch-link" href="pause.html">
+                  <span>Take a pause<small>Exams, a funeral, sickness. A knot goes on: no bead, and your streak waits.</small></span>
+                  <span aria-hidden="true">→</span>
+                </a>
               </li>
               <li>
                 <label class="switch">
@@ -220,20 +208,8 @@
               </li>
               <li>
                 <label class="switch">
-                  <span>Squad alerts<small>When someone in your squad is struggling.</small></span>
-                  <input type="checkbox" role="switch" name="remind-squad" checked />
-                </label>
-              </li>
-              <li>
-                <label class="switch">
-                  <span>Weekend warning<small>A heads-up on Friday evening. You know why.</small></span>
+                  <span>Weekend heads-up<small>A short note on Friday evening, before the hardest nights.</small></span>
                   <input type="checkbox" role="switch" name="remind-weekend" checked />
-                </label>
-              </li>
-              <li>
-                <label class="switch">
-                  <span>Savings milestones<small>Every time you pass another KSh 1,000.</small></span>
-                  <input type="checkbox" role="switch" name="remind-savings" />
                 </label>
               </li>
             </ul>
@@ -249,15 +225,14 @@
             <div class="field">
               <label for="lang">Malebo speaks</label>
               <select id="lang" name="lang">
-                <option value="sheng">Sheng</option>
-                <option value="sw">Kiswahili</option>
-                <option value="en" selected>English (this edition)</option>
+                <option value="en" selected>English</option>
+                <option value="ke">Kenyan voice: Kiswahili &amp; Sheng</option>
               </select>
             </div>
           </fieldset>
 
           <div class="form-actions">
-            <button class="btn btn-red" type="submit">Save settings</button>
+            <button class="btn" type="submit">Save settings</button>
             <p>Prototype: settings don't save yet.</p>
           </div>
         </form>

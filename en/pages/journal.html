@@ -8,13 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <!-- =====================================================================
@@ -68,7 +69,7 @@
           <h2 id="new" class="panel-title">Today's entry</h2>
           <form class="card" action="journal.html" method="get">
             <!-- A prompt helps when you don't know what to write -->
-            <p class="hint">Prompt: What helped you today, even a little?</p>
+            <p class="hint">Prompt: What helped today, even a little? Or: what made it hard?</p>
             <div class="field">
               <label for="entry">Your entry</label>
               <!-- no name="" so it never lands in the address bar -->
@@ -83,7 +84,7 @@
                 <label class="chip mood--chaos"><input type="radio" name="feel" value="rough" /> Rough</label>
               </div>
             </fieldset>
-            <button class="btn btn-red" type="submit">Save entry</button>
+            <button class="btn" type="submit">Save entry</button>
           </form>
         </section>
 
@@ -93,20 +94,20 @@
           <ol class="entries">
             <li>
               <article class="entry mood--calm">
-                <header class="entry-top"><time datetime="2026-10-06">Tue, Oct 6 · Day 22</time><span>Calm</span></header>
-                <p>Walked home instead of passing the betting shop. Small thing, but it worked. Moved KSh 150 to the Mombasa goal.</p>
+                <header class="entry-top"><time datetime="2026-10-11">Sun, Oct 11 · Day 28</time><span>Calm</span></header>
+                <p>Slept properly for the first time in weeks. Read two chapters for the exam. My head feels quieter.</p>
               </article>
             </li>
             <li>
               <article class="entry mood--pressure">
-                <header class="entry-top"><time datetime="2026-10-03">Sat, Oct 3 · Day 19</time><span>Hard</span></header>
-                <p>Derby day. Everyone in the group chat was placing bets. Hit SOS twice. Texted Brian. Watched the match anyway, no bet. Proud.</p>
+                <header class="entry-top"><time datetime="2026-10-10">Sat, Oct 10 · Day 27</time><span>Hard</span></header>
+                <p>Went to a friend's place and they lit up. Said "niko poa" like my plan says. Left early and walked. Hard, but I did it.</p>
               </article>
             </li>
             <li>
-              <article class="entry mood--hype">
-                <header class="entry-top"><time datetime="2026-09-29">Tue, Sept 29 · Day 15</time><span>Good</span></header>
-                <p>Payday and the money is still there. First time in months. Two weeks strong.</p>
+              <article class="entry mood--chaos">
+                <header class="entry-top"><time datetime="2026-09-19">Sat, Sept 19 · Day 6</time><span>Rough</span></header>
+                <p>Slipped at the birthday. Felt like everything was wasted. Then I saw my five beads were still there. Starting again tomorrow.</p>
               </article>
             </li>
           </ol>

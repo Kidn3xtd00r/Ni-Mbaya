@@ -41,6 +41,10 @@ ACTIVE = {
     "savings": "profile", "anasa": "profile", "habit": "profile",
 }
 
+# Bump these whenever a stylesheet changes, so browsers fetch the new one
+# instead of showing an old copy from their cache.
+CSS_VERSION = {"styles": 9, "bead": 4}
+
 # Pages that are ideas for later, not part of the MVP.
 CONCEPTS = {"community", "league", "shop", "savings", "anasa", "habit"}
 
@@ -115,11 +119,32 @@ def footer(R, P):
 CONCEPT_NOTE = '''<p class="concept-note"><strong>Idea for later.</strong> This page is a design concept, not part of the first version. We'll only build it if testing shows people need it.</p>'''
 
 
+def head_links(R):
+    """Fonts, stylesheets and icon: the same on every English page."""
+    return f'''<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{R}../CSS/styles.css?v={CSS_VERSION['styles']}" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="{R}../CSS/bead.css?v={CSS_VERSION['bead']}" />
+    <link rel="icon" href="{R}../Images/icons/bead.svg" />
+  </head>'''
+
+
 def stamp(path):
     s = path.read_text(encoding="utf-8")
     at_root = path.parent == EN
     R, P = ("", "pages/") if at_root else ("../", "")
     active = path.stem if path.stem in dict(TABS) else ACTIVE.get(path.stem, "")
+
+    # Everything from the first font link to </head> is replaced.
+    s, n = re.subn(r'<link rel="preconnect" href="https://fonts.googleapis.com" />.*?</head>',
+                   lambda _: head_links(R), s, count=1, flags=re.S)
+    assert n == 1, f"no font links found in {path}"
 
     # The landing page has its own big header, so only its footer is stamped.
     if "landing-header" not in s:

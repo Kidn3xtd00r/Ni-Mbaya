@@ -3,33 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Quit Plan · Bead by Bead</title>
-    <meta name="description" content="Six quick questions and Bead by Bead builds your personal quit plan." />
+    <title>Your plan · Bead by Bead</title>
+    <meta name="description" content="Five quick questions to set up your plan: when you start, why, your hard moments, what you'll do instead, and who's on your side." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <!-- =====================================================================
-       THE QUIT PLAN (onboarding)
-       Every serious quit app starts here, before anything else:
-         - Flamy asks 6 questions and builds a personal plan
-         - Quitzilla makes you set up your habit before you see the app
-       Why? Because the app can only count your clean time, money saved and
-       milestones once it knows WHAT you're quitting, WHEN, and what it COSTS.
-       And writing down your "why" on day one gives the SOS screen something
-       to remind you of later.
-
-       It's one long form split into 6 numbered steps (<fieldset>s).
-       The little numbered list at the top jumps to each step (#step-1...).
-       Pressing "Build my plan" goes to today.html (Phase 2 will save it).
+       THE PLAN: one commitment, set up in five questions
+       The first version does ONE thing well: quitting weed. So there's no
+       "pick your habits" step any more. The questions are the ones that
+       matter on a hard day:
+         1. When do you start?         → the first day of the bracelet
+         2. Why?                       → shown on Today and on SOS
+         3. When is it hardest?        → your triggers
+         4. What will you do instead?  → your "when… I will…" plan
+         5. Who's on your side?        → optional, never required
        ===================================================================== -->
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -62,116 +60,92 @@
       <section class="page-hero">
         <div class="wrap plan-hero">
           <div>
-            <span class="eyebrow">Your quit plan · 6 questions · about 1 minute</span>
-            <h1>Let's build <em>your plan.</em></h1>
-            <p class="lede">Answer honestly. Nobody sees this but you and Malebo.</p>
+            <p class="eyebrow">Your plan · 5 questions · about 2 minutes</p>
+            <h1>Let's make <em>your plan.</em></h1>
+            <p class="lede">Your commitment: <strong>no weed.</strong> Nobody sees these answers but you.</p>
           </div>
           <img src="../../Images/illustrated/malebo-calm.svg" alt="" width="200" height="200" class="plan-malebo" />
         </div>
       </section>
 
-      <div class="wrap chapter">
-        <!-- The step list. Each link jumps to its fieldset's id. -->
+      <div class="wrap chapter chapter--tight">
         <ol class="plan-steps" aria-label="Steps">
-          <li><a href="#step-1">What</a></li>
-          <li><a href="#step-2">When</a></li>
-          <li><a href="#step-3">Cost</a></li>
-          <li><a href="#step-4">How</a></li>
-          <li><a href="#step-5">Why</a></li>
-          <li><a href="#step-6">Who</a></li>
+          <li><a href="#step-1">Start</a></li>
+          <li><a href="#step-2">Why</a></li>
+          <li><a href="#step-3">Hard moments</a></li>
+          <li><a href="#step-4">Instead</a></li>
+          <li><a href="#step-5">Support</a></li>
         </ol>
 
+        <!-- Privacy: a "get" form puts every field that has a name="" into
+             the address bar, e.g. today.html?why=I+want+a+clear+head...
+             That ends up in browser history, where anyone with the phone
+             can see it. So the personal answers below (your reason, your
+             hard moments, your plan, your friend's name) have NO name="".
+             The browser then leaves them out. Only the start choice and
+             date are sent, and they say nothing about you. -->
         <form class="plan" action="today.html" method="get">
-          <!-- STEP 1: checkboxes, because many people fight more than one habit -->
           <fieldset id="step-1" class="plan-step">
-            <legend><span class="plan-no">1</span> What do you want to quit?</legend>
-            <p class="hint">Pick as many as you like. Each one gets its own clean-time clock.</p>
+            <legend><span class="plan-no">1</span> When do you start?</legend>
+            <p class="hint">This is day 1 of your bracelet.</p>
             <ul class="ticks">
-              <li><label class="tick"><input type="checkbox" name="habit" value="betting" checked /> Betting</label></li>
-              <li><label class="tick"><input type="checkbox" name="habit" value="alcohol" checked /> Alcohol</label></li>
-              <li><label class="tick"><input type="checkbox" name="habit" value="debt" /> Fuliza &amp; loan apps</label></li>
-              <li><label class="tick"><input type="checkbox" name="habit" value="scrolling" /> Late-night scrolling</label></li>
-              <li><label class="tick"><input type="checkbox" name="habit" value="smoking" /> Smoking or vaping</label></li>
-              <li><label class="tick"><input type="checkbox" name="habit" value="other" /> Something else</label></li>
-            </ul>
-          </fieldset>
-
-          <!-- STEP 2: two radios + a date field -->
-          <fieldset id="step-2" class="plan-step">
-            <legend><span class="plan-no">2</span> When do you start?</legend>
-            <p class="hint">Your clock starts counting from this moment.</p>
-            <ul class="ticks">
-              <li><label class="tick"><input type="radio" name="start" value="now" checked /> Right now</label></li>
+              <li><label class="tick"><input type="radio" name="start" value="today" checked /> Today</label></li>
               <li><label class="tick"><input type="radio" name="start" value="before" /> I already stopped on…</label></li>
             </ul>
             <div class="field mt">
-              <label for="quit-date">Quit date</label>
-              <input id="quit-date" name="date" type="date" value="2026-09-15" />
+              <label for="start-date">Start date</label>
+              <input id="start-date" name="date" type="date" value="2026-09-14" />
             </div>
           </fieldset>
 
-          <!-- STEP 3: a number. This is what powers "money saved". -->
+          <fieldset id="step-2" class="plan-step">
+            <legend><span class="plan-no">2</span> Why are you stopping?</legend>
+            <p class="hint">In your own words. You'll see this on hard days, so make it something that hits.</p>
+            <div class="field">
+              <label for="why">My reason</label>
+              <textarea id="why" rows="3">I want a clear head for my diploma exams, and my fare money back.</textarea>
+            </div>
+          </fieldset>
+
           <fieldset id="step-3" class="plan-step">
-            <legend><span class="plan-no">3</span> What does it cost you?</legend>
-            <p class="hint">Roughly, per day. Bets, rounds, interest, all of it. This powers your "money saved" counter.</p>
-            <div class="field">
-              <label for="cost">KSh per day</label>
-              <input id="cost" name="cost" type="number" min="0" step="10" value="150" inputmode="numeric" />
-            </div>
+            <legend><span class="plan-no">3</span> When is it hardest?</legend>
+            <p class="hint">Tick the moments that get you. Knowing them is half the battle.</p>
+            <ul class="ticks">
+              <li><label class="tick"><input type="checkbox" value="friends" checked /> When friends light up</label></li>
+              <li><label class="tick"><input type="checkbox" value="stress" /> When I'm stressed</label></li>
+              <li><label class="tick"><input type="checkbox" value="bored" checked /> Bored, late at night</label></li>
+              <li><label class="tick"><input type="checkbox" value="sleep" /> When I can't sleep</label></li>
+              <li><label class="tick"><input type="checkbox" value="weekend" /> Weekends</label></li>
+            </ul>
           </fieldset>
 
-          <!-- STEP 4: Flamy's two programmes. Same pick-card style as
-               check-in, but with no pictures. -->
+          <!-- "When X, I will Y". Deciding the exact action ahead of time
+               works better than just wanting to stop. -->
           <fieldset id="step-4" class="plan-step">
-            <legend><span class="plan-no">4</span> How do you want to quit?</legend>
-            <div class="picks">
-              <label class="pick">
-                <input type="radio" name="method" value="cold" checked />
-                <span class="pick-text">Cold turkey<small>Stop completely, starting today. Your streak starts now.</small></span>
-              </label>
-              <label class="pick">
-                <input type="radio" name="method" value="taper" />
-                <span class="pick-text">Cut down step by step<small>A weekly limit that gets smaller until it's zero.</small></span>
-              </label>
-            </div>
-          </fieldset>
-
-          <!-- STEP 5: your reasons. The SOS screen shows these back to you
-               when a craving hits. That's why apps ask on day one. -->
-          <fieldset id="step-5" class="plan-step">
-            <legend><span class="plan-no">5</span> Why are you quitting?</legend>
-            <p class="hint">Tick the ones that hit, then say it in your own words. Malebo will remind you when it matters.</p>
-            <ul class="ticks">
-              <li><label class="tick"><input type="checkbox" name="why" value="money" checked /> Keep my money</label></li>
-              <li><label class="tick"><input type="checkbox" name="why" value="debt" /> Get out of debt</label></li>
-              <li><label class="tick"><input type="checkbox" name="why" value="family" /> My family</label></li>
-              <li><label class="tick"><input type="checkbox" name="why" value="health" /> My health</label></li>
-              <li><label class="tick"><input type="checkbox" name="why" value="control" checked /> Feel in control again</label></li>
-            </ul>
-            <div class="field mt">
-              <label for="why-words">In your own words</label>
-              <!-- no name="" so your private words never land in the address bar -->
-              <textarea id="why-words" rows="3">Saving for a Mombasa trip. And I'm tired of Monday regret.</textarea>
-            </div>
-          </fieldset>
-
-          <!-- STEP 6: accountability. I Am Sober, Nomo and Coach.me all
-               show that one real person beats a hundred notifications. -->
-          <fieldset id="step-6" class="plan-step">
-            <legend><span class="plan-no">6</span> Who's got your back?</legend>
-            <p class="hint">One accountability partner. They see your streak and get a nudge if you go quiet. Never your journal.</p>
+            <legend><span class="plan-no">4</span> What will you do instead?</legend>
+            <p class="hint">Finish the sentence for your hardest moment. Make it small and specific.</p>
             <div class="field">
-              <label for="buddy">Partner's name</label>
-              <input id="buddy" type="text" value="Brian" autocomplete="off" />
+              <label for="when">When…</label>
+              <input id="when" type="text" value="the boys light up after class," />
             </div>
-            <ul class="ticks">
-              <li><label class="tick"><input type="checkbox" name="group" value="yes" checked /> Also put me in a savings group of 5</label></li>
-            </ul>
+            <div class="field mt">
+              <label for="will">I will…</label>
+              <input id="will" type="text" value="say &quot;niko poa&quot; and walk to the stage." />
+            </div>
+          </fieldset>
+
+          <fieldset id="step-5" class="plan-step">
+            <legend><span class="plan-no">5</span> Who's on your side? <small>(optional)</small></legend>
+            <p class="hint">Someone you could text on a hard day. They don't get an account and never see your journal. Skip it if you'd rather keep this to yourself.</p>
+            <div class="field">
+              <label for="who">Their first name</label>
+              <input id="who" type="text" placeholder="e.g. my cousin" />
+            </div>
           </fieldset>
 
           <div class="form-actions">
-            <button class="btn btn-red btn-big" type="submit">Build my plan</button>
-            <p>You can change any of this later in Settings.</p>
+            <button class="btn btn-big" type="submit">Start my bracelet</button>
+            <p class="hint">Prototype: nothing is saved yet. Later, your plan will stay only on this phone.</p>
           </div>
         </form>
       </div>

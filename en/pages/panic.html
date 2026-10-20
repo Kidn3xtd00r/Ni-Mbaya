@@ -4,33 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SOS · Bead by Bead</title>
-    <meta name="description" content="Craving right now? Breathe for 60 seconds, remember why you started, and ride it out." />
+    <meta name="description" content="A craving right now? Breathe for one minute, remember why, and get through the next ten minutes." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <!-- =====================================================================
-       SOS: THE CRAVING SCREEN
-       Built like Flamy's SOS button and I Am Sober's "craving" flow:
-         1. BREATHE first (a 60-second guided circle), because a craving
-            peaks and passes, usually within minutes
-         2. your REASONS from the quit plan, shown back to you
-         3. quick DISTRACTIONS
-         4. your PARTNER, one tap away
-         5. LOG the craving + its trigger, so you learn your patterns
-         6. real help (1192) if it's bigger than an app
-       The breathing circle is a CSS animation: it grows for 4 seconds
-       (breathe in), holds 4, shrinks 4 (breathe out). See "BREATHE" in CSS.
+       SOS: for the moment a craving hits
+       Calm words only on this page: no slang jokes, no roasting.
+       1. Breathe (the circle animates with CSS)
+       2. Your reason
+       3. Ten minutes: small things to do right now
+       4. What's normal: cravings when you stop are expected, and they pass
        ===================================================================== -->
-  <body class="page-panic">
+  <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
@@ -58,11 +54,10 @@
     </header>
 
     <main id="main">
-      <!-- 1. BREATHE -->
       <section class="wrap sos-hero" aria-labelledby="sos-title">
-        <span class="eyebrow">SOS · you've got this</span>
-        <h1 id="sos-title">Driver, <em>drop me here.</em></h1>
-        <p class="lede">A craving is a wave. It rises, peaks and passes. Breathe with the circle for one minute.</p>
+        <p class="eyebrow">SOS</p>
+        <h1 id="sos-title">This will <em>pass.</em></h1>
+        <p class="lede">A craving is a wave. It rises, peaks and fades, usually within minutes. Breathe with the circle for one minute.</p>
 
         <!-- The circle. Three labels sit on top of each other; CSS fades
              each one in during its part of the 12-second loop. -->
@@ -71,87 +66,65 @@
           <span class="breathe-label breathe-hold">Hold</span>
           <span class="breathe-label breathe-out">Breathe out</span>
         </div>
-        <!-- Screen readers get the instruction as plain text instead -->
         <p class="sr-only">Breathe in for 4 seconds, hold for 4, breathe out for 4. Repeat 5 times.</p>
         <p class="hint">In for 4 · hold for 4 · out for 4 · five times</p>
-
-        <!-- A real link to the "I beat it" screen. -->
-        <a class="btn btn-red btn-big" href="celebrate.html">The wave passed · +50 XP</a>
       </section>
 
-      <!-- 2. YOUR REASONS (from the quit plan) -->
       <section class="chapter" aria-labelledby="why">
         <div class="wrap split">
           <div class="chapter-head">
             <span class="chapter-no" aria-hidden="true">01</span>
             <h2 id="why">Remember <em>why.</em></h2>
-            <p>You wrote these on day one.</p>
+            <p>You wrote this on day one.</p>
           </div>
           <figure class="card why-card">
-            <blockquote>"Saving for a Mombasa trip. And I'm tired of Monday regret."</blockquote>
-            <ul class="proof">
-              <li>Betting-free <strong>23 days</strong></li>
-              <li>Kept from betting <strong>KSh 3,450</strong></li>
-              <li>Bracelet <strong>28 of 30 beads</strong></li>
-              <li>Next milestone <strong>Day 30, in 7 days</strong></li>
-            </ul>
-            <figcaption class="hint">Change your reasons any time in Settings.</figcaption>
+            <blockquote>"I want a clear head for my diploma exams, and my fare money back."</blockquote>
+            <figcaption class="hint">24 beads on your bracelet. <a href="streak.html">See them</a></figcaption>
           </figure>
         </div>
       </section>
 
-      <div class="shuka" aria-hidden="true"></div>
-
-      <!-- 3 + 4. DISTRACTIONS + PARTNER: the numbered "ten minutes" cards -->
       <section class="chapter" aria-labelledby="ten">
         <div class="wrap">
           <div class="chapter-head">
             <span class="chapter-no" aria-hidden="true">02</span>
-            <h2 id="ten">Just get through <em>the next 10 minutes.</em></h2>
+            <h2 id="ten">Just the next <em>10 minutes.</em></h2>
             <p>Not forever. Ten minutes. Pick one and do it now.</p>
           </div>
           <ol class="ten">
-            <li><strong>Text Brian</strong><span>Your partner. "I'm struggling." That's the whole message. <a href="community.html">Open chat →</a></span></li>
-            <li><strong>Move</strong><span>Leave the room. Walk to the gate and back.</span></li>
+            <li><strong>Leave the spot</strong><span>Wherever it's being passed around, walk away. Go to the stage, the shop, anywhere.</span></li>
             <li><strong>Cold water</strong><span>Drink a full glass. Splash your face.</span></li>
-            <li><strong>Write it out</strong><span>Two lines in your journal. <a href="journal.html">Journal →</a></span></li>
-            <li><strong>Call 1192</strong><span>NACADA's free, 24/7 helpline for alcohol and drugs. Real people, no judgement.</span></li>
+            <li><strong>Text someone</strong><span>"I'm struggling, talk to me." That's the whole message.</span></li>
+            <li><strong>Eat something</strong><span>Hunger makes cravings louder. Chapati, a banana, anything.</span></li>
+            <li><strong>Write it out</strong><span>Two lines in your journal. <a href="journal.html">Journal</a></span></li>
+            <li><strong>Call 1192</strong><span>NACADA's free 24/7 helpline for alcohol and drugs. Real people, confidential, no judgement.</span></li>
           </ol>
         </div>
       </section>
 
-      <!-- 5. LOG THE CRAVING: what triggered it? This feeds the "Your
-           triggers" chart on each habit's page. -->
-      <section class="chapter" aria-labelledby="log">
+      <!-- What's normal: facts, with a source, so nobody feels broken. -->
+      <section class="chapter" aria-labelledby="normal">
         <div class="wrap split">
           <div class="chapter-head">
             <span class="chapter-no" aria-hidden="true">03</span>
-            <h2 id="log">Log this <em>craving.</em></h2>
-            <p>Ten seconds. Over time you'll see your pattern, and Malebo will warn you before it comes.</p>
+            <h2 id="normal">What's <em>normal.</em></h2>
+            <p>When someone who smoked often stops, their body takes time to adjust. Feeling rough is a sign of change, not failure.</p>
           </div>
-          <form class="card" action="celebrate.html" method="get">
-            <fieldset>
-              <legend class="legend-small">What triggered it?</legend>
-              <ul class="ticks">
-                <li><label class="tick"><input type="radio" name="trigger" value="football" /> Football on TV</label></li>
-                <li><label class="tick"><input type="radio" name="trigger" value="payday" /> Payday</label></li>
-                <li><label class="tick"><input type="radio" name="trigger" value="friends" /> Friends</label></li>
-                <li><label class="tick"><input type="radio" name="trigger" value="bored" /> Bored or stressed</label></li>
-              </ul>
-            </fieldset>
-            <fieldset>
-              <legend class="legend-small">How strong, 1 to 5?</legend>
-              <div class="chips">
-                <label class="chip"><input type="radio" name="strength" value="1" /> 1</label>
-                <label class="chip"><input type="radio" name="strength" value="2" /> 2</label>
-                <label class="chip"><input type="radio" name="strength" value="3" /> 3</label>
-                <label class="chip"><input type="radio" name="strength" value="4" /> 4</label>
-                <label class="chip"><input type="radio" name="strength" value="5" /> 5</label>
-              </div>
-            </fieldset>
-            <button class="btn btn-red" type="submit">Log it · I beat it</button>
-          </form>
+          <dl class="glossary">
+            <div><dt>Days 1 to 3</dt><dd>Irritability, restlessness, less appetite and poor sleep often start here.</dd></div>
+            <div><dt>Days 2 to 6</dt><dd>Usually the hardest stretch. This is what SOS is for.</dd></div>
+            <div><dt>Up to 2 weeks</dt><dd>Most of it fades. Sleep and strange dreams can take longer to settle.</dd></div>
+          </dl>
         </div>
+        <p class="wrap hint mt">Source: Budney and others, <a href="https://pubmed.ncbi.nlm.nih.gov/12943018/">"The time course and significance of cannabis withdrawal"</a>, Journal of Abnormal Psychology, 2003. Everyone is different; if you feel unwell, see a doctor.</p>
+      </section>
+
+      <section class="wrap cta-band" aria-labelledby="cta">
+        <div>
+          <h2 id="cta">The wave <em>passed?</em></h2>
+          <a class="btn btn-big" href="today.html">Back to today</a>
+        </div>
+        <img src="../../Images/illustrated/malebo-calm.svg" alt="" width="200" height="200" loading="lazy" />
       </section>
     </main>
 

@@ -3,20 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Evening Check-In · Bead by Bead</title>
-    <meta name="description" content="Hey! How did today go? Your 30-second daily check-in with Malebo." />
+    <title>Check-in · Bead by Bead</title>
+    <meta name="description" content="Thirty seconds: did you keep your word today, did you slip, or do you need a pause?" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
+  <!-- =====================================================================
+       CHECK-IN: the most important screen in the app
+       Three honest answers, all the same size, all equally easy to tap.
+       That's on purpose: if "I slipped" were smaller or harder to find,
+       people would lie, and the bracelet would stop meaning anything.
+       Each answer is a link to its own next screen:
+         kept    → celebrate.html  (a bead goes on)
+         slipped → slip.html       (beads stay, pick a next step)
+         pause   → pause.html      (a knot, with a reason)
+       ===================================================================== -->
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
@@ -47,131 +58,48 @@
     <main id="main">
       <section class="page-hero">
         <div class="wrap">
-          <span class="eyebrow">Daily check-in · Day 23 → 24</span>
-          <h1>Hey! How did <em>today go?</em></h1>
-          <p class="lede">Thirty seconds. Be honest, Malebo can tell anyway.</p>
+          <p class="eyebrow">Evening check-in · 30 seconds</p>
+          <h1>How did <em>today go?</em></h1>
+          <p class="lede">Be honest. The bracelet only works if it's true, and nothing you say here can take a bead away.</p>
         </div>
       </section>
 
-      <div class="wrap chapter">
-        <!-- =============================================================
-             THE FORM
-             action="celebrate.html" = when you press "Check in", the browser
-             goes to the celebration screen. method="get" puts your answer in
-             the address bar (celebrate.html?feeling=hype). Fine for a demo, but a
-             real app would save it properly (Phase 3: FastAPI + database).
+      <div class="wrap chapter chapter--tight">
+        <!-- WHICH DAY? Today, or yesterday (still open). In the prototype
+             this is just a choice; nothing is saved. -->
+        <fieldset class="day-pick">
+          <legend class="eyebrow">Which day?</legend>
+          <label class="chip"><input type="radio" name="day" value="today" checked /> Today · Tue 13</label>
+          <label class="chip"><input type="radio" name="day" value="yesterday" /> Yesterday · Mon 12 (not recorded yet)</label>
+        </fieldset>
 
-             class="checkin" is the hook for the :has() trick in CSS that
-             shows Malebo's reply. See section 8 of styles.css.
-             ============================================================= -->
-        <form class="checkin" action="celebrate.html" method="get">
-          <!-- QUESTION 1: four radio buttons.
-               Same name="feeling" on all four = they're ONE group, so only
-               one can be picked at a time. That's what makes them radios.
-               Each one has an id, which the CSS looks for (#feel-calm...).
+        <!-- THE THREE ANSWERS. Big cards, one line each, same weight. -->
+        <ul class="answers">
+          <li>
+            <a class="answer answer--kept" href="celebrate.html">
+              <ol class="band" aria-hidden="true"><li class="day day--kept"></li><li class="day day--kept"></li><li class="day day--kept"></li></ol>
+              <strong>I kept it</strong>
+              <span>No weed today. A bead goes on.</span>
+            </a>
+          </li>
+          <li>
+            <a class="answer answer--slip" href="slip.html">
+              <ol class="band" aria-hidden="true"><li class="day day--kept"></li><li class="day day--slip"></li><li class="day day--kept"></li></ol>
+              <strong>I slipped</strong>
+              <span>I smoked. Your beads stay, and we'll pick a next step.</span>
+            </a>
+          </li>
+          <li>
+            <a class="answer answer--pause" href="pause.html">
+              <ol class="band" aria-hidden="true"><li class="day day--kept"></li><li class="day day--pause"></li><li class="day day--kept"></li></ol>
+              <strong>I need a pause</strong>
+              <span>Exams, a funeral, sickness. A knot, not a break.</span>
+            </a>
+          </li>
+        </ul>
 
-               Wrapping the <input> INSIDE its <label> connects them, so
-               tapping anywhere on the card picks the radio. -->
-          <fieldset>
-            <legend>How did today go?</legend>
-            <div class="picks">
-              <label class="pick mood--calm">
-                <input type="radio" name="feeling" value="calm" id="feel-calm" />
-                <img src="../../Images/illustrated/malebo-calm.svg" alt="" width="200" height="200" />
-                <span class="pick-text">I'm okay<small>Steady. Nothing crazy.</small></span>
-              </label>
-              <label class="pick mood--hype">
-                <input type="radio" name="feeling" value="hype" id="feel-hype" />
-                <img src="../../Images/illustrated/malebo-hype.svg" alt="" width="200" height="200" />
-                <span class="pick-text">I won today<small>Crushed it today.</small></span>
-              </label>
-              <label class="pick mood--pressure">
-                <input type="radio" name="feeling" value="pressure" id="feel-pressure" />
-                <img src="../../Images/illustrated/malebo-pressure.svg" alt="" width="200" height="200" />
-                <span class="pick-text">It was hard<small>I slacked a bit.</small></span>
-              </label>
-              <label class="pick mood--chaos">
-                <input type="radio" name="feeling" value="chaos" id="feel-chaos" />
-                <img src="../../Images/illustrated/malebo-chaos.svg" alt="" width="200" height="200" />
-                <span class="pick-text">I'm about to slip<small>Close to breaking it.</small></span>
-              </label>
-            </div>
-          </fieldset>
-
-          <!-- MALEBO'S REPLY
-               All five replies are written here, but CSS only shows ONE:
-               the "waiting" one until you pick, then the one matching your
-               pick. aria-live="polite" asks screen readers to read it out
-               when it changes, after they finish what they're saying. -->
-          <div aria-live="polite">
-            <div class="reply reply--none">
-              <img src="../../Images/illustrated/malebo-hype.svg" alt="" width="200" height="200" />
-              <div>
-                <p class="reply-label">Malebo is waiting</p>
-                <p class="bubble">Tell me the truth…</p>
-              </div>
-            </div>
-            <div class="reply reply--calm mood--calm">
-              <img src="../../Images/illustrated/malebo-calm.svg" alt="" width="200" height="200" />
-              <div>
-                <p class="reply-label">Calm Coach says</p>
-                <p class="bubble">Slowly, slowly. Discipline is a journey. Okay is okay. Pure greatness.</p>
-              </div>
-            </div>
-            <div class="reply reply--hype mood--hype">
-              <img src="../../Images/illustrated/malebo-hype.svg" alt="" width="200" height="200" />
-              <div>
-                <p class="reply-label">Motivator says</p>
-                <p class="bubble">Let's gooo! This is the energy! Day 24, here we come!</p>
-              </div>
-            </div>
-            <div class="reply reply--pressure mood--pressure">
-              <img src="../../Images/illustrated/malebo-pressure.svg" alt="" width="200" height="200" />
-              <div>
-                <p class="reply-label">Pressure Friend says</p>
-                <p class="bubble">Come on, you! Get it together. Tomorrow we start early.</p>
-              </div>
-            </div>
-            <div class="reply reply--chaos mood--chaos">
-              <img src="../../Images/illustrated/malebo-chaos.svg" alt="" width="200" height="200" />
-              <div>
-                <p class="reply-label">Careful, friend</p>
-                <p class="bubble">"The very last one"? That's a lie. <a href="panic.html">Hit the panic button first.</a></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- QUESTION 2: checkboxes. Unlike radios, you can tick several. -->
-          <fieldset>
-            <legend>What did you win today?</legend>
-            <p class="hint">Tick everything that counts. Each win is +10 XP. CSS adds them up below.</p>
-            <ul class="ticks">
-              <li><label class="tick"><input type="checkbox" name="win" value="no-habit" /> Didn't touch the habit</label></li>
-              <li><label class="tick"><input type="checkbox" name="win" value="saved" /> Moved KSh 150 to my goal</label></li>
-              <li><label class="tick"><input type="checkbox" name="win" value="moved" /> Moved my body</label></li>
-              <li><label class="tick"><input type="checkbox" name="win" value="slept" /> Slept before midnight</label></li>
-              <li><label class="tick"><input type="checkbox" name="win" value="squad" /> Checked on a squad member</label></li>
-              <li><label class="tick"><input type="checkbox" name="win" value="water" /> Drank enough water</label></li>
-            </ul>
-            <!-- The XP total. Like the quests on Leo, it's counted by CSS:
-                 each ticked .tick adds 10 to a counter called wins. -->
-            <p class="wins-total mt" aria-live="polite">Check-in +20 XP · </p>
-          </fieldset>
-
-          <!-- QUESTION 3: a free-text note.
-               No name="" on purpose: without a name, the browser doesn't
-               send it, so your private note never lands in the address bar. -->
-          <div class="field">
-            <label for="note">Anything else? (only you see this)</label>
-            <textarea id="note" rows="4" placeholder="Today I got tempted around 2pm…"></textarea>
-          </div>
-
-          <div class="form-actions">
-            <!-- type="submit" sends the form (to streak.html, see above). -->
-            <button class="btn btn-red btn-big" type="submit">Check in</button>
-            <p>Day 24, +20 XP, and a new bead on your bracelet.</p>
-          </div>
-        </form>
+        <!-- Not an answer: an emergency exit, for right now -->
+        <p class="hint center">About to smoke right now? <a href="panic.html">Go to SOS first.</a></p>
       </div>
     </main>
 

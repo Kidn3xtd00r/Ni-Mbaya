@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A slip · Bead by Bead</title>
+    <meta name="description" content="You slipped and said so. Your beads are all still here. Pick one next step." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
+  </head>
+
+  <!-- =====================================================================
+       SLIP: the screen that matters most
+       This is the moment most people give up: "I've already blown it,
+       so why stop now?" This screen's whole job is to stop that thought.
+         1. Thank them for being honest (no shame words, ever)
+         2. Show the proof: every earned bead is still on the bracelet
+         3. Ask for ONE small next step, not a big promise
+       The next steps use radio buttons + :has(): pick one and only its
+       panel opens. Pure CSS (see "NEXT STEPS" in bead.css).
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs. SOS sits in the middle as a red button so it's
+             always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html" aria-current="page">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="journal.html">Journal</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Two numbers that come straight from the record: beads earned
+               and the current streak. No coins, no XP. alt="" on the icons
+               because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your record (example)">
+            <li><a class="chip-bead" href="streak.html"><img class="icon" src="../../Images/icons/bead.svg" alt="" />24<span class="sr-only"> beads earned</span></a></li>
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />5<span class="sr-only"> day streak</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <p class="eyebrow">Tuesday 13 October · recorded as a slip</p>
+          <h1>Thanks for <em>telling the truth.</em></h1>
+          <p class="lede">A slip is one day. It isn't the whole story, and it doesn't undo the days before it. Look.</p>
+        </div>
+      </section>
+
+      <section class="wrap chapter chapter--tight" aria-labelledby="proof-title">
+        <h2 id="proof-title" class="sr-only">Your bracelet after today</h2>
+        <div class="band-card">
+          <div class="band-frame">
+            <ol class="band band--short" aria-label="Your last 10 days. Today has a slip mark; every earned bead is still there.">
+              <li class="day day--ngao"><span class="sr-only">Day 22: kept, shield</span></li>
+              <li class="day day--missing"><span class="sr-only">Day 23: not recorded</span></li>
+              <li class="day day--kept"><span class="sr-only">Day 24: kept</span></li>
+              <li class="day day--kept"><span class="sr-only">Day 25: kept</span></li>
+              <li class="day day--kept"><span class="sr-only">Day 26: kept</span></li>
+              <li class="day day--kept"><span class="sr-only">Day 27: kept</span></li>
+              <li class="day day--kept"><span class="sr-only">Day 28: kept</span></li>
+              <li class="day day--unknown"><span class="sr-only">Day 29: not recorded yet</span></li>
+              <li class="day day--slip is-new"><span class="sr-only">Day 30, today: slipped</span></li>
+            </ol>
+          </div>
+          <dl class="stat-row">
+            <div><dt>Beads, still yours</dt><dd>24</dd></div>
+            <div><dt>Beads lost</dt><dd>0</dd></div>
+            <div><dt>Streak</dt><dd>starts again tomorrow</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- =============================================================
+           ONE NEXT STEP
+           A <fieldset> of radio buttons. Each <label class="step-pick">
+           holds a radio and a hidden panel. When a radio is checked,
+           :has(:checked) on its label opens that panel.
+           ============================================================= -->
+      <section class="chapter" aria-labelledby="next-title">
+        <div class="wrap split">
+          <div class="chapter-head">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <h2 id="next-title">One next <em>step.</em></h2>
+            <p>Not a big promise. Just one thing you'll do in the next day. Pick the one that fits.</p>
+          </div>
+
+          <form class="next-steps" action="today.html" method="get">
+            <fieldset>
+              <legend class="sr-only">Choose one next step</legend>
+
+              <label class="step-pick">
+                <input type="radio" name="next" value="restart" />
+                <span class="step-name">Start again tomorrow</span>
+                <span class="step-more">Tomorrow morning you'll see the pledge on Today: "Just for today, I won't smoke." That's all you have to do.</span>
+              </label>
+
+              <label class="step-pick">
+                <input type="radio" name="next" value="plan" />
+                <span class="step-name">Plan for what set it off</span>
+                <span class="step-more">
+                  What set it off today?
+                  <span class="chips">
+                    <span class="chip">Friends lit up</span>
+                    <span class="chip">Stress</span>
+                    <span class="chip">Bored at night</span>
+                    <span class="chip">Couldn't sleep</span>
+                  </span>
+                  Then finish your plan: "When that happens, I will…" <a href="start.html#step-4">Update my plan</a>
+                </span>
+              </label>
+
+              <label class="step-pick">
+                <input type="radio" name="next" value="tell" />
+                <span class="step-name">Tell someone on your side</span>
+                <span class="step-more">One message is enough: "I slipped today. Starting again tomorrow." Someone who's on your side won't need more.</span>
+              </label>
+
+              <label class="step-pick">
+                <input type="radio" name="next" value="write" />
+                <span class="step-name">Write it out</span>
+                <span class="step-more">Two lines in your private journal: what happened, and what you'd do differently. <a href="journal.html">Open the journal</a></span>
+              </label>
+            </fieldset>
+
+            <button class="btn btn-big" type="submit">That's my next step</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Help, calmly, for anyone who needs more than an app -->
+      <section class="wrap help-note" aria-labelledby="help-title">
+        <h2 id="help-title" class="eyebrow">If it feels like more than a slip</h2>
+        <p>Slipping again and again doesn't mean you're weak. It can mean you deserve more support than an app. NACADA's helpline is free, 24/7, and confidential: <a href="tel:1192">call 1192</a>.</p>
+      </section>
+
+      <p class="wrap signoff">Umeteleza, si umeanguka. Tomorrow, bead by bead.</p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">One day at a time. One bead at a time.</p>
+        </div>
+        <nav class="footer-col" aria-label="The app">
+          <h2>The app</h2>
+          <ul>
+            <li><a href="start.html">Make your plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Ideas for later">
+          <h2>Ideas for later</h2>
+          <ul>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>For ages 18+. · Need to talk to someone? Call <a href="tel:1192">1192</a>, NACADA's free 24/7 helpline for alcohol and drugs.</p>
+        <p>Bead by Bead is a prototype: nothing you type is saved, and every name, date and number is an example. · <a href="../../index.html">Kenyan voice (Kiswahili &amp; Sheng)</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

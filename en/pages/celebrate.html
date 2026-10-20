@@ -3,27 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Let's go! Day 24 · Bead by Bead</title>
-    <meta name="description" content="Check-in done. Your streak just went up." />
+    <title>Bead 25 · Bead by Bead</title>
+    <meta name="description" content="You kept your word today. A new bead goes on your bracelet." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Permanent+Marker&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../../CSS/styles.css?v=5" />
-    <!-- The English edition's bold, game-like layer. Loaded second so it wins. -->
-    <link rel="stylesheet" href="../../CSS/pop.css?v=5" />
-    <link rel="icon" href="../../Images/illustrated/malebo-hype.svg" />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
   </head>
 
   <!-- =====================================================================
-       THE CELEBRATION SCREEN
-       The check-in form sends you here (action="celebrate.html"). It's the
-       Duolingo moment: big flame, number goes up, rewards pop in.
-       The pops are a CSS @keyframes animation that runs once on load
-       (section 22). People with "reduce motion" switched on get no
-       animation, thanks to the rule in section 2.
+       KEPT: the moment a bead goes on
+       The new bead is the last <li> with the class "is-new": CSS drops it
+       in with a little bounce (see "THE NEW BEAD" in bead.css).
+       Monday is still "not recorded yet", so we don't count it either way:
+       the screen shows this week as "6 kept, 1 open", and asks you to
+       fill Monday in rather than guessing.
        ===================================================================== -->
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -52,44 +53,45 @@
       </div>
     </header>
 
-    <main id="main" class="wrap celebrate">
-      <!-- Today's new bead, big, popping in. Same .bead as the bracelet,
-           just huge (.bead--hero). -->
-      <span class="bead bead--white bead--hero pop" aria-hidden="true"></span>
+    <main id="main">
+      <section class="wrap kept-result" aria-labelledby="result-title">
+        <img class="result-malebo" src="../../Images/illustrated/malebo-hype.svg" alt="" width="220" height="220" />
+        <p class="eyebrow">Tuesday 13 October</p>
+        <h1 id="result-title">Bead <em>25</em> is on.</h1>
+        <p class="lede">You kept your word today. That bead is yours for good.</p>
 
-      <!-- "Malisaa!" = the KOT cheer for someone winning an exchange -->
-      <p class="bubble bubble--green">Let's gooo! This is the energy!</p>
+        <div class="band-frame">
+          <ol class="band band--short" aria-label="Your last 7 days, with today's new bead">
+            <li class="day day--kept"><span class="sr-only">Wednesday: kept</span></li>
+            <li class="day day--kept"><span class="sr-only">Thursday: kept</span></li>
+            <li class="day day--kept"><span class="sr-only">Friday: kept</span></li>
+            <li class="day day--kept"><span class="sr-only">Saturday: kept</span></li>
+            <li class="day day--kept"><span class="sr-only">Sunday: kept</span></li>
+            <li class="day day--unknown"><span class="sr-only">Monday: not recorded yet</span></li>
+            <li class="day day--kept is-new"><span class="sr-only">Today: kept, new bead</span></li>
+          </ol>
+        </div>
 
-      <h1 class="big-day pop"><small>Streak extended</small>Day 24</h1>
+        <dl class="stat-row">
+          <div><dt>Beads</dt><dd>25</dd></div>
+          <div><dt>This week</dt><dd>6 kept, 1 open</dd></div>
+        </dl>
+        <p class="hint">Monday is still open. If you kept it, fill it in and your streak joins up again. <a href="checkIn.html">Fill in Monday</a></p>
 
-      <!-- The rewards. Each has a colour class (reward--xp, etc.) that sets
-           --rw, which colours the border AND the number. -->
-      <ul class="rewards" aria-label="Rewards">
-        <li class="reward reward--xp pop"><img src="../../Images/icons/xp.svg" alt="" /><strong>+45</strong><span>XP</span></li>
-        <li class="reward reward--mbao pop"><img src="../../Images/icons/mbao.svg" alt="" /><strong>+15</strong><span>Coins</span></li>
-        <li class="reward reward--bead pop"><span class="bead bead--green" aria-hidden="true"></span><strong>+1</strong><span>Bead</span></li>
-      </ul>
+        <!-- One optional line. Writing down what worked makes it easier
+             to do again. -->
+        <form class="card note-form" action="today.html" method="get">
+          <div class="field">
+            <label for="helped">What helped today? <small>(optional, only you see this)</small></label>
+            <!-- no name="" so it never lands in the address bar
+                 (same trick as the journal) -->
+            <input id="helped" type="text" placeholder="Went to the gym instead of the base" />
+          </div>
+          <button class="btn btn-green" type="submit">Done</button>
+        </form>
 
-      <!-- The week, with today now lit -->
-      <section class="card" aria-label="This week">
-        <ol class="week">
-          <li><img src="../../Images/icons/flame.svg" alt="" />Mon<span class="sr-only">: checked in</span></li>
-          <li><img src="../../Images/icons/flame.svg" alt="" />Tue<span class="sr-only">: checked in</span></li>
-          <li class="is-today"><img src="../../Images/icons/flame.svg" alt="" />Wed<span class="sr-only">: checked in today</span></li>
-          <li><img src="../../Images/icons/flame-off.svg" alt="" />Thu</li>
-          <li><img src="../../Images/icons/flame-off.svg" alt="" />Fri</li>
-          <li><img src="../../Images/icons/flame-off.svg" alt="" />Sat</li>
-          <li><img src="../../Images/icons/flame-off.svg" alt="" />Sun</li>
-        </ol>
+        <p class="signoff">Twenty-five. Hiyo ni discipline, si luck.</p>
       </section>
-
-      <p class="lede">29 of 30. Just one bead to a full bracelet. The people have spoken: you'll be Certified Discipline soon.</p>
-
-      <div class="btn-row">
-        <a class="btn btn-red btn-big" href="today.html">Keep going</a>
-        <a class="btn btn-ghost btn-big" href="community.html">Tell your group</a>
-      </div>
-      <p><span class="example-tag">Demo</span> In Phase 1 every check-in lands on Day 24.</p>
     </main>
 
     <footer class="site-footer">

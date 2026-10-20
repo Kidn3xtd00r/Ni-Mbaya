@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Take a pause · Bead by Bead</title>
+    <meta name="description" content="Life happens. Pause your bracelet for a few days with a reason: a knot goes on, no bead, and no broken streak." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=Manrope:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../CSS/styles.css?v=9" />
+    <!-- The Bead by Bead look (cream paper, forest ink, flag colours).
+         Loaded second so it wins over styles.css. -->
+    <link rel="stylesheet" href="../../CSS/bead.css?v=4" />
+    <link rel="icon" href="../../Images/icons/bead.svg" />
+  </head>
+
+  <!-- =====================================================================
+       PAUSE: a knot, not a break
+       The rules (from the Shanga spec):
+         - a pause needs a reason and dates
+         - it can start up to 3 days ago, so you can pause after the fact
+         - paused days get a knot: NO bead, and the streak waits
+       A pause is honest: it never pretends a day was kept.
+       ===================================================================== -->
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="../index.html">Bead <span>by Bead</span></a>
+        <!-- Five tabs. SOS sits in the middle as a red button so it's
+             always one tap away (class="tab-sos"). -->
+        <nav class="tabbar" aria-label="Main">
+          <a href="today.html" aria-current="page">Today</a>
+          <a href="streak.html">Progress</a>
+          <a href="panic.html" class="tab-sos">SOS</a>
+          <a href="journal.html">Journal</a>
+          <a href="profile.html">Me</a>
+        </nav>
+        <div class="header-actions">
+          <!-- Two numbers that come straight from the record: beads earned
+               and the current streak. No coins, no XP. alt="" on the icons
+               because the sr-only text says it in words. -->
+          <ul class="stat-chips" aria-label="Your record (example)">
+            <li><a class="chip-bead" href="streak.html"><img class="icon" src="../../Images/icons/bead.svg" alt="" />24<span class="sr-only"> beads earned</span></a></li>
+            <li><a class="chip-flame" href="streak.html"><img class="icon" src="../../Images/icons/flame.svg" alt="" />5<span class="sr-only"> day streak</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page-hero">
+        <div class="wrap">
+          <p class="eyebrow">Pause</p>
+          <h1>A knot, <em>not a break.</em></h1>
+          <p class="lede">Exams, a funeral upcountry, a week in hospital. Life happens. Pause for a few days and your streak waits for you.</p>
+        </div>
+      </section>
+
+      <div class="wrap split chapter chapter--tight">
+        <form class="card pause-form" action="today.html" method="get">
+          <fieldset>
+            <legend class="legend-small">Why are you pausing?</legend>
+            <!-- "required" on ONE radio covers the whole group (all the
+                 radios with name="why"). The browser won't send the form
+                 until one is picked. No JS needed.
+                 The radios keep their name="why": without a shared name
+                 they wouldn't act as a group. The values are short and
+                 general (like "exams"), so seeing them in the address bar
+                 gives nothing away. -->
+            <ul class="ticks">
+              <li><label class="tick"><input type="radio" name="why" value="exams" required /> Exams</label></li>
+              <li><label class="tick"><input type="radio" name="why" value="funeral" /> A funeral or family matter</label></li>
+              <li><label class="tick"><input type="radio" name="why" value="sick" /> I'm sick</label></li>
+              <li><label class="tick"><input type="radio" name="why" value="travel" /> Travelling, no network</label></li>
+              <li><label class="tick"><input type="radio" name="why" value="other" /> Something else</label></li>
+            </ul>
+          </fieldset>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="from">From</label>
+              <!-- min = 3 days ago: you can pause after the fact, but not further back -->
+              <!-- required: the browser blocks the form if this is cleared -->
+              <input id="from" name="from" type="date" value="2026-10-13" min="2026-10-10" required />
+            </div>
+            <div class="field">
+              <label for="to">Until</label>
+              <input id="to" name="to" type="date" value="2026-10-15" min="2026-10-13" max="2026-10-27" required />
+            </div>
+          </div>
+          <p class="hint">Up to 14 days at a time. You can start a pause up to 3 days back.</p>
+
+          <button class="btn btn-big" type="submit">Start the pause</button>
+        </form>
+
+        <div>
+          <h2 class="eyebrow">What it looks like</h2>
+          <div class="band-card">
+            <div class="band-frame">
+              <ol class="band band--short" aria-label="Example: three kept days, a three-day pause shown as knots, then kept days again">
+                <li class="day day--kept"><span class="sr-only">Kept</span></li>
+                <li class="day day--kept"><span class="sr-only">Kept</span></li>
+                <li class="day day--kept"><span class="sr-only">Kept</span></li>
+                <li class="day day--pause"><span class="sr-only">Paused</span></li>
+                <li class="day day--pause"><span class="sr-only">Paused</span></li>
+                <li class="day day--pause"><span class="sr-only">Paused</span></li>
+                <li class="day day--kept"><span class="sr-only">Kept</span></li>
+                <li class="day day--kept"><span class="sr-only">Kept</span></li>
+              </ol>
+            </div>
+          </div>
+          <ul class="plain-list mt">
+            <li><strong>A knot</strong> for each paused day. No bead: a pause isn't a kept day.</li>
+            <li><strong>Your streak waits.</strong> It carries on from where it was when you come back.</li>
+            <li><strong>End it early</strong> any time, from Today.</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shuka" aria-hidden="true"></div>
+      <div class="wrap footer-inner">
+        <div>
+          <img class="footer-mascot" src="../../Images/illustrated/malebo.svg" alt="" width="216" height="208" loading="lazy" />
+          <p class="wordmark">Bead <span>by Bead</span></p>
+          <p class="footer-motto">One day at a time. One bead at a time.</p>
+        </div>
+        <nav class="footer-col" aria-label="The app">
+          <h2>The app</h2>
+          <ul>
+            <li><a href="start.html">Make your plan</a></li>
+            <li><a href="today.html">Today</a></li>
+            <li><a href="checkIn.html">Evening check-in</a></li>
+            <li><a href="streak.html">Progress</a></li>
+            <li><a href="panic.html">SOS</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="how-it-works.html">How it works</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="Ideas for later">
+          <h2>Ideas for later</h2>
+          <ul>
+            <li><a href="community.html">Group &amp; partner</a></li>
+            <li><a href="league.html">League</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="savings.html">Savings goals</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="wrap footer-base">
+        <p>For ages 18+. · Need to talk to someone? Call <a href="tel:1192">1192</a>, NACADA's free 24/7 helpline for alcohol and drugs.</p>
+        <p>Bead by Bead is a prototype: nothing you type is saved, and every name, date and number is an example. · <a href="../../index.html">Kenyan voice (Kiswahili &amp; Sheng)</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
